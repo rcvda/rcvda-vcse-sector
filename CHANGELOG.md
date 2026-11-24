@@ -2,6 +2,13 @@
 
 All notable changes to this plugin, most recent first. Format: `## YYYY-MM-DD — vX.Y.Z — description`.
 
+## 2026-11-24 — v0.2.1 — Light-mode card surfaces
+
+- Panels now read as white cards in light mode. Previously every panel (KPI tiles, chart boxes, filter bar) was filled with the theme's `--wp--preset--color--surface` tint (`#a7c1d9` Light Blue), which — correct for an occasional badge — turned the whole dashboard Light-Blue-on-Light-Blue when used as the fill behind every element.
+- Introduced one component-scoped token, `--card`, that is a *mapping* rather than a colour: it resolves to the theme's own `base` in light (white) and `surface` in dark (`#16284a`), so panels are white cards in light mode and proper dark panels in dark mode, while still tracking any future change to the rcvda-base palette. `--surface` is retained for the single "living measure" callout note, which is its intended badge/callout use.
+- Bar rails (`.track`, `.conc-bar`) repointed from `base` to `divider` so they stay visible now that the cards themselves are `base`.
+- Verified in both light and dark against the real rcvda-base token values. No data, markup or behaviour change.
+
 ## 2026-11-24 — v0.2.0 — Detailed snapshot analytics
 
 - Added the full current-snapshot analysis beside the over-time trends: active sector by type, charity legal structure, decade founded, turnover/income bands, large-vs-small by value, income concentration, digital presence, the NAVCA whole-sector projection, the ten largest organisations, and a glossary. Every section responds to the Authority filter.

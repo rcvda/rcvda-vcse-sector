@@ -2,7 +2,7 @@
 Contributors: RCVDA
 Requires at least: 6.0
 Tested up to: 6.6
-Stable tag: 0.2.0
+Stable tag: 0.2.1
 License: GPLv2 or later
 
 "State of the Sector" — a living, weekly-updated dashboard of the registered VCSE sector size across the five Tees Valley authorities.
@@ -27,5 +27,11 @@ estate-wide and tracks dark mode). No external JavaScript libraries are used.
 [rcvda_vcse_sector title="State of the Sector"]  — override the heading
 
 == Changelog ==
+= 0.2.1 =
+Light-mode fix: panels now read as white cards. The card fill is a --card token that resolves to the theme's own `base` in light and `surface` in dark, instead of using the light-blue `surface` tint for every panel. `surface` is kept for the single callout note. Bar rails repointed to `divider` so they stay visible on the white cards. No data or behaviour change.
+
+= 0.2.0 =
+Added the full current-snapshot analysis beside the over-time trends (type, legal structure, decade founded, income/turnover, size, concentration, digital, NAVCA projection, ten largest, glossary), read from a second living dataset (aggregates JSON) with a bundled fallback.
+
 = 0.1.0 =
 Initial release.
