@@ -1,0 +1,79 @@
+/* RCVDA VCSE Sector — "State of the Sector" living dashboard.
+   Chrome (text, panels, borders, links, backgrounds, dark mode) is inherited
+   from the active rcvda-base skin: each rule consumes the theme's
+   --wp--preset--color--* tokens directly (DESIGN.md hex as a fallback for use
+   outside the theme). The plugin defines NO palette or dark mode of its own for
+   chrome. The only colours it owns are the data scales — the Tees Valley borough
+   scale (read in JS from rcvda-core's --la-*/--tv-navy) and the four segment
+   colours below (a brand-derived categorical scale, with its own dark variants
+   like the borough scale). */
+
+.rcvda-vcse-sector{
+  --c-charity:#033E8C; --c-cic:#F29F05; --c-society:#6E9FC9; --c-casc:#D91E0D;
+  color:var(--wp--preset--color--contrast,#0E1F40);
+}
+html[data-theme="dark"] .rcvda-vcse-sector{ --c-charity:#6FA8DC; --c-cic:#F6B53F; --c-society:#9BC0E3; --c-casc:#EF5A49; }
+@media (prefers-color-scheme:dark){html:not([data-theme]) .rcvda-vcse-sector{ --c-charity:#6FA8DC; --c-cic:#F6B53F; --c-society:#9BC0E3; --c-casc:#EF5A49; }}
+
+.rcvda-vcse-sector *{box-sizing:border-box}
+.rcvda-vcse-sector .wrap{max-width:1240px;margin:0 auto;}
+.rcvda-vcse-sector h1,.rcvda-vcse-sector h2,.rcvda-vcse-sector h3{font-family:inherit;margin:0;text-wrap:balance;color:var(--wp--preset--color--contrast,#0E1F40);}
+.rcvda-vcse-sector .tnum{font-variant-numeric:tabular-nums;font-feature-settings:"tnum";}
+.rcvda-vcse-sector .masthead{display:flex;justify-content:space-between;align-items:flex-start;gap:24px;flex-wrap:wrap;border-bottom:2px solid var(--wp--preset--color--contrast,#0E1F40);padding-bottom:22px;margin-bottom:18px;}
+.rcvda-vcse-sector .masthead h1{font-size:clamp(1.9rem,4vw,3rem);font-weight:800;line-height:1.05;}
+.rcvda-vcse-sector .masthead .lede{color:var(--wp--preset--color--muted,#51607A);flex-basis:100%;width:100%;margin-top:16px;font-size:1.02rem;}
+.rcvda-vcse-sector .masthead .meta{text-align:right;font-size:.8rem;color:var(--wp--preset--color--muted,#51607A);white-space:nowrap;}
+.rcvda-vcse-sector .masthead .meta b{color:var(--wp--preset--color--contrast,#0E1F40);font-weight:700;}
+.rcvda-vcse-sector .eyebrow{font-size:.82rem;font-weight:700;color:var(--wp--preset--color--brand-light,#033E8C);}
+.rcvda-vcse-sector .note{background:var(--wp--preset--color--surface,#FFFFFF);border:1px solid var(--wp--preset--color--divider,#D4DEEA);color:var(--wp--preset--color--muted,#51607A);border-radius:10px;padding:12px 16px;font-size:.83rem;margin-bottom:16px;line-height:1.55;display:flex;gap:10px;align-items:flex-start;}
+.rcvda-vcse-sector .note svg{color:var(--wp--preset--color--brand-light,#033E8C);flex:none;margin-top:1px;}
+.rcvda-vcse-sector .note a{color:var(--wp--preset--color--brand-light,#033E8C);font-weight:700;}
+.rcvda-vcse-sector .filterbar{display:flex;align-items:center;gap:12px;flex-wrap:wrap;background:var(--wp--preset--color--surface,#FFFFFF);border:1px solid var(--wp--preset--color--divider,#D4DEEA);border-radius:12px;padding:12px 16px;margin-bottom:24px;}
+.rcvda-vcse-sector .filterbar label{font-size:.82rem;font-weight:700;color:var(--wp--preset--color--brand-light,#033E8C);display:flex;align-items:center;gap:6px;}
+.rcvda-vcse-sector .filterbar select{font:inherit;font-size:.92rem;font-weight:700;color:var(--wp--preset--color--contrast,#0E1F40);background:var(--wp--preset--color--base,#EEF3F8);border:1px solid var(--wp--preset--color--divider,#D4DEEA);border-radius:8px;padding:7px 30px 7px 12px;cursor:pointer;-webkit-appearance:none;appearance:none;background-image:url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 12 12'><path d='M2 4l4 4 4-4' stroke='%23808a9c' stroke-width='1.6' fill='none' stroke-linecap='round'/></svg>");background-repeat:no-repeat;background-position:right 10px center;}
+.rcvda-vcse-sector .filterbar select:focus-visible{outline:2px solid var(--wp--preset--color--brand-light,#033E8C);outline-offset:1px;}
+.rcvda-vcse-sector .filterbar .tag{font-size:.82rem;color:var(--wp--preset--color--muted,#51607A);}
+.rcvda-vcse-sector .filterbar .tag b{color:var(--wp--preset--color--contrast,#0E1F40);font-variant-numeric:tabular-nums;}
+.rcvda-vcse-sector .kpis{display:grid;grid-template-columns:repeat(6,1fr);gap:14px;margin-bottom:8px;}
+.rcvda-vcse-sector .kpi{background:var(--wp--preset--color--surface,#FFFFFF);border:1px solid var(--wp--preset--color--divider,#D4DEEA);border-radius:12px;padding:15px 16px 13px;display:flex;flex-direction:column;gap:2px;position:relative;overflow:hidden;}
+.rcvda-vcse-sector .kpi::before{content:"";position:absolute;left:0;top:0;bottom:0;width:3px;background:var(--bar,var(--wp--preset--color--brand-light,#033E8C));opacity:.9;}
+.rcvda-vcse-sector .kpi .v{font-size:1.8rem;font-weight:800;line-height:1.05;color:var(--wp--preset--color--contrast,#0E1F40);}
+.rcvda-vcse-sector .kpi .l{font-size:.75rem;color:var(--wp--preset--color--muted,#51607A);font-weight:600;}
+.rcvda-vcse-sector .kpi .s{font-size:.71rem;color:var(--wp--preset--color--muted,#51607A);}
+.rcvda-vcse-sector .band{display:flex;align-items:center;gap:10px;margin:30px 0 4px;}
+.rcvda-vcse-sector .band h3{font-size:1rem;font-weight:800;color:var(--wp--preset--color--contrast,#0E1F40);display:flex;align-items:center;gap:8px;}
+.rcvda-vcse-sector .band h3 svg{color:var(--wp--preset--color--brand-light,#033E8C);}
+.rcvda-vcse-sector .band .rule{flex:1;height:1px;background:var(--wp--preset--color--divider,#D4DEEA);}
+.rcvda-vcse-sector .grid{display:grid;grid-template-columns:repeat(12,1fr);gap:16px;margin-top:14px;}
+.rcvda-vcse-sector .panel{background:var(--wp--preset--color--surface,#FFFFFF);border:1px solid var(--wp--preset--color--divider,#D4DEEA);border-radius:14px;padding:18px 20px;min-width:0;}
+.rcvda-vcse-sector .col-12{grid-column:span 12}.rcvda-vcse-sector .col-7{grid-column:span 7}.rcvda-vcse-sector .col-5{grid-column:span 5}
+.rcvda-vcse-sector .panel h2{font-size:1.02rem;font-weight:700;color:var(--wp--preset--color--contrast,#0E1F40);}
+.rcvda-vcse-sector .panel .sub{font-size:.78rem;color:var(--wp--preset--color--muted,#51607A);margin-top:3px;}
+.rcvda-vcse-sector .panel-head{margin-bottom:12px;}
+.rcvda-vcse-sector .chart{width:100%;height:auto;overflow:visible;}
+.rcvda-vcse-sector .chart .axis{stroke:var(--wp--preset--color--divider,#D4DEEA);stroke-width:1;}
+.rcvda-vcse-sector .chart .grid-l{stroke:var(--wp--preset--color--divider,#D4DEEA);stroke-width:1;stroke-dasharray:2 4;opacity:.7;}
+.rcvda-vcse-sector .chart .axlab{fill:var(--wp--preset--color--muted,#51607A);font-size:11px;}
+.rcvda-vcse-sector .chart .series{fill:none;stroke-width:2.4;stroke-linejoin:round;stroke-linecap:round;}
+.rcvda-vcse-sector .chart .mk{stroke:var(--wp--preset--color--surface,#FFFFFF);stroke-width:1.5;}
+.rcvda-vcse-sector .chart .mk-hit{fill:transparent;cursor:pointer;}
+.rcvda-vcse-sector .chart .dlab{font-size:11px;font-weight:700;}
+.rcvda-vcse-sector .legend{display:flex;flex-wrap:wrap;gap:6px 16px;margin-top:14px;font-size:.78rem;color:var(--wp--preset--color--muted,#51607A);}
+.rcvda-vcse-sector .legend button{font:inherit;font-size:.78rem;color:var(--wp--preset--color--muted,#51607A);background:none;border:none;cursor:pointer;display:inline-flex;align-items:center;gap:7px;padding:2px 4px;border-radius:6px;}
+.rcvda-vcse-sector .legend button[aria-pressed="false"]{opacity:.35;text-decoration:line-through;}
+.rcvda-vcse-sector .legend .dot{width:11px;height:11px;border-radius:3px;flex:none;}
+.rcvda-vcse-sector table.matrix{width:100%;border-collapse:collapse;font-size:.85rem;}
+.rcvda-vcse-sector table.matrix th,.rcvda-vcse-sector table.matrix td{padding:8px 10px;border-bottom:1px solid var(--wp--preset--color--divider,#D4DEEA);text-align:right;font-variant-numeric:tabular-nums;color:var(--wp--preset--color--contrast,#0E1F40);}
+.rcvda-vcse-sector table.matrix th:first-child,.rcvda-vcse-sector table.matrix td:first-child{text-align:left;}
+.rcvda-vcse-sector table.matrix thead th{font-size:.72rem;color:var(--wp--preset--color--muted,#51607A);font-weight:700;}
+.rcvda-vcse-sector table.matrix td:first-child{font-weight:700;color:var(--wp--preset--color--contrast,#0E1F40);display:flex;align-items:center;gap:8px;}
+.rcvda-vcse-sector table.matrix .chip{width:9px;height:9px;border-radius:2px;flex:none;}
+.rcvda-vcse-sector table.matrix tfoot td{font-weight:800;border-top:2px solid var(--wp--preset--color--contrast,#0E1F40);border-bottom:none;}
+.rcvda-vcse-sector footer{margin-top:32px;padding-top:18px;border-top:1px solid var(--wp--preset--color--divider,#D4DEEA);color:var(--wp--preset--color--muted,#51607A);font-size:.75rem;line-height:1.7;opacity:.9;}
+.rcvda-vcse-sector footer b{color:var(--wp--preset--color--contrast,#0E1F40);font-weight:700;}
+.rcvda-vcse-sector footer a{color:var(--wp--preset--color--brand-light,#033E8C);}
+.rcvda-vcse-sector .loading{padding:40px;text-align:center;color:var(--wp--preset--color--muted,#51607A);font-size:.9rem;}
+.rcvda-vcse-sector-tip{position:fixed;pointer-events:none;background:var(--wp--preset--color--contrast,#0E1F40);color:var(--wp--preset--color--base,#FFFFFF);font-size:.76rem;padding:6px 9px;border-radius:6px;opacity:0;transition:opacity .1s;z-index:2147483000;white-space:nowrap;box-shadow:0 4px 14px rgba(0,0,0,.25);}
+@media(max-width:1000px){.rcvda-vcse-sector .kpis{grid-template-columns:repeat(3,1fr)}.rcvda-vcse-sector .col-7,.rcvda-vcse-sector .col-5{grid-column:span 12}}
+@media(max-width:560px){.rcvda-vcse-sector .kpis{grid-template-columns:repeat(2,1fr)}.rcvda-vcse-sector .masthead .meta{text-align:left}}
+@media(prefers-reduced-motion:reduce){.rcvda-vcse-sector *{transition:none!important}}

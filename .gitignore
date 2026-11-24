@@ -1,0 +1,7 @@
+.DS_Store
+Thumbs.db
+node_modules/
+*.log
+
+# versioned build artefacts (the committed dist zip is unversioned)
+rcvda-vcse-sector-*.zip
