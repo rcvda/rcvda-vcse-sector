@@ -2,6 +2,10 @@
 
 All notable changes to this plugin, most recent first. Format: `## YYYY-MM-DD — vX.Y.Z — description`.
 
+## 2026-11-25 — v0.5.21 — Founded chart: segment seam in dark mode too
+
+- The 1px seam between stacked segments in *When the sector was founded* now applies in dark mode as well as light. It uses the card colour (`--card`), so it is white in light mode and the dark panel colour in dark mode. Segment widths unchanged.
+
 ## 2026-11-25 — v0.5.20 — Structure & age: charity legal structure beside new Social enterprise types panel
 
 - *Charity legal structure* moves from Digital & projection into Structure & age, under the founded chart.

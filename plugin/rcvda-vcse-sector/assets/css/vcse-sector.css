@@ -148,9 +148,8 @@ html[data-theme="dark"] .rcvda-vcse-sector{ --c-charity:#8E88D4; --c-cic:#F2644C
 .rcvda-vcse-sector .fill{height:100%;border-radius:5px;min-width:3px;background:var(--wp--preset--color--brand-light,#033E8C);}
 .rcvda-vcse-sector .track.stack{display:flex;}
 .rcvda-vcse-sector .track.stack span{height:100%;}
-/* light mode: 1px card-coloured seam between stacked segments (the segment hues sit close enough in light to merge); inset shadow so segment widths are unchanged */
-html[data-theme="light"] .rcvda-vcse-sector .track.stack span+span{box-shadow:inset 1px 0 0 var(--card,#FFFFFF);}
-@media (prefers-color-scheme:light){html:not([data-theme]) .rcvda-vcse-sector .track.stack span+span{box-shadow:inset 1px 0 0 var(--card,#FFFFFF);}}
+/* 1px card-coloured seam between stacked segments so neighbouring hues don't merge — white in light, the dark panel colour in dark (--card); inset shadow so segment widths are unchanged */
+.rcvda-vcse-sector .track.stack span+span{box-shadow:inset 1px 0 0 var(--card,#FFFFFF);}
 .rcvda-vcse-sector .legend .legitem{display:inline-flex;align-items:center;gap:7px;}
 .rcvda-vcse-sector .bar-row .val{text-align:right;font-weight:700;color:var(--wp--preset--color--contrast,#0E1F40);font-variant-numeric:tabular-nums;}
 
