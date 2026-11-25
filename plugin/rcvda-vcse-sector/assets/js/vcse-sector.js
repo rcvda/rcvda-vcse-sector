@@ -426,7 +426,7 @@
       });
       if(comp.length){ var last=comp[comp.length-1];
         if(s.secondary&&dual){ endlabs.push({x:X(last.t)-7,y:YP(last.v)+3,color:s.color,text:commas(last.v),anchor:'end'}); }
-        else if(s.key===topKey && !dual){ endlabs.push({x:X(last.t)+6,y:YP(last.v)+3,color:s.color,text:commas(last.v),anchor:'start'}); } }
+        else { endlabs.push({x:X(last.t)+6,y:YP(last.v)+3,color:s.color,text:commas(last.v),anchor:'start'}); } }
     });
     endlabs.sort(function(a,b){return a.y-b.y;});
     for(var e=1;e<endlabs.length;e++){ if(endlabs[e].y-endlabs[e-1].y<13) endlabs[e].y=endlabs[e-1].y+13; }
