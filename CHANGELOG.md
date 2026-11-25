@@ -2,6 +2,12 @@
 
 All notable changes to this plugin, most recent first. Format: `## YYYY-MM-DD — vX.Y.Z — description`.
 
+## 2026-11-25 — v0.5.17 — KPI strip: restore Sector turnover; Income vs GVA second; Employees and Volunteers tiles
+
+- Sector turnover is back as the first charity tile (v0.5.16 had replaced it). Income vs GVA moves to second, replacing Median income; its sub-line now reads "of £Xbn GVA (2024)" since turnover sits beside it. Falls back to Median income if an area has no GVA figure.
+- Top-10 share and Declared a website tiles replaced by **Employees** and **Volunteers** — a fixed snapshot from 08/09/2026 (Size of the Voluntary Sector FTC pull), summed across active charities that report the field, with the reporting count in each sub-line (Tees Valley: 5,134 employees from 93; 25,851 volunteers from 672). Not yet in the weekly runner — backfill is a follow-up. Both removed figures remain in the detail sections (Income concentration, Digital presence).
+- Charity-group footnote updated to cover workforce and the 08/09/2026 snapshot.
+
 ## 2026-11-25 — v0.5.16 — KPI strip: replace Sector turnover with Income vs GVA
 
 - The first charity tile now shows active charities' latest-year income as a share of the selected area's gross value added, with the income and GVA in the sub-line (e.g. Tees Valley 2.1% — £351m of £17.0bn).

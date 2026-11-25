@@ -272,10 +272,28 @@
     var blk=S.AGG&&S.AGG.snapshots&&S.AGG.snapshots[S.AGG.latest], key=null;
     if(blk){ for(var k in blk){ if(blk[k]===A){ key=k; break; } } }
     var g=key&&GVA_M[key];
-    if(!g) return [gbp(A.sector_value),"Sector turnover","latest-year income"];
+    if(!g) return [gbpFull(A.median_income),"Median income","of those reporting"];
     var pc=100*(A.sector_value||0)/(g*1e6);
     var gs=g>=1e4?"£"+(g/1e3).toFixed(1)+"bn":"£"+(g/1e3).toFixed(2)+"bn";
-    return [pc.toFixed(1)+"%","Income vs GVA",gbp(A.sector_value)+" of "+gs+" ("+GVA_YEAR+")"];
+    return [pc.toFixed(1)+"%","Income vs GVA","of "+gs+" GVA ("+GVA_YEAR+")"];
+  }
+  /* Workforce — FIXED snapshot, 08/09/2026 (not yet in the weekly runner;
+     backfill is an open action). Source: Data/Size of the Voluntary Sector
+     (FTC snapshot 2026-09-08)/north-east/north-east-organisations-enriched-2026-09-08.csv,
+     active based-in organisations, summing `employees` / `volunteers` where
+     reported (charities only). n = organisations reporting the field. */
+  var WF_DATE="08/09/2026", WF={
+    "Darlington":{employees:1108,employees_n:16,volunteers:4028,volunteers_n:124},
+    "Hartlepool":{employees:826,employees_n:15,volunteers:1312,volunteers_n:91},
+    "Middlesbrough":{employees:1111,employees_n:22,volunteers:6662,volunteers_n:137},
+    "Redcar-and-Cleveland":{employees:253,employees_n:10,volunteers:2306,volunteers_n:120},
+    "Stockton-on-Tees":{employees:1836,employees_n:30,volunteers:11543,volunteers_n:200},
+    "Tees Valley":{employees:5134,employees_n:93,volunteers:25851,volunteers_n:672}};
+  function aggKey(S,A){ var blk=S.AGG&&S.AGG.snapshots&&S.AGG.snapshots[S.AGG.latest]; if(blk){ for(var k in blk){ if(blk[k]===A) return k; } } return null; }
+  function wfTile(S,A,f,label){
+    var w=WF[aggKey(S,A)];
+    if(!w) return ["–",label,"not available"];
+    return [commas(w[f]),label,w[f+"_n"]+" reporting · "+WF_DATE];
   }
   function renderKPIs(S,A,sLabel){
     var box=S.q('.j-kpis');
@@ -288,14 +306,14 @@
       ["~"+commas(A.navca.total),"Est. Whole Sector","inc. unregistered"]
     ];
     var charTiles=[
+      [gbp(A.sector_value),"Sector turnover","latest-year income"],
       gvaTile(S,A),
-      [gbpFull(A.median_income),"Median income","of those reporting"],
-      [A.concentration.top10+"%","Top-10 share","of charity income"],
-      [webChar+"%","Declared a website","of registered charities"]
+      wfTile(S,A,"employees","Employees"),
+      wfTile(S,A,"volunteers","Volunteers")
     ];
     box.innerHTML='<div class="kheads"><div class="ghead ghead-all"><span class="sw sw-all"></span>All VCFSE · whole registered sector</div><div class="ghead ghead-char"><span class="sw sw-char"></span>Registered charities only</div></div>'
       +'<div class="kpiblock">'+allTiles.map(function(it){return tile(it,'g-all');}).join('')+charTiles.map(function(it){return tile(it,'g-char');}).join('')+'</div>'
-      +'<div class="kfoots"><p class="kfoot kfoot-all"><b>Whole sector count</b> includes unregistered organisations projected through the NAVCA model.</p><p class="kfoot kfoot-char"><b>Income and website figures cover registered charities only.</b> CICs, registered societies and CASCs don’t file income or a website through their registers, so the sector’s true turnover and online presence are higher than shown.</p></div>';
+      +'<div class="kfoots"><p class="kfoot kfoot-all"><b>Whole sector count</b> includes unregistered organisations projected through the NAVCA model.</p><p class="kfoot kfoot-char"><b>Income and workforce figures cover registered charities only.</b> CICs, registered societies and CASCs don’t file income or staffing through their registers, so the sector’s true turnover and workforce are higher than shown. Employees and volunteers are a fixed snapshot from 08/09/2026, summed from the charities that reported them.</p></div>';
   }
 
   function renderDetail(S,A,sLabel){
