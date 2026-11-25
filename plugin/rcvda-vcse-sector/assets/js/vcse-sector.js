@@ -110,6 +110,8 @@
 
       +'<div class="band"><h3>'+vicon("calendar",20)+'Structure &amp; age</h3><div class="rule"></div></div>'
       +'<section class="grid"><div class="panel col-12"><div class="panel-head"><h2>When the sector was founded</h2><div class="sub">Active organisations by decade of registration, coloured by type (oldest to most recent). CASCs carry no registration date, so are not shown.</div></div><div class="bars j-decades"></div><div class="legend j-decleg"></div></div></section>'
+      +'<section class="grid"><div class="panel col-6"><div class="panel-head"><h2>Charity legal structure</h2><div class="sub j-legalsub"></div></div><div class="split j-legalsplit"></div><div class="mini j-legalmini"></div></div>'
+      +'<div class="panel col-6"><div class="panel-head"><h2>Social enterprise types</h2><div class="sub j-sesub"></div></div><div class="split j-sesplit"></div><div class="mini j-semini"></div></div></section>'
 
       +'<div class="band"><h3>'+vicon("pound-sterling",20)+'Money</h3><div class="rule"></div></div>'
       +'<section class="grid"><div class="panel col-6"><div class="panel-head"><h2>'+vicon("pound-sterling",18)+'Turnover of the active sector</h2><div class="sub j-incsub"></div></div><div class="bars j-income"></div></div>'
@@ -117,8 +119,7 @@
       +'<div class="panel col-12"><div class="panel-head"><h2>'+vicon("chart-pie",18)+'Income concentration</h2><div class="sub j-concsub"></div></div><div class="conc-bar"><div class="top j-conctop"></div></div><div class="mini j-concmini"></div></div></section>'
 
       +'<div class="band"><h3>'+vicon("globe",20)+'Digital &amp; projection</h3><div class="rule"></div></div>'
-      +'<section class="grid"><div class="panel col-6"><div class="panel-head"><h2>'+vicon("globe",18)+'Digital presence</h2><div class="sub">Active organisations with a website</div></div><div class="donut-wrap"><svg class="j-donut" width="122" height="122" viewBox="0 0 132 132" role="img"></svg><div class="mini j-digmini" style="flex:1"></div></div></div>'
-      +'<div class="panel col-6"><div class="panel-head"><h2>Charity legal structure</h2><div class="sub j-legalsub"></div></div><div class="split j-legalsplit"></div><div class="mini j-legalmini"></div></div></section>'
+      +'<section class="grid"><div class="panel col-6"><div class="panel-head"><h2>'+vicon("globe",18)+'Digital presence</h2><div class="sub">Active organisations with a website</div></div><div class="donut-wrap"><svg class="j-donut" width="122" height="122" viewBox="0 0 132 132" role="img"></svg><div class="mini j-digmini" style="flex:1"></div></div></div></section>'
 
       +'<div class="band"><h3>'+vicon("building",20)+'The largest organisations</h3><div class="rule"></div></div>'
       +'<section class="grid"><div class="panel col-12"><div class="panel-head"><h2>'+vicon("building",18)+'Ten largest active organisations by income</h2><div class="sub j-topsub"></div></div><table class="toptable j-top"></table></div></section>'
@@ -323,6 +324,21 @@
     var maxSeg=Math.max.apply(null,SEGMENTS.map(function(s){return A.by_segment[s]||0;}))||1;
     S.q('.j-type').innerHTML=SEGMENTS.map(function(s){ var n=A.by_segment[s]||0;
       return '<div class="bar-row"><div class="lab">'+segLabel(s)+'</div><div class="track"><div class="fill" style="width:'+(100*n/maxSeg)+'%;background:'+col.seg[s]+'"></div></div><div class="val">'+commas(n)+'</div></div>'; }).join("");
+    // social enterprise types — CICs vs registered societies, and society sub-types
+    // (A.social_enterprise from the runner; falls back to the segment counts)
+    (function(){
+      var cic=A.by_segment.CICs||0, soc=A.by_segment.Societies||0, tot=cic+soc||1, SE=A.social_enterprise;
+      S.q('.j-sesub').textContent=commas(cic+soc)+" active social enterprises (CASCs counted separately)";
+      S.q('.j-sesplit').innerHTML='<div style="flex:'+cic+';background:'+col.seg.CICs+'" title="CICs">'+(cic/tot>0.12?"CICs "+commas(cic):"")+'</div>'
+        +'<div style="flex:'+soc+';background:'+col.seg.Societies+'" title="Registered societies">'+(soc/tot>0.12?"Societies "+commas(soc):"")+'</div>';
+      var rows=[["Community interest companies",cic]];
+      if(SE&&SE.society_types){ var T=SE.society_types;
+        [["community_benefit","Community benefit societies"],["co_operative","Co-operative societies"],["credit_union","Credit unions"],["working_mens_club","Working men’s clubs"],["friendly_society","Friendly societies"],["other","Other registered societies"]]
+          .forEach(function(k){ if((T[k[0]]||0)>0) rows.push([k[1],T[k[0]]]); });
+      } else { rows.push(["Registered societies",soc]); }
+      S.q('.j-semini').innerHTML=rows.map(function(r){return '<div class="r"><span class="k">'+esc(r[0])+'</span><span>'+commas(r[1])+'</span></div>';}).join("")
+        +((SE&&SE.society_types)?"":'<div class="r"><span class="k" style="font-style:italic">Society sub-types appear from the next snapshot</span><span></span></div>');
+    })();
     // legal
     var L=A.legal; S.q('.j-legalsub').textContent=commas(L.total_charities)+" active registered charities";
     var inc=L.incorporated, uninc=L.unincorporated, tot=inc+uninc||1;

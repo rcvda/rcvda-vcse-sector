@@ -2,6 +2,12 @@
 
 All notable changes to this plugin, most recent first. Format: `## YYYY-MM-DD — vX.Y.Z — description`.
 
+## 2026-11-25 — v0.5.20 — Structure & age: charity legal structure beside new Social enterprise types panel
+
+- *Charity legal structure* moves from Digital & projection into Structure & age, under the founded chart.
+- New *Social enterprise types* panel beside it: a CICs vs registered societies split bar, and a list of CICs plus society sub-types (community benefit, co-operative, credit union, working men's club, friendly society, other registered society; zero rows hidden). Reads `social_enterprise` from the aggregates (added to the data runner the same day); until a snapshot carries it, shows the CIC and society totals with a note that sub-types follow. CASCs are counted separately, as in the intro.
+- *Digital presence* now sits on its own under Digital & projection.
+
 ## 2026-11-25 — v0.5.19 — Founded chart: 1px seam between stacked segments in light mode
 
 - In *When the sector was founded*, each segment after the first in a stacked bar now carries a 1px card-coloured (white) seam on its left edge in light mode, so neighbouring segment colours no longer merge. Drawn as an inset shadow, so segment widths and totals are unchanged. Dark mode unchanged.
