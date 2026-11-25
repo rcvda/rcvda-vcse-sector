@@ -292,6 +292,9 @@
     "Tees Valley":{employees:5134,employees_n:93,volunteers:25851,volunteers_n:672}};
   function aggKey(S,A){ var blk=S.AGG&&S.AGG.snapshots&&S.AGG.snapshots[S.AGG.latest]; if(blk){ for(var k in blk){ if(blk[k]===A) return k; } } return null; }
   function wfTile(S,A,f,label){
+    // live: A.workforce from the weekly runner (from 25/11/2026); fallback: the fixed September figures
+    var L=A.workforce;
+    if(L&&L[f+"_n"]) return [commas(L[f]),label,commas(L[f+"_n"])+" charities reporting"];
     var w=WF[aggKey(S,A)];
     if(!w) return ["–",label,"not available"];
     return [commas(w[f]),label,w[f+"_n"]+" reporting · Sep 2026"];
@@ -314,7 +317,7 @@
     ];
     box.innerHTML='<div class="kpiblock">'+allTiles.map(function(it){return tile(it,'g-all');}).join('')+charTiles.map(function(it){return tile(it,'g-char');}).join('')+'</div>'
       +'<div class="kheads"><div class="ghead ghead-all"><span class="sw sw-all"></span>All VCFSE · whole registered sector</div><div class="ghead ghead-char"><span class="sw sw-char"></span>Registered charities only</div></div>'
-      +'<div class="kfoots"><p class="kfoot kfoot-all"><b>Whole sector count</b> includes unregistered organisations projected through the NAVCA model.</p><p class="kfoot kfoot-char"><b>Income and workforce figures cover registered charities only.</b> CICs, registered societies and CASCs don’t file income or staffing through their registers, so the sector’s true turnover and workforce are higher than shown. Employees and volunteers are a fixed snapshot from 08/09/2026, summed from the charities that reported them.</p></div>';
+      +'<div class="kfoots"><p class="kfoot kfoot-all"><b>Whole sector count</b> includes unregistered organisations projected through the NAVCA model.</p><p class="kfoot kfoot-char"><b>Income and workforce figures cover registered charities only.</b> CICs, registered societies and CASCs don’t file income or staffing through their registers, so the sector’s true turnover and workforce are higher than shown. Employees and volunteers are summed from each charity’s latest annual return, where reported.</p></div>';
   }
 
   function renderDetail(S,A,sLabel){

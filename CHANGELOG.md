@@ -2,6 +2,12 @@
 
 All notable changes to this plugin, most recent first. Format: `## YYYY-MM-DD — vX.Y.Z — description`.
 
+## 2026-11-25 — v0.5.22 — Employees and Volunteers tiles read live data
+
+- The Employees and Volunteers tiles now read `workforce` from the weekly aggregates (from the 25/11/2026 snapshot), summed from each active charity's latest annual return, with the reporting count in the sub-line. The fixed 08/09/2026 figures remain only as a fallback for snapshots without `workforce`.
+- Live Tees Valley figures differ from September: employees 5,100 (94 reporting) vs 5,134; volunteers 19,365 (669) vs 25,851 — mostly newer annual returns from a few large bodies (e.g. Freemasons Charity Yorkshire North & East Ridings 3,000 → 0; Middlesbrough Diocesan Trust 2,000 → 100), plus three organisations whose full record failed to fetch on 25/11 (fixed in the runner).
+- Footnote updated: figures come from latest annual returns, where reported.
+
 ## 2026-11-25 — v0.5.21 — Founded chart: segment seam in dark mode too
 
 - The 1px seam between stacked segments in *When the sector was founded* now applies in dark mode as well as light. It uses the card colour (`--card`), so it is white in light mode and the dark panel colour in dark mode. Segment widths unchanged.
