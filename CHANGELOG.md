@@ -2,6 +2,11 @@
 
 All notable changes to this plugin, most recent first. Format: `## YYYY-MM-DD — vX.Y.Z — description`.
 
+## 2026-11-25 — v0.5.4 — Restructure the over-time charts; total line on its own chart
+
+- The whole-sector total returns — on the right chart. “Active VCFSE over time” (the former four-segments chart) now leads the section and carries a Total VCFSE line alongside the four segment lines, where the total (~1,587) and Registered Charities (~1,050) share a sensible single axis — no misleading second axis. The “Active VCFSE by authority” borough comparison sits below it.
+- The Measure and Range controls are wrapped in a boxed control bar, matching the borough pills.
+
 ## 2026-11-25 — v0.5.3 — Remove the Tees Valley total line from the authority chart
 
 - The “Active … by authority” chart no longer draws the Tees Valley total as a line. The total is ~3× the largest borough, so it forced a second, tightly-zoomed right axis that made a tiny real change (e.g. 1,563 → 1,587, +24) look like a steep climb while the boroughs sat flat — misleading. The chart now shows the five boroughs on one sensible scale; the whole-Tees-Valley total remains in the headline figures and the Latest-snapshot table.
