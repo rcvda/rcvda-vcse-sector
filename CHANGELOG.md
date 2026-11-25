@@ -2,6 +2,11 @@
 
 All notable changes to this plugin, most recent first. Format: `## YYYY-MM-DD — vX.Y.Z — description`.
 
+## 2026-11-25 — v0.5.15 — Latest snapshot matrix: one line per row; fix misaligned row rules
+
+- Number cells no longer wrap, so each change arrow sits beside its figure instead of dropping below it; tightened cell padding and arrow width so the table fits the existing col-5 panel without widening it.
+- The Authority cell was `display:flex`, which took it out of table layout: its rule sat at its own content height rather than the row's, and the Tees Valley total rule broke at that column. It is a normal table cell again, with the colour chip inline.
+
 ## 2026-11-25 — v0.5.14 — Add up/stable/down change arrows to the Latest snapshot matrix (vs the previous snapshot)
 
 ## 2026-11-25 — v0.5.13 — Show the snapshot date on hover over the timeline range points

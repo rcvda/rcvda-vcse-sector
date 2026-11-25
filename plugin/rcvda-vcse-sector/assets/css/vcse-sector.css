@@ -188,9 +188,12 @@ html[data-theme="dark"] .rcvda-vcse-sector{ --c-charity:#8E88D4; --c-cic:#F2644C
 .rcvda-vcse-sector td.n{text-align:right;font-variant-numeric:tabular-nums;font-weight:700;white-space:nowrap;}
 .rcvda-vcse-sector table.matrix th,.rcvda-vcse-sector table.matrix td{text-align:right;font-variant-numeric:tabular-nums;}
 .rcvda-vcse-sector table.matrix th:first-child,.rcvda-vcse-sector table.matrix td:first-child{text-align:left;}
-.rcvda-vcse-sector table.matrix td:first-child{font-weight:700;display:flex;align-items:center;gap:8px;}
+.rcvda-vcse-sector table.matrix td:first-child{font-weight:700;}
+.rcvda-vcse-sector table.matrix td:first-child .chip{display:inline-block;vertical-align:-1px;margin-right:8px;}
+.rcvda-vcse-sector table.matrix th,.rcvda-vcse-sector table.matrix td{padding-left:5px;padding-right:5px;}
+.rcvda-vcse-sector table.matrix th:not(:first-child),.rcvda-vcse-sector table.matrix td:not(:first-child){white-space:nowrap;}
 .rcvda-vcse-sector table.matrix tfoot td{font-weight:800;border-top:2px solid var(--wp--preset--color--contrast,#0E1F40);border-bottom:none;}
-.rcvda-vcse-sector .matrix .dlt{display:inline-block;width:12px;margin-left:3px;text-align:center;line-height:1;}
+.rcvda-vcse-sector .matrix .dlt{display:inline-block;width:10px;margin-left:2px;text-align:center;line-height:1;}
 .rcvda-vcse-sector .matrix .dlt svg{vertical-align:middle;}
 .rcvda-vcse-sector .matrix .dlt.up svg path{fill:#0E8A4F;}
 .rcvda-vcse-sector .matrix .dlt.dn svg path{fill:#E52D13;}
