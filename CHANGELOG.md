@@ -2,6 +2,12 @@
 
 All notable changes to this plugin, most recent first. Format: `## YYYY-MM-DD — vX.Y.Z — description`.
 
+## 2026-11-25 — v0.4.6 — Founded chart: horizontal bars coloured by type
+
+- “When the sector was founded” is now a horizontal bar per decade, each bar stacked in the four segment colours (Charities, CICs, Societies, CASCs) with a legend, so the type mix within each decade is visible — e.g. the pre-1960 base is all registered societies and the 2020s are CIC-led. Falls back to a single-colour bar if the data still carries the old flat shape.
+- Needs the data repo’s decade breakdown by type: build_snapshot.py now emits decades as decade->{segment:count}, and the bundled aggregates are regenerated to match. Push the tees-valley-vcse-sector data repo so the live jsDelivr feed carries the new shape; until then the live feed shows single-colour bars and the bundled copy is the coloured fallback.
+- Sub-label notes that CASCs carry no registration date and are not shown.
+
 ## 2026-11-25 — v0.4.5 — Borough-coloured card outlines on selection
 
 - Selecting a borough pill now outlines all six KPI cards in that borough’s colour (DESIGN.md Tees Valley borough scale, resolved from rcvda-core’s --la-* tokens): a 2px border on the white whole-sector cards and a 2px ring on the filled charity cards. “Tees Valley (all five)” returns the cards to their default grey edge. The outline tracks dark mode with the rest of the palette.

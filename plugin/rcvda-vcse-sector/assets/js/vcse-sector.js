@@ -93,7 +93,7 @@
       +'<div class="panel col-6"><div class="panel-head"><h2>Projected whole sector</h2><div class="sub">What NAVCA predicts vs what’s on the register</div></div><div class="j-proj"></div></div></section>'
 
       +'<div class="band"><h3>Structure &amp; age</h3><div class="rule"></div></div>'
-      +'<section class="grid"><div class="panel col-12"><div class="panel-head"><h2>When the sector was founded</h2><div class="sub">Active organisations by decade of registration (oldest to most recent)</div></div><div class="cols j-decades"></div></div></section>'
+      +'<section class="grid"><div class="panel col-12"><div class="panel-head"><h2>When the sector was founded</h2><div class="sub">Active organisations by decade of registration, coloured by type (oldest to most recent). CASCs carry no registration date, so are not shown.</div></div><div class="bars j-decades"></div><div class="legend j-decleg"></div></div></section>'
 
       +'<div class="band"><h3>Money</h3><div class="rule"></div></div>'
       +'<section class="grid"><div class="panel col-6"><div class="panel-head"><h2>Turnover of the active sector</h2><div class="sub j-incsub"></div></div><div class="bars j-income"></div></div>'
@@ -265,10 +265,15 @@
       +'<div style="flex:'+uninc+';background:'+col.accent+'" title="Unincorporated">'+(uninc/tot>0.12?"Unincorporated "+commas(uninc):"")+'</div>';
     S.q('.j-legalmini').innerHTML=[["CIO — foundation",L.cio_foundation],["CIO — association",L.cio_association],["Charitable company",L.charitable_company],["Trust",L.trust]]
       .map(function(r){return '<div class="r"><span class="k">'+r[0]+'</span><span>'+commas(r[1])+'</span></div>';}).join("");
-    // decades
-    var maxD=Math.max.apply(null,DECADES.map(function(d){return A.decades[d]||0;}))||1;
-    S.q('.j-decades').innerHTML=DECADES.map(function(d){ var n=A.decades[d]||0;
-      return '<div class="colbar"><div class="cn">'+commas(n)+'</div><div class="cfill" style="height:'+(100*n/maxD)+'%;background:'+col.accent+'"></div><div class="cx">'+d.replace("Pre-1960","pre-60")+'</div></div>'; }).join("");
+    // decades — horizontal bars, stacked by segment type (handles legacy flat shape too)
+    function decSegs(d){ var v=A.decades[d]; if(v&&typeof v==='object'){ return SEGMENTS.map(function(s){return [s,v[s]||0];}); } return [["",(+v||0)]]; }
+    function decTot(d){ return decSegs(d).reduce(function(a,x){return a+x[1];},0); }
+    var maxD=Math.max.apply(null,DECADES.map(decTot))||1;
+    S.q('.j-decades').innerHTML=DECADES.map(function(d){ var tot=decTot(d);
+      var stack=decSegs(d).filter(function(x){return x[1]>0;}).map(function(x){ var c=x[0]?col.seg[x[0]]:col.accent; return '<span style="width:'+(100*x[1]/maxD)+'%;background:'+c+'" title="'+esc((x[0]||'All')+': '+commas(x[1]))+'"></span>'; }).join('');
+      return '<div class="bar-row"><div class="lab">'+esc(d)+'</div><div class="track stack">'+stack+'</div><div class="val">'+commas(tot)+'</div></div>'; }).join("");
+    var present=SEGMENTS.filter(function(s){ return DECADES.some(function(d){ var v=A.decades[d]; return v&&typeof v==='object'&&(v[s]||0)>0; }); });
+    S.q('.j-decleg').innerHTML=present.map(function(s){ return '<span class="legitem"><span class="dot" style="background:'+col.seg[s]+'"></span>'+esc(s)+'</span>'; }).join('');
     // income bands
     S.q('.j-incsub').textContent=commas(A.no_income)+" report no income · avg "+gbpFull(A.avg_income);
     var maxB=Math.max.apply(null,BANDS.map(function(b){return A.income_bands[b]||0;}))||1;
