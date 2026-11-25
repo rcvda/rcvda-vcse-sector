@@ -2,6 +2,10 @@
 
 All notable changes to this plugin, most recent first. Format: `## YYYY-MM-DD — vX.Y.Z — description`.
 
+## 2026-11-25 — v0.4.5 — Borough-coloured card outlines on selection
+
+- Selecting a borough pill now outlines all six KPI cards in that borough’s colour (DESIGN.md Tees Valley borough scale, resolved from rcvda-core’s --la-* tokens): a 2px border on the white whole-sector cards and a 2px ring on the filled charity cards. “Tees Valley (all five)” returns the cards to their default grey edge. The outline tracks dark mode with the rest of the palette.
+
 ## 2026-11-25 — v0.4.4 — Split the KPI caption under its blocks
 
 - The strip caption is split in two on the same six-column grid: the NAVCA whole-sector note sits under the two whole-sector tiles (columns 1–2), and the charities-only note under the four charity tiles (columns 3–6). Below 680px the two notes stack full width.

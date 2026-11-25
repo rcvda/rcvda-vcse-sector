@@ -204,6 +204,8 @@
   function render(S){
     var col=colours(S.root); S.col=col;
     var measure=S.q('.j-seg').value, scope=S.q('.j-bor').value;
+    S.root.classList.toggle('rc-borough', scope!=='TV');
+    if(scope!=='TV'){ S.root.style.setProperty('--sel', col.bor[scope]); }
     var sLabel=scope==="TV"?"Tees Valley":(BORO.filter(function(b){return b[0]===scope;})[0]||["",scope])[1];
     S.q('.j-scope').innerHTML="Showing <b>"+esc(measure==="ALL"?"All VCFSE":measure)+"</b> · "+esc(sLabel);
     var A=scopeAgg(S,scope);

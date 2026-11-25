@@ -74,6 +74,8 @@ html[data-theme="dark"] .rcvda-vcse-sector{ --c-charity:#8E88D4; --c-cic:#F2644C
 .rcvda-vcse-sector .kpi{min-width:0;height:116px;border-radius:12px;padding:15px 17px 13px;display:flex;flex-direction:column;gap:2px;}
 .rcvda-vcse-sector .kpi.g-all{background:var(--card,#FFFFFF);border:1.5px solid var(--greyedge,#B7C0CC);box-shadow:0 1px 3px rgba(14,31,64,.05);}
 .rcvda-vcse-sector .kpi.g-char{background:var(--c-charity,#211D47);box-shadow:0 2px 6px rgba(14,31,64,.14);}
+.rcvda-vcse-sector.rc-borough .kpi.g-all{border:2px solid var(--sel,#B7C0CC);}
+.rcvda-vcse-sector.rc-borough .kpi.g-char{box-shadow:0 0 0 2px var(--sel,#211D47),0 2px 6px rgba(14,31,64,.14);}
 .rcvda-vcse-sector .kpi .v{font-size:1.6rem;font-weight:800;line-height:1.05;}
 .rcvda-vcse-sector .kpi .l{font-size:.75rem;font-weight:700;margin-top:3px;}
 .rcvda-vcse-sector .kpi .s{font-size:.71rem;}
