@@ -2,6 +2,10 @@
 
 All notable changes to this plugin, most recent first. Format: `## YYYY-MM-DD — vX.Y.Z — description`.
 
+## 2026-11-25 — v0.5.3 — Remove the Tees Valley total line from the authority chart
+
+- The “Active … by authority” chart no longer draws the Tees Valley total as a line. The total is ~3× the largest borough, so it forced a second, tightly-zoomed right axis that made a tiny real change (e.g. 1,563 → 1,587, +24) look like a steep climb while the boroughs sat flat — misleading. The chart now shows the five boroughs on one sensible scale; the whole-Tees-Valley total remains in the headline figures and the Latest-snapshot table.
+
 ## 2026-11-25 — v0.5.2 — Drop partial snapshots from the trend charts
 
 - The over-time charts no longer plot partial snapshots (dates where the “All VCFSE” total was built from an incomplete set of segments). These produced misleading dots — e.g. a borough appearing to drop to a third of its size and back — because the counts weren’t comparable. Only complete snapshots are charted now. Individual-measure trends (Registered Charities, CICs, etc.) are unaffected and keep their full history, since single-segment readings are always complete.

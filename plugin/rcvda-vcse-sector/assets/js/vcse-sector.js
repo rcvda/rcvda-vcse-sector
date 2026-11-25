@@ -236,8 +236,7 @@
     if(S.DATA.length){
       var series1;
       if(scope==="TV"){
-        series1=[{key:"TV",name:"Tees Valley total",color:col.tv,pts:tvSeries(S,measure),dashed:true,secondary:true}];
-        BORO.forEach(function(b){ series1.push({key:b[0],name:b[1],color:col.bor[b[0]],pts:boroughSeries(S,b[0],measure)}); });
+        series1=BORO.map(function(b){ return {key:b[0],name:b[1],color:col.bor[b[0]],pts:boroughSeries(S,b[0],measure)}; });
         S.q('.j-c1t').textContent=(measure==="ALL"?"Active VCFSE organisations":("Active "+segLabel(measure)))+" by authority";
         S.q('.j-c1sub').textContent="Based-in, active \u00b7 one line per authority";
       } else {
