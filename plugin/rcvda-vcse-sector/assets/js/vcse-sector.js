@@ -231,8 +231,7 @@
   function renderKPIs(S,A,sLabel){
     var box=S.q('.j-kpis');
     if(!A){ box.innerHTML='<div class="loading">Loading the latest snapshot…</div>'; return; }
-    function tiles(items){ return '<div class="ktiles">'+items.map(function(it){
-      return '<div class="kpi"><div class="v tnum">'+esc(it[0])+'</div><div class="l">'+esc(it[1])+'</div><div class="s">'+esc(it[2])+'</div></div>'; }).join('')+'</div>'; }
+    function tile(it,grp){ return '<div class="kpi '+grp+'"><div class="v tnum">'+esc(it[0])+'</div><div class="l">'+esc(it[1])+'</div><div class="s">'+esc(it[2])+'</div></div>'; }
     var charN=(A.legal&&A.legal.total_charities)||0;
     var webChar=charN?Math.round(100*A.has_web/charN):A.web_pct;
     var allTiles=[
@@ -245,10 +244,8 @@
       [A.concentration.top10+"%","Top-10 share","of charity income"],
       [webChar+"%","Declared a website","of registered charities"]
     ];
-    box.innerHTML='<div class="kpiblock">'
-      +'<div class="kgroup g-all"><div class="ghead"><span class="sw sw-all"></span>All VCFSE · whole registered sector</div>'+tiles(allTiles)+'</div>'
-      +'<div class="kdiv" aria-hidden="true"></div>'
-      +'<div class="kgroup g-char"><div class="ghead"><span class="sw sw-char"></span>Registered charities only</div>'+tiles(charTiles)+'</div></div>'
+    box.innerHTML='<div class="kheads"><div class="ghead ghead-all"><span class="sw sw-all"></span>All VCFSE · whole registered sector</div><div class="ghead ghead-char"><span class="sw sw-char"></span>Registered charities only</div></div>'
+      +'<div class="kpiblock">'+allTiles.map(function(it){return tile(it,'g-all');}).join('')+charTiles.map(function(it){return tile(it,'g-char');}).join('')+'</div>'
       +'<p class="kfoot"><b>Whole sector count</b> includes unregistered organisations projected through the NAVCA model. <b>Income and website figures cover registered charities only.</b> CICs, registered societies and CASCs don’t file income or a website through their registers, so the sector’s true turnover and online presence are higher than shown.</p>';
   }
 

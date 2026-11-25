@@ -2,6 +2,14 @@
 
 All notable changes to this plugin, most recent first. Format: `## YYYY-MM-DD — vX.Y.Z — description`.
 
+## 2026-11-25 — v0.4.3 — KPI tiles exactly equal width
+
+- The six KPI tiles now sit on one shared six-column grid (each an equal 1fr), so every tile is exactly the same width across both groups — the 2:4 flex in v0.4.2 left them a few pixels apart. The two group headings span two and four columns above the tiles; below 680px the strip drops to two columns and the group super-labels are hidden (tile colour still distinguishes the groups).
+
+## 2026-11-25 — v0.4.2 — KPI tiles fill the full width
+
+- The six KPI tiles now grow to span the full strip width instead of sitting at a fixed 165px with trailing dead space. The two groups flex 2:4 by tile count and the tiles flex within them, so all six stay the same size and the strip is balanced edge to edge (height still 116px; wraps on narrow screens).
+
 ## 2026-11-25 — v0.4.1 — Est. Whole Sector sublabel; full-width caption
 
 - The “Est. Whole Sector” tile now shows “inc. unregistered” on its sublabel line (was blank).
