@@ -343,16 +343,21 @@
         +'<td style="width:110px"><div class="tbar" style="width:'+Math.max(4,100*o.income/maxI)+'%"></div></td><td class="n">'+gbp(o.income)+'</td></tr>'; }).join("")+'</tbody>';
   }
 
+  var TRI_UP='<svg viewBox="0 0 10 10" width="8" height="8" aria-hidden="true"><path d="M5 1.5L9 8.5H1Z"/></svg>';
+  var TRI_DN='<svg viewBox="0 0 10 10" width="8" height="8" aria-hidden="true"><path d="M5 8.5L9 1.5H1Z"/></svg>';
   function renderMatrix(S){
     var L=latestDate(S), t=S.q('.j-matrix');
     S.q('.j-mxsub').textContent="Active based-in organisations · "+fmtDate(L);
+    var ds=spineDates(S), prev=(ds.length>=2)?ds[ds.length-2].date:null;
+    function at(bor,seg,date){ if(date==null) return null; for(var i=0;i<S.DATA.length;i++){ var r=S.DATA[i]; if(r.bor===bor&&r.seg===seg&&r.date===date) return r.active; } return null; }
+    function delta(now,was){ if(now==null||was==null) return '<span class="dlt"></span>'; var d=now-was, tt=' title="'+(d>0?'+'+d:d)+' since '+esc(fmtShort(prev))+'"'; if(d>0) return '<span class="dlt up"'+tt+'>'+TRI_UP+'</span>'; if(d<0) return '<span class="dlt dn"'+tt+'>'+TRI_DN+'</span>'; return '<span class="dlt st" title="no change">–</span>'; }
     var head="<thead><tr><th>Authority</th>"+SEGMENTS.map(function(s){return "<th>"+(s==="Charities"?"Char.":s)+"</th>";}).join("")+"<th>Total</th></tr></thead>";
-    var body="<tbody>", colTot={}, grand=0; SEGMENTS.forEach(function(s){colTot[s]=0;});
-    BORO.forEach(function(b){ body+="<tr><td><span class='chip' style='background:"+S.col.bor[b[0]]+"'></span>"+esc(b[1])+"</td>"; var rt=0;
-      SEGMENTS.forEach(function(s){ var rows=S.DATA.filter(function(r){return r.bor===b[0]&&r.seg===s&&r.date===L;}); var v=rows.length?rows[0].active:null; if(v!=null){rt+=v;colTot[s]+=v;} body+="<td>"+(v==null?"–":v)+"</td>"; });
-      grand+=rt; body+="<td><b>"+rt+"</b></td></tr>"; });
+    var body="<tbody>", colTot={}, colTotP={}, colHasP={}, grand=0, grandP=0, grandHasP=false; SEGMENTS.forEach(function(s){colTot[s]=0;colTotP[s]=0;colHasP[s]=false;});
+    BORO.forEach(function(b){ body+="<tr><td><span class='chip' style='background:"+S.col.bor[b[0]]+"'></span>"+esc(b[1])+"</td>"; var rt=0, rtp=0, rtHasP=false;
+      SEGMENTS.forEach(function(s){ var v=at(b[0],s,L), vp=at(b[0],s,prev); if(v!=null){rt+=v;colTot[s]+=v;} if(vp!=null){rtp+=vp;colTotP[s]+=vp;rtHasP=true;colHasP[s]=true;} body+="<td>"+(v==null?"–":v)+delta(v,vp)+"</td>"; });
+      grand+=rt; if(rtHasP){grandP+=rtp;grandHasP=true;} body+="<td><b>"+rt+"</b>"+delta(rt, rtHasP?rtp:null)+"</td></tr>"; });
     body+="</tbody>";
-    var foot="<tfoot><tr><td>Tees Valley</td>"+SEGMENTS.map(function(s){return "<td>"+colTot[s]+"</td>";}).join("")+"<td>"+grand+"</td></tr></tfoot>";
+    var foot="<tfoot><tr><td>Tees Valley</td>"+SEGMENTS.map(function(s){return "<td>"+colTot[s]+delta(colTot[s], colHasP[s]?colTotP[s]:null)+"</td>";}).join("")+"<td>"+grand+delta(grand, grandHasP?grandP:null)+"</td></tr></tfoot>";
     t.innerHTML=head+body+foot;
   }
 
@@ -462,6 +467,8 @@
       host.addEventListener('pointermove',function(e){ if(!dragging)return; live(pxOf(e)); });
       host.addEventListener('pointerup',function(e){ if(!dragging)return; dragging=false; commit(); });
       host.addEventListener('pointercancel',function(){ if(!dragging)return; dragging=false; commit(); });
+      host.addEventListener('mousemove',function(e){ if(dragging) return; var r=host.getBoundingClientRect(); var px=(e.clientX-r.left)/r.width*S._rl.W; var best=S._rl.ds[0],bd=1e18; S._rl.ds.forEach(function(d){ var dx=Math.abs(S._rl.X(d.t)-px); if(dx<bd){bd=dx;best=d;} }); if(bd<16){ S.tip.textContent=fmtDate(best.date); S.tip.style.opacity=1; S.tip.style.left=(e.clientX+12)+'px'; S.tip.style.top=(e.clientY-10)+'px'; } else { S.tip.style.opacity=0; } });
+      host.addEventListener('mouseleave',function(){ S.tip.style.opacity=0; });
     }
   }
   function bootAll(){ var tip=ensureTip(); var list=document.querySelectorAll('.rcvda-vcse-sector'); for(var i=0;i<list.length;i++){ if(!list[i].__sots){ list[i].__sots=1; initOne(list[i],tip); } } }
