@@ -2,6 +2,10 @@
 
 All notable changes to this plugin, most recent first. Format: `## YYYY-MM-DD — vX.Y.Z — description`.
 
+## 2026-11-25 — v0.4.4 — Split the KPI caption under its blocks
+
+- The strip caption is split in two on the same six-column grid: the NAVCA whole-sector note sits under the two whole-sector tiles (columns 1–2), and the charities-only note under the four charity tiles (columns 3–6). Below 680px the two notes stack full width.
+
 ## 2026-11-25 — v0.4.3 — KPI tiles exactly equal width
 
 - The six KPI tiles now sit on one shared six-column grid (each an equal 1fr), so every tile is exactly the same width across both groups — the 2:4 flex in v0.4.2 left them a few pixels apart. The two group headings span two and four columns above the tiles; below 680px the strip drops to two columns and the group super-labels are hidden (tile colour still distinguishes the groups).

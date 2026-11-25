@@ -70,7 +70,7 @@ html[data-theme="dark"] .rcvda-vcse-sector{ --c-charity:#8E88D4; --c-cic:#F2644C
 .rcvda-vcse-sector .ktiles{display:flex;gap:13px;flex-wrap:wrap;}
 .rcvda-vcse-sector .kdiv{width:1px;align-self:stretch;background:var(--wp--preset--color--divider,#D4DEEA);margin-top:26px;}
 @container (max-width:1100px){.rcvda-vcse-sector .kdiv{display:none;}}
-@container (max-width:680px){.rcvda-vcse-sector .kpiblock{grid-template-columns:repeat(2,1fr);}.rcvda-vcse-sector .kheads{display:none;}}
+@container (max-width:680px){.rcvda-vcse-sector .kpiblock{grid-template-columns:repeat(2,1fr);}.rcvda-vcse-sector .kheads{display:none;}.rcvda-vcse-sector .kfoots{grid-template-columns:1fr;}.rcvda-vcse-sector .kfoot-all,.rcvda-vcse-sector .kfoot-char{grid-column:1 / -1;}}
 .rcvda-vcse-sector .kpi{min-width:0;height:116px;border-radius:12px;padding:15px 17px 13px;display:flex;flex-direction:column;gap:2px;}
 .rcvda-vcse-sector .kpi.g-all{background:var(--card,#FFFFFF);border:1.5px solid var(--greyedge,#B7C0CC);box-shadow:0 1px 3px rgba(14,31,64,.05);}
 .rcvda-vcse-sector .kpi.g-char{background:var(--c-charity,#211D47);box-shadow:0 2px 6px rgba(14,31,64,.14);}
@@ -83,7 +83,10 @@ html[data-theme="dark"] .rcvda-vcse-sector{ --c-charity:#8E88D4; --c-cic:#F2644C
 .rcvda-vcse-sector .kpi.g-char .v{color:var(--char-ink,#fff);}
 .rcvda-vcse-sector .kpi.g-char .l{color:var(--char-ink-2,rgba(255,255,255,.92));}
 .rcvda-vcse-sector .kpi.g-char .s{color:var(--char-ink-3,rgba(255,255,255,.62));}
-.rcvda-vcse-sector .kfoot{margin:14px 0 2px;font-size:.78rem;color:var(--wp--preset--color--muted,#51607A);max-width:none;line-height:1.5;}
+.rcvda-vcse-sector .kfoots{display:grid;grid-template-columns:repeat(6,1fr);gap:13px;margin:14px 0 2px;align-items:start;}
+.rcvda-vcse-sector .kfoot-all{grid-column:1 / 3;}
+.rcvda-vcse-sector .kfoot-char{grid-column:3 / 7;}
+.rcvda-vcse-sector .kfoot{margin:0;font-size:.78rem;color:var(--wp--preset--color--muted,#51607A);line-height:1.5;}
 .rcvda-vcse-sector .kfoot b{color:var(--wp--preset--color--contrast,#0E1F40);font-weight:700;}
 .rcvda-vcse-sector .band{display:flex;align-items:center;gap:10px;margin:30px 0 4px;}
 .rcvda-vcse-sector .band h3{font-size:1rem;font-weight:800;color:var(--wp--preset--color--contrast,#0E1F40);display:flex;align-items:center;gap:8px;}
