@@ -37,20 +37,23 @@ html[data-theme="dark"] .rcvda-vcse-sector{ --c-charity:#8E88D4; --c-cic:#F2644C
 .rcvda-vcse-sector .note svg{color:var(--wp--preset--color--brand-light,#033E8C);flex:none;margin-top:1px;}
 .rcvda-vcse-sector .note a{color:var(--wp--preset--color--brand-light,#033E8C);font-weight:700;}
 .rcvda-vcse-sector .filterbar{display:flex;align-items:center;gap:12px;flex-wrap:wrap;background:var(--card,#FFFFFF);border:1px solid var(--wp--preset--color--divider,#D4DEEA);border-radius:12px;padding:12px 16px;margin-bottom:24px;box-shadow:0 1px 3px rgba(14,31,64,.05);}
-.rcvda-vcse-sector .filterbar label{font-size:.82rem;font-weight:700;color:var(--wp--preset--color--brand-light,#033E8C);display:flex;align-items:center;gap:6px;}
-.rcvda-vcse-sector .filterbar select{font:inherit;font-size:.92rem;font-weight:700;color:var(--wp--preset--color--contrast,#0E1F40);background:var(--wp--preset--color--base,#EEF3F8);border:1px solid var(--wp--preset--color--divider,#D4DEEA);border-radius:8px;padding:7px 30px 7px 12px;cursor:pointer;-webkit-appearance:none;appearance:none;background-image:url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 12 12'><path d='M2 4l4 4 4-4' stroke='%23808a9c' stroke-width='1.6' fill='none' stroke-linecap='round'/></svg>");background-repeat:no-repeat;background-position:right 10px center;}
-.rcvda-vcse-sector .filterbar select:focus-visible{outline:2px solid var(--wp--preset--color--brand-light,#033E8C);outline-offset:1px;}
+
+.rcvda-vcse-sector .trendctl{display:flex;align-items:center;gap:12px;flex-wrap:wrap;margin:0 0 14px;}
+.rcvda-vcse-sector .trendctl label,.rcvda-vcse-sector .filterbar label{font-size:.82rem;font-weight:700;color:var(--wp--preset--color--brand-light,#033E8C);display:flex;align-items:center;gap:6px;}
+.rcvda-vcse-sector .trendctl select,.rcvda-vcse-sector .filterbar select{font:inherit;font-size:.92rem;font-weight:700;color:var(--wp--preset--color--contrast,#0E1F40);background:var(--wp--preset--color--base,#EEF3F8);border:1px solid var(--wp--preset--color--divider,#D4DEEA);border-radius:8px;padding:7px 30px 7px 12px;cursor:pointer;-webkit-appearance:none;appearance:none;background-image:url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 12 12'><path d='M2 4l4 4 4-4' stroke='%23808a9c' stroke-width='1.6' fill='none' stroke-linecap='round'/></svg>");background-repeat:no-repeat;background-position:right 10px center;}
+.rcvda-vcse-sector .trendctl select:focus-visible,.rcvda-vcse-sector .filterbar select:focus-visible{outline:2px solid var(--wp--preset--color--brand-light,#033E8C);outline-offset:1px;}
 .rcvda-vcse-sector .filterbar .borchips{display:flex;flex-wrap:wrap;gap:.4rem;align-items:center;flex:1 1 100%;order:-1;margin-bottom:2px;}
 .rcvda-vcse-sector .borchip{font:inherit;font-size:.82rem;font-weight:700;line-height:1;padding:7px 13px;border-radius:999px;cursor:pointer;background:var(--card,#FFFFFF);color:var(--wp--preset--color--contrast,#0E1F40);border:2px solid var(--cat,#2A3B72);}
 .rcvda-vcse-sector .borchip:hover{filter:brightness(1.06);}
 .rcvda-vcse-sector .borchip:focus-visible{outline:3px solid var(--wp--preset--color--brand-light,#033E8C);outline-offset:1px;}
 .rcvda-vcse-sector .borchip.is-active{background:var(--cat,#2A3B72);border-color:var(--cat,#2A3B72);color:#fff;}
 .rcvda-vcse-sector .borchip[data-value="Middlesbrough"].is-active,.rcvda-vcse-sector .borchip[data-value="Stockton-on-Tees"].is-active{color:#1a1a1a;}
-.rcvda-vcse-sector .filterbar .tag{font-size:.82rem;color:var(--wp--preset--color--muted,#51607A);}
-.rcvda-vcse-sector .filterbar .tag b{color:var(--wp--preset--color--contrast,#0E1F40);font-variant-numeric:tabular-nums;}
+.rcvda-vcse-sector .trendctl .tag,.rcvda-vcse-sector .filterbar .tag{font-size:.82rem;color:var(--wp--preset--color--muted,#51607A);}
+.rcvda-vcse-sector .trendctl .tag b,.rcvda-vcse-sector .filterbar .tag b{color:var(--wp--preset--color--contrast,#0E1F40);font-variant-numeric:tabular-nums;}
+.rcvda-vcse-sector .segchips{display:inline-flex;flex-wrap:wrap;gap:.4rem;align-items:center;}
 .rcvda-vcse-sector .rangebar{display:inline-flex;align-items:center;gap:4px;margin-left:auto;}
 .rcvda-vcse-sector .rangebar label{margin-right:2px;}
-.rcvda-vcse-sector .rangebar button{font:inherit;font-size:.76rem;font-weight:700;color:var(--wp--preset--color--muted,#51607A);background:transparent;border:1px solid var(--wp--preset--color--divider,#D4DEEA);border-radius:7px;padding:4px 9px;cursor:pointer;}
+.rcvda-vcse-sector .rangebar button{font:inherit;font-size:.76rem;font-weight:700;color:var(--wp--preset--color--muted,#51607A);background:transparent;border:1px solid var(--wp--preset--color--divider,#D4DEEA);border-radius:999px;padding:5px 11px;cursor:pointer;}
 .rcvda-vcse-sector .rangebar button.on{color:#fff;background:var(--wp--preset--color--brand-light,#033E8C);border-color:var(--wp--preset--color--brand-light,#033E8C);}
 .rcvda-vcse-sector .rangebar button:focus-visible{outline:2px solid var(--wp--preset--color--brand-light,#033E8C);outline-offset:1px;}
 .rcvda-vcse-sector .leg-note{display:inline-flex;align-items:center;gap:6px;font-size:.76rem;color:var(--wp--preset--color--muted,#51607A);opacity:.9;}

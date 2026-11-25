@@ -2,6 +2,12 @@
 
 All notable changes to this plugin, most recent first. Format: `## YYYY-MM-DD — vX.Y.Z — description`.
 
+## 2026-11-25 — v0.5.0 — Move Measure and Range to the trend charts
+
+- The Measure and Range controls move out of the top filter bar (which now holds only the global borough pills) into a controls row directly under the “Sector size over time” heading — beside the over-time charts they actually drive. The headline KPIs and detail panels respond only to the borough pills, so the controls now sit at the level they affect.
+- Measure is now a row of segment-coloured pills (All VCFSE, Registered Charities, CICs, Societies, CASCs) in the segment colours, matching the borough pills, instead of a dropdown; the Range buttons are rounded to match.
+- A “Headline Figures” section heading (with a gauge glyph) now sits above the KPI strip, giving it the same wayfinding as the other sections.
+
 ## 2026-11-25 — v0.4.9 — Smart time-range default; label fixes
 
 - The over-time charts open on a new **Recent** range that fits the dense, regular-cadence run of whatever series are shown (snapshots within 120 days of each other), so sparse historical seed points no longer stretch the axis. **All** still shows the full back-history (now to 2020), and the scale fits the selected borough — a borough with earlier data shows more under All. Replaced the 13-week button with Recent.

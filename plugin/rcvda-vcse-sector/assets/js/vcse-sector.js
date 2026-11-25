@@ -25,7 +25,8 @@
     'book-open':'<path d="M12 7v14"/><path d="M3 18a1 1 0 0 1-1-1V4a1 1 0 0 1 1-1h5a4 4 0 0 1 4 4 4 4 0 0 1 4-4h5a1 1 0 0 1 1 1v13a1 1 0 0 1-1 1h-6a3 3 0 0 0-3 3 3 3 0 0 0-3-3z"/>',
     'scale':'<path d="m16 16 3-8 3 8c-.87.65-1.92 1-3 1s-2.13-.35-3-1Z"/><path d="m2 16 3-8 3 8c-.87.65-1.92 1-3 1s-2.13-.35-3-1Z"/><path d="M7 21h10"/><path d="M12 3v18"/><path d="M3 7h2c2 0 5-1 7-2 2 1 5 2 7 2h2"/>',
     'users':'<path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M22 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/>',
-    'map-pin':'<path d="M20 10c0 6-8 12-8 12s-8-6-8-12a8 8 0 0 1 16 0Z"/><circle cx="12" cy="10" r="3"/>'};
+    'map-pin':'<path d="M20 10c0 6-8 12-8 12s-8-6-8-12a8 8 0 0 1 16 0Z"/><circle cx="12" cy="10" r="3"/>',
+    'gauge':'<path d="m12 14 4-4"/><path d="M3.34 19a10 10 0 1 1 17.32 0"/>'};
   function vicon(n,sz){ return '<svg width="'+sz+'" height="'+sz+'" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">'+(VIC[n]||'')+'</svg>'; }
   var LA_INK_LIGHT={"Darlington":"#900030","Hartlepool":"#248000","Middlesbrough":"#ac6300","Redcar-and-Cleveland":"#217887","Stockton-on-Tees":"#1a79bd"};
   var LA_INK_DARK={"Darlington":"#C24A72","Hartlepool":"#5AAE3A","Middlesbrough":"#F2A133","Redcar-and-Cleveland":"#4FA3B2","Stockton-on-Tees":"#5AAEE6"};
@@ -84,7 +85,6 @@
       +'<div class="note"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><line x1="12" y1="16" x2="12" y2="12"/><line x1="12" y1="8" x2="12.01" y2="8"/></svg>'
       +'<div><b>A living measure.</b> This dashboard reads the open dataset that RCVDA rebuilds every Monday from Find That Charity, so each weekly point appears automatically. The over-time charts are seeded from earlier snapshots; the detailed analytics describe the latest snapshot and build up week by week. Data: <a href="https://github.com/rcvda/tees-valley-vcse-sector" target="_blank" rel="noopener">rcvda/tees-valley-vcse-sector</a> (CC&nbsp;BY-NC-SA&nbsp;4.0).</div></div>'
       +'<div class="filterbar">'
-      +'<label>Measure</label><select class="j-seg"><option value="ALL">All VCFSE (total)</option><option value="Charities">Charities</option><option value="CICs">CICs</option><option value="Societies">Societies</option><option value="CASCs">CASCs</option></select>'
       +'<input type="hidden" class="j-bor" value="TV">'
       +'<div class="borchips j-borchips" role="group" aria-label="Authority">'
       +'<button type="button" class="borchip is-active" data-value="TV" aria-pressed="true" style="--cat:var(--tv-navy,#2A3B72)">'+esc(area)+' (all five)</button>'
@@ -93,13 +93,12 @@
       +'<button type="button" class="borchip" data-value="Middlesbrough" aria-pressed="false" style="--cat:var(--la-middlesbrough,#EF8A00)">Middlesbrough</button>'
       +'<button type="button" class="borchip" data-value="Redcar-and-Cleveland" aria-pressed="false" style="--cat:var(--la-redcar-cleveland,#217887)">Redcar &amp; Cleveland</button>'
       +'<button type="button" class="borchip" data-value="Stockton-on-Tees" aria-pressed="false" style="--cat:var(--la-stockton,#1D8AD7)">Stockton-on-Tees</button>'
-      +'</div>'
-      +'<span class="tag j-scope"></span>'
-      +'<span class="rangebar j-range" role="group" aria-label="Trend time range"><label>Range</label>'
-      +'<button type="button" data-r="fit" class="on">Recent</button><button type="button" data-r="12m">12 mths</button><button type="button" data-r="all">All</button></span></div>'
+      +'</div></div>'
+      +'<div class="band"><h3>'+vicon("gauge",20)+'Headline Figures</h3><div class="rule"></div></div>'
       +'<section class="kpis j-kpis"><div class="loading">Loading the latest snapshot…</div></section>'
 
       +'<div class="band"><h3>'+vicon("trending-up",20)+'Sector size over time</h3><div class="rule"></div></div>'
+      +'<div class="trendctl"><label>Measure</label><input type="hidden" class="j-seg" value="ALL"><div class="segchips" role="group" aria-label="Measure"><button type="button" class="borchip is-active" data-value="ALL" aria-pressed="true" style="--cat:var(--tv-navy,#2A3B72)">All VCFSE</button><button type="button" class="borchip" data-value="Charities" aria-pressed="false" style="--cat:var(--c-charity,#211D47)">Registered Charities</button><button type="button" class="borchip" data-value="CICs" aria-pressed="false" style="--cat:var(--c-cic,#E52D13)">CICs</button><button type="button" class="borchip" data-value="Societies" aria-pressed="false" style="--cat:var(--c-society,#6C1D45)">Societies</button><button type="button" class="borchip" data-value="CASCs" aria-pressed="false" style="--cat:var(--c-casc,#0E8A4F)">CASCs</button></div><span class="tag j-scope"></span><span class="rangebar j-range" role="group" aria-label="Trend time range"><label>Range</label><button type="button" data-r="fit" class="on">Recent</button><button type="button" data-r="12m">12 mths</button><button type="button" data-r="all">All</button></span></div>'
       +'<section class="grid"><div class="panel col-12 panel--noscope"><div class="panel-head"><h2 class="j-c1t">Active VCFSE organisations by authority</h2><div class="sub">Based-in, active · one line per authority</div></div><div class="j-chart1"><div class="loading">Loading…</div></div><div class="legend j-leg1"></div></div></section>'
       +'<section class="grid"><div class="panel col-7"><div class="panel-head"><h2 class="j-c2t">The four segments over time</h2><div class="sub">Based-in, active · one line per segment</div></div><div class="j-chart2"></div><div class="legend j-leg2"></div></div>'
       +'<div class="panel col-5 panel--noscope"><div class="panel-head"><h2>Latest snapshot</h2><div class="sub j-mxsub">Active based-in organisations</div></div><table class="matrix j-matrix"></table></div></section>'
@@ -148,7 +147,7 @@
     if('MutationObserver' in window){ new MutationObserver(reRender).observe(document.documentElement,{attributes:true,attributeFilter:['data-theme','class']}); }
     if(window.matchMedia){ try{ window.matchMedia('(prefers-color-scheme:dark)').addEventListener('change',reRender); }catch(e){} }
     if('ResizeObserver' in window){ new ResizeObserver(reRender).observe(S.q('.j-chart1')); }
-    S.q('.j-seg').addEventListener('change',function(){ render(S); });
+    S.root.querySelectorAll('.segchips .borchip').forEach(function(b){ b.addEventListener('click',function(){ var hid=S.q('.j-seg'); if(hid.value===b.getAttribute('data-value')) return; hid.value=b.getAttribute('data-value'); S.root.querySelectorAll('.segchips .borchip').forEach(function(x){ var on=(x===b); x.classList.toggle('is-active',on); x.setAttribute('aria-pressed',on?'true':'false'); }); render(S); }); });
     S.root.querySelectorAll('.j-borchips .borchip').forEach(function(b){ b.addEventListener('click',function(){ var hid=S.q('.j-bor'); if(hid.value===b.getAttribute('data-value')) return; hid.value=b.getAttribute('data-value'); S.root.querySelectorAll('.j-borchips .borchip').forEach(function(x){ var on=(x===b); x.classList.toggle('is-active',on); x.setAttribute('aria-pressed',on?'true':'false'); }); render(S); }); });
     S.q('.j-range').addEventListener('click',function(e){ var b=e.target.closest('button'); if(!b)return;
       S.range=b.getAttribute('data-r');
