@@ -148,7 +148,7 @@
     if(window.matchMedia){ try{ window.matchMedia('(prefers-color-scheme:dark)').addEventListener('change',reRender); }catch(e){} }
     if('ResizeObserver' in window){ new ResizeObserver(reRender).observe(S.q('.j-chart1')); }
     S.root.querySelectorAll('.segchips .borchip').forEach(function(b){ b.addEventListener('click',function(){ var hid=S.q('.j-seg'); if(hid.value===b.getAttribute('data-value')) return; hid.value=b.getAttribute('data-value'); S.root.querySelectorAll('.segchips .borchip').forEach(function(x){ var on=(x===b); x.classList.toggle('is-active',on); x.setAttribute('aria-pressed',on?'true':'false'); }); render(S); }); });
-    S.root.querySelectorAll('.j-borchips .borchip').forEach(function(b){ b.addEventListener('click',function(){ var hid=S.q('.j-bor'); if(hid.value===b.getAttribute('data-value')) return; hid.value=b.getAttribute('data-value'); S.root.querySelectorAll('.j-borchips .borchip').forEach(function(x){ var on=(x===b); x.classList.toggle('is-active',on); x.setAttribute('aria-pressed',on?'true':'false'); }); render(S); }); });
+    S.root.querySelectorAll('.j-borchips .borchip').forEach(function(b){ b.addEventListener('click',function(){ var hid=S.q('.j-bor'); if(hid.value===b.getAttribute('data-value')) return; hid.value=b.getAttribute('data-value'); S.root.querySelectorAll('.j-borchips .borchip').forEach(function(x){ var on=(x===b); x.classList.toggle('is-active',on); x.setAttribute('aria-pressed',on?'true':'false'); }); var nv=hid.value; S.hidden1={}; if(nv!=="TV"){ BORO.forEach(function(bb){ if(bb[0]!==nv) S.hidden1[bb[0]]=true; }); } render(S); }); });
     S.q('.j-range').addEventListener('click',function(e){ var b=e.target.closest('button'); if(!b)return;
       S.range=b.getAttribute('data-r');
       this.querySelectorAll('button').forEach(function(x){ x.classList.toggle('on',x===b); });
@@ -234,15 +234,13 @@
     renderKPIs(S,A,sLabel);
     // trends
     if(S.DATA.length){
-      var series1;
+      var series1=BORO.map(function(b){ return {key:b[0],name:b[1],color:col.bor[b[0]],pts:boroughSeries(S,b[0],measure)}; });
       if(scope==="TV"){
-        series1=BORO.map(function(b){ return {key:b[0],name:b[1],color:col.bor[b[0]],pts:boroughSeries(S,b[0],measure)}; });
         S.q('.j-c1t').textContent=(measure==="ALL"?"Active VCFSE organisations":("Active "+segLabel(measure)))+" by authority";
         S.q('.j-c1sub').textContent="Based-in, active \u00b7 one line per authority";
       } else {
-        series1=[{key:scope,name:sLabel,color:col.bor[scope],pts:boroughSeries(S,scope,measure)}];
         S.q('.j-c1t').textContent=(measure==="ALL"?"Active VCFSE organisations":("Active "+segLabel(measure)))+" in "+sLabel;
-        S.q('.j-c1sub').textContent="Based-in, active";
+        S.q('.j-c1sub').textContent="Based-in, active \u00b7 "+sLabel+" shown \u2014 tap another authority to compare";
       }
       drawChart(S,'.j-chart1',series1.filter(function(s){return !S.hidden1[s.key]&&s.pts.length;}),'.j-leg1',series1,S.hidden1);
       var series2=[{key:"TOTAL",name:"Total VCFSE",color:col.tv,pts:(scope==="TV"?tvSeries(S,"ALL"):boroughSeries(S,scope,"ALL")),dashed:true}];
