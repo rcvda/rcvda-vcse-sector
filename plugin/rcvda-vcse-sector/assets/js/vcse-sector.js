@@ -122,7 +122,7 @@
       +'<div class="band"><h3>'+vicon("building",20)+'The largest organisations</h3><div class="rule"></div></div>'
       +'<section class="grid"><div class="panel col-12"><div class="panel-head"><h2>'+vicon("building",18)+'Ten largest active organisations by income</h2><div class="sub j-topsub"></div></div><table class="toptable j-top"></table></div></section>'
 
-      +'<div class="band"><h3>'+vicon("book-open",20)+'Glossary</h3><div class="rule"></div></div>'
+      +'<div class="band band--noscope"><h3>'+vicon("book-open",20)+'Glossary</h3><div class="rule"></div></div>'
       +'<section class="grid"><div class="panel col-12 panel--noscope">'+GLOSS+'</div></section>'
 
       +'<footer><b>Method.</b> Candidates are drawn from Find That Charity for the five '+esc(area)+' local-authority areas, classified by registered organisation type and filtered to those whose <b>registered office (HQ)</b> is in the borough. Scope: registered charities (including CIOs), CICs, registered societies / mutuals and CASCs; statutory bodies (schools, NHS, councils) excluded. Each weekly run recomputes the counts and the analytics; figures describe the active sector. The over-time series is seeded from earlier dated snapshots. <span class="j-built"></span>'
@@ -220,7 +220,7 @@
     var col=colours(S.root); S.col=col;
     var measure=S.q('.j-seg').value, scope=S.q('.j-bor').value;
     S.root.classList.toggle('rc-borough', scope!=='TV');
-    if(scope!=='TV'){ S.root.style.setProperty('--sel', col.bor[scope]); }
+    if(scope!=='TV'){ var selInk=(rcIsDark()?LA_INK_DARK:LA_INK_LIGHT)[scope]||col.bor[scope]; S.root.style.setProperty('--sel', col.bor[scope]); S.root.style.setProperty('--sel-ink', selInk); S.accFill=col.bor[scope]; S.accInk=selInk; } else { S.accFill=col.accent; S.accInk=col.accent; }
     (function(){ var tag='';
       if(scope!=='TV'){ var nm=(BORO.filter(function(b){return b[0]===scope;})[0]||['',scope])[1];
         var ink=(rcIsDark()?LA_INK_DARK:LA_INK_LIGHT)[scope]||col.bor[scope];
@@ -312,7 +312,7 @@
     var sz=A.size, sv=A.sector_value||1;
     S.q('.j-size').innerHTML=[["large","£100k and over"],["medium","£10k–£100k"],["small","under £10k"],["none","no income reported"]].map(function(k){ var b=sz[k[0]];
       return '<div class="size-row"><div class="sl">'+({large:"Large",medium:"Medium",small:"Small",none:"None"})[k[0]]+'<small>'+k[1]+'</small></div>'
-        +'<div class="track"><div class="fill" style="width:'+(b.pct||(b.n?2:0))+'%;background:'+col.accent+'"></div></div>'
+        +'<div class="track"><div class="fill" style="width:'+(b.pct||(b.n?2:0))+'%;background:'+S.accFill+'"></div></div>'
         +'<div class="sv">'+commas(b.n)+'<small>'+gbp(b.val)+' · '+b.pct+'%</small></div></div>'; }).join("");
     // concentration
     S.q('.j-concsub').textContent="Share of the sector's "+gbp(A.sector_value)+" held by the largest organisations";
@@ -321,8 +321,8 @@
     // digital donut
     var pct=A.web_pct, r=52, c=2*Math.PI*r, on=c*pct/100;
     S.q('.j-donut').innerHTML='<circle cx="66" cy="66" r="52" fill="none" stroke="'+col.muted+'" stroke-opacity=".25" stroke-width="16"/>'
-      +'<circle cx="66" cy="66" r="52" fill="none" stroke="'+col.accent+'" stroke-width="16" stroke-linecap="round" stroke-dasharray="'+on+' '+c+'" transform="rotate(-90 66 66)"/>'
-      +'<text x="66" y="62" text-anchor="middle" font-size="24" font-weight="800" fill="'+col.accent+'">'+pct+'%</text>'
+      +'<circle cx="66" cy="66" r="52" fill="none" stroke="'+S.accFill+'" stroke-width="16" stroke-linecap="round" stroke-dasharray="'+on+' '+c+'" transform="rotate(-90 66 66)"/>'
+      +'<text x="66" y="62" text-anchor="middle" font-size="24" font-weight="800" fill="'+S.accInk+'">'+pct+'%</text>'
       +'<text x="66" y="82" text-anchor="middle" font-size="11" fill="'+col.muted+'">have a site</text>';
     S.q('.j-digmini').innerHTML='<div class="r"><span class="k">With a website</span><span>'+commas(A.has_web)+'</span></div><div class="r"><span class="k">No website found</span><span>'+commas(A.active-A.has_web)+'</span></div>';
     // projection

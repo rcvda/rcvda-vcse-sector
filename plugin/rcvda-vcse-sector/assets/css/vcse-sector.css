@@ -79,6 +79,13 @@ html[data-theme="dark"] .rcvda-vcse-sector{ --c-charity:#8E88D4; --c-cic:#F2644C
 .rcvda-vcse-sector .kpi.g-char{background:var(--c-charity,#211D47);box-shadow:0 2px 6px rgba(14,31,64,.14);}
 .rcvda-vcse-sector.rc-borough .kpi.g-all{border:2px solid var(--sel,#B7C0CC);}
 .rcvda-vcse-sector.rc-borough .kpi.g-char{box-shadow:0 0 0 2px var(--sel,#211D47),0 2px 6px rgba(14,31,64,.14);}
+.rcvda-vcse-sector.rc-borough .band:not(.band--noscope) h3{color:var(--sel-ink,#0E1F40);}
+.rcvda-vcse-sector.rc-borough .band:not(.band--noscope) h3 svg{color:var(--sel-ink,#033E8C);}
+.rcvda-vcse-sector.rc-borough .panel:not(.panel--noscope) .panel-head h2 svg{color:var(--sel-ink,#033E8C);}
+.rcvda-vcse-sector.rc-borough .panel:not(.panel--noscope) .fill{background:var(--sel,#033E8C);}
+.rcvda-vcse-sector.rc-borough .panel:not(.panel--noscope) .colbar .cfill{background:var(--sel,#033E8C);}
+.rcvda-vcse-sector.rc-borough .panel:not(.panel--noscope) .tbar{background:var(--sel,#033E8C);}
+.rcvda-vcse-sector.rc-borough .panel:not(.panel--noscope) .toptable tbody tr:nth-child(even) td{background:color-mix(in srgb, var(--sel,#033E8C) 8%, transparent);}
 .rcvda-vcse-sector .kpi .v{font-size:1.6rem;font-weight:800;line-height:1.05;}
 .rcvda-vcse-sector .kpi .l{font-size:.75rem;font-weight:700;margin-top:3px;}
 .rcvda-vcse-sector .kpi .s{font-size:.71rem;}

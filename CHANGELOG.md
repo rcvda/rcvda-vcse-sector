@@ -2,6 +2,8 @@
 
 All notable changes to this plugin, most recent first. Format: `## YYYY-MM-DD — vX.Y.Z — description`.
 
+## 2026-11-25 — v0.5.8 — Theme borough-sensitive section headers and default-blue chart fills to the selected authority's colour
+
 ## 2026-11-25 — v0.5.7 — Show the end-of-line value on every series line, not just the top line
 
 ## 2026-11-25 — v0.5.6 — Restore authority comparators on the by-authority chart when a borough is selected
