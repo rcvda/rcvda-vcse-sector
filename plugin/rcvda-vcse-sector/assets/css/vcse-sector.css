@@ -10,16 +10,18 @@
    for the card fill in both modes made every panel the light-blue tint in light
    mode; `surface` is reserved here for the one callout note.) The only colours
    the plugin owns outright are the data scales — the Tees Valley borough scale
-   (read in JS from rcvda-core's --la-*/--tv-navy) and the four segment colours
-   below. */
+   (read in JS from rcvda-core's --la-* and --tv-navy tokens) and the four
+   segment colours below. */
 
 .rcvda-vcse-sector{
-  --c-charity:#033E8C; --c-cic:#F29F05; --c-society:#6E9FC9; --c-casc:#D91E0D;
+  --c-charity:#211D47; --c-cic:#E52D13; --c-society:#6C1D45; --c-casc:#0E8A4F;
+  --greyedge:#B7C0CC;
+  --char-ink:#FFFFFF; --char-ink-2:rgba(255,255,255,.92); --char-ink-3:rgba(255,255,255,.62);
   --card:var(--wp--preset--color--base,#FFFFFF);
   color:var(--wp--preset--color--contrast,#0E1F40);
 }
-html[data-theme="dark"] .rcvda-vcse-sector{ --c-charity:#6FA8DC; --c-cic:#F6B53F; --c-society:#9BC0E3; --c-casc:#EF5A49; --card:var(--wp--preset--color--surface,#16284A); }
-@media (prefers-color-scheme:dark){html:not([data-theme]) .rcvda-vcse-sector{ --c-charity:#6FA8DC; --c-cic:#F6B53F; --c-society:#9BC0E3; --c-casc:#EF5A49; --card:var(--wp--preset--color--surface,#16284A); }}
+html[data-theme="dark"] .rcvda-vcse-sector{ --c-charity:#8E88D4; --c-cic:#F2644C; --c-society:#D06A96; --c-casc:#3DBE78; --greyedge:#425777; --char-ink:#1B1740; --char-ink-2:rgba(27,23,64,.92); --char-ink-3:rgba(27,23,64,.62); --card:var(--wp--preset--color--surface,#16284A); }
+@media (prefers-color-scheme:dark){html:not([data-theme]) .rcvda-vcse-sector{ --c-charity:#8E88D4; --c-cic:#F2644C; --c-society:#D06A96; --c-casc:#3DBE78; --greyedge:#425777; --char-ink:#1B1740; --char-ink-2:rgba(27,23,64,.92); --char-ink-3:rgba(27,23,64,.62); --card:var(--wp--preset--color--surface,#16284A); }}
 
 .rcvda-vcse-sector *{box-sizing:border-box}
 .rcvda-vcse-sector .wrap{max-width:1240px;margin:0 auto;}
@@ -40,12 +42,39 @@ html[data-theme="dark"] .rcvda-vcse-sector{ --c-charity:#6FA8DC; --c-cic:#F6B53F
 .rcvda-vcse-sector .filterbar select:focus-visible{outline:2px solid var(--wp--preset--color--brand-light,#033E8C);outline-offset:1px;}
 .rcvda-vcse-sector .filterbar .tag{font-size:.82rem;color:var(--wp--preset--color--muted,#51607A);}
 .rcvda-vcse-sector .filterbar .tag b{color:var(--wp--preset--color--contrast,#0E1F40);font-variant-numeric:tabular-nums;}
-.rcvda-vcse-sector .kpis{display:grid;grid-template-columns:repeat(6,1fr);gap:14px;margin-bottom:8px;}
-.rcvda-vcse-sector .kpi{background:var(--card,#FFFFFF);border:1px solid var(--wp--preset--color--divider,#D4DEEA);border-radius:12px;padding:15px 16px 13px;display:flex;flex-direction:column;gap:2px;position:relative;overflow:hidden;box-shadow:0 1px 3px rgba(14,31,64,.05);}
-.rcvda-vcse-sector .kpi::before{content:"";position:absolute;left:0;top:0;bottom:0;width:3px;background:var(--bar,var(--wp--preset--color--brand-light,#033E8C));opacity:.9;}
-.rcvda-vcse-sector .kpi .v{font-size:1.65rem;font-weight:800;line-height:1.05;color:var(--wp--preset--color--contrast,#0E1F40);}
-.rcvda-vcse-sector .kpi .l{font-size:.75rem;color:var(--wp--preset--color--muted,#51607A);font-weight:600;}
-.rcvda-vcse-sector .kpi .s{font-size:.71rem;color:var(--wp--preset--color--muted,#51607A);}
+.rcvda-vcse-sector .rangebar{display:inline-flex;align-items:center;gap:4px;margin-left:auto;}
+.rcvda-vcse-sector .rangebar label{margin-right:2px;}
+.rcvda-vcse-sector .rangebar button{font:inherit;font-size:.76rem;font-weight:700;color:var(--wp--preset--color--muted,#51607A);background:transparent;border:1px solid var(--wp--preset--color--divider,#D4DEEA);border-radius:7px;padding:4px 9px;cursor:pointer;}
+.rcvda-vcse-sector .rangebar button.on{color:#fff;background:var(--wp--preset--color--brand-light,#033E8C);border-color:var(--wp--preset--color--brand-light,#033E8C);}
+.rcvda-vcse-sector .rangebar button:focus-visible{outline:2px solid var(--wp--preset--color--brand-light,#033E8C);outline-offset:1px;}
+.rcvda-vcse-sector .leg-note{display:inline-flex;align-items:center;gap:6px;font-size:.76rem;color:var(--wp--preset--color--muted,#51607A);opacity:.9;}
+.rcvda-vcse-sector .leg-note .mk-part-key{width:10px;height:10px;border-radius:50%;background:var(--card,#FFFFFF);border:1.6px solid var(--wp--preset--color--muted,#51607A);display:inline-block;flex:none;}
+.rcvda-vcse-sector .leg-note .ax2-key{width:16px;height:3px;border-radius:2px;display:inline-block;flex:none;}
+/* KPI strip — two data-basis groups: all-VCFSE (white, grey-edged) vs charities-only (indigo) */
+.rcvda-vcse-sector .kpis{margin-bottom:8px;container-type:inline-size;}
+.rcvda-vcse-sector .kpiblock{display:flex;gap:28px;flex-wrap:wrap;align-items:flex-start;}
+.rcvda-vcse-sector .kgroup{display:flex;flex-direction:column;gap:11px;}
+.rcvda-vcse-sector .ghead{display:flex;align-items:center;gap:8px;font-size:.72rem;font-weight:800;letter-spacing:.05em;text-transform:uppercase;color:var(--wp--preset--color--muted,#51607A);}
+.rcvda-vcse-sector .ghead .sw{width:13px;height:13px;border-radius:3px;flex:none;}
+.rcvda-vcse-sector .ghead .sw-all{background:var(--card,#FFFFFF);border:1.5px solid var(--greyedge,#B7C0CC);}
+.rcvda-vcse-sector .ghead .sw-char{background:var(--c-charity,#211D47);}
+.rcvda-vcse-sector .ktiles{display:flex;gap:13px;flex-wrap:wrap;}
+.rcvda-vcse-sector .kdiv{width:1px;align-self:stretch;background:var(--wp--preset--color--divider,#D4DEEA);margin-top:26px;}
+@container (max-width:1100px){.rcvda-vcse-sector .kdiv{display:none;}}
+.rcvda-vcse-sector .kpi{width:165px;min-height:116px;border-radius:12px;padding:15px 17px 13px;display:flex;flex-direction:column;gap:2px;}
+.rcvda-vcse-sector .g-all .kpi{background:var(--card,#FFFFFF);border:1.5px solid var(--greyedge,#B7C0CC);box-shadow:0 1px 3px rgba(14,31,64,.05);}
+.rcvda-vcse-sector .g-char .kpi{background:var(--c-charity,#211D47);box-shadow:0 2px 6px rgba(14,31,64,.14);}
+.rcvda-vcse-sector .kpi .v{font-size:1.6rem;font-weight:800;line-height:1.05;}
+.rcvda-vcse-sector .kpi .l{font-size:.75rem;font-weight:700;margin-top:3px;}
+.rcvda-vcse-sector .kpi .s{font-size:.71rem;}
+.rcvda-vcse-sector .g-all .kpi .v{color:var(--wp--preset--color--contrast,#0E1F40);}
+.rcvda-vcse-sector .g-all .kpi .l{color:var(--wp--preset--color--contrast,#0E1F40);}
+.rcvda-vcse-sector .g-all .kpi .s{color:var(--wp--preset--color--muted,#51607A);}
+.rcvda-vcse-sector .g-char .kpi .v{color:var(--char-ink,#fff);}
+.rcvda-vcse-sector .g-char .kpi .l{color:var(--char-ink-2,rgba(255,255,255,.92));}
+.rcvda-vcse-sector .g-char .kpi .s{color:var(--char-ink-3,rgba(255,255,255,.62));}
+.rcvda-vcse-sector .kfoot{margin:14px 0 2px;font-size:.78rem;color:var(--wp--preset--color--muted,#51607A);max-width:92ch;line-height:1.5;}
+.rcvda-vcse-sector .kfoot b{color:var(--wp--preset--color--contrast,#0E1F40);font-weight:700;}
 .rcvda-vcse-sector .band{display:flex;align-items:center;gap:10px;margin:30px 0 4px;}
 .rcvda-vcse-sector .band h3{font-size:1rem;font-weight:800;color:var(--wp--preset--color--contrast,#0E1F40);display:flex;align-items:center;gap:8px;}
 .rcvda-vcse-sector .band h3 svg{color:var(--wp--preset--color--brand-light,#033E8C);}
@@ -137,7 +166,7 @@ html[data-theme="dark"] .rcvda-vcse-sector{ --c-charity:#6FA8DC; --c-cic:#F6B53F
 .rcvda-vcse-sector footer a{color:var(--wp--preset--color--brand-light,#033E8C);}
 .rcvda-vcse-sector .loading{padding:40px;text-align:center;color:var(--wp--preset--color--muted,#51607A);font-size:.9rem;}
 .rcvda-vcse-sector-tip{position:fixed;pointer-events:none;background:var(--wp--preset--color--contrast,#0E1F40);color:var(--wp--preset--color--base,#FFFFFF);font-size:.76rem;padding:6px 9px;border-radius:6px;opacity:0;transition:opacity .1s;z-index:2147483000;white-space:nowrap;box-shadow:0 4px 14px rgba(0,0,0,.25);}
-@media(max-width:1000px){.rcvda-vcse-sector .kpis{grid-template-columns:repeat(3,1fr)}.rcvda-vcse-sector .col-4,.rcvda-vcse-sector .col-5,.rcvda-vcse-sector .col-6,.rcvda-vcse-sector .col-7,.rcvda-vcse-sector .col-8{grid-column:span 12}}
+@media(max-width:1000px){.rcvda-vcse-sector .kdiv{display:none}.rcvda-vcse-sector .col-4,.rcvda-vcse-sector .col-5,.rcvda-vcse-sector .col-6,.rcvda-vcse-sector .col-7,.rcvda-vcse-sector .col-8{grid-column:span 12}}
 @media(max-width:700px){.rcvda-vcse-sector .gloss{columns:1}}
-@media(max-width:560px){.rcvda-vcse-sector .kpis{grid-template-columns:repeat(2,1fr)}.rcvda-vcse-sector .masthead .meta{text-align:left}.rcvda-vcse-sector .bar-row{grid-template-columns:120px 1fr 48px}}
+@media(max-width:560px){.rcvda-vcse-sector .masthead .meta{text-align:left}.rcvda-vcse-sector .bar-row{grid-template-columns:120px 1fr 48px}}
 @media(prefers-reduced-motion:reduce){.rcvda-vcse-sector *{transition:none!important}}

@@ -2,6 +2,15 @@
 
 All notable changes to this plugin, most recent first. Format: `## YYYY-MM-DD — vX.Y.Z — description`.
 
+## 2026-11-24 — v0.3.0 — Intro rewrite, VCFSE terminology, two-group KPI strip
+
+- New masthead intro: "State of the Sector is a timed series produced by RCVDA that records the registered Voluntary, Community, Faith and Social-Enterprise (VCFSE) sector based-in and trading from the five Tees Valley Authorities", naming the three families — Registered Charities (incl. CIOs); Social Enterprises (incl. CICs, registered societies / mutuals); and CASCs.
+- House terminology moved from VCSE to VCFSE across the dashboard chrome (eyebrow, measure control, chart titles, glossary). Plugin slug, shortcode and admin name are unchanged.
+- KPI strip rebuilt as two data-basis groups. "All VCFSE · whole registered sector" (active organisations; NAVCA whole-sector estimate) renders as white, grey-edged tiles; "Registered charities only" (sector turnover, median income, top-10 share, website) renders as filled charity-indigo tiles, under a caption noting that income and websites exist only on the Charity Commission register, so the whole-sector figures are higher than shown. Six uniform tiles (165×116); the group divider is hidden via a container query when the strip wraps.
+- The website figure is now charities-denominated — declared a website divided by registered charities (64%) — rather than the previous all-active denominator (43%), which understated it because CICs, societies and CASCs cannot file a website through their registers.
+- New component tokens: `--greyedge` (whole-sector tile edge) and `--char-ink`/`-2`/`-3` (charity-tile text), each with a dark-mode value so the charity tiles stay legible (dark text on the lightened charity fill) in dark mode.
+- No change to the data spine, the over-time charts or the snapshot-detail sections. Verified in light and dark, wide and wrapped.
+
 ## 2026-11-24 — v0.2.1 — Light-mode card surfaces
 
 - Panels now read as white cards in light mode. Previously every panel (KPI tiles, chart boxes, filter bar) was filled with the theme's `--wp--preset--color--surface` tint (`#a7c1d9` Light Blue), which — correct for an occasional badge — turned the whole dashboard Light-Blue-on-Light-Blue when used as the fill behind every element.

@@ -11,7 +11,7 @@
   var SEGMENTS=["Charities","CICs","Societies","CASCs"];
   var BORO=[["Darlington","Darlington"],["Hartlepool","Hartlepool"],["Middlesbrough","Middlesbrough"],["Redcar-and-Cleveland","Redcar & Cleveland"],["Stockton-on-Tees","Stockton-on-Tees"]];
   var LA_TOKEN={"Darlington":["--la-darlington","#900030"],"Hartlepool":["--la-hartlepool","#248000"],"Middlesbrough":["--la-middlesbrough","#EF8A00"],"Redcar-and-Cleveland":["--la-redcar-cleveland","#217887"],"Stockton-on-Tees":["--la-stockton","#1D8AD7"]};
-  var SEG_TOKEN={Charities:["--c-charity","#033E8C"],CICs:["--c-cic","#F29F05"],Societies:["--c-society","#6E9FC9"],CASCs:["--c-casc","#D91E0D"]};
+  var SEG_TOKEN={Charities:["--c-charity","#211D47"],CICs:["--c-cic","#E52D13"],Societies:["--c-society","#6C1D45"],CASCs:["--c-casc","#0E8A4F"]};
   var DECADES=["Pre-1960","1960s","1970s","1980s","1990s","2000s","2010s","2020s"];
   var BANDS=["£1m +","£500k - £1m","£250k - £500k","£100k - £250k","£75k - £100k","£50k - £75k","Over 25k","Over 10k","Under 10k"];
   var MONTHS=["Jan","Feb","Mar","Apr","May","Jun","Jul","Aug","Sep","Oct","Nov","Dec"];
@@ -58,23 +58,25 @@
     +'<dt>Based in</dt><dd>The organisation’s <b>registered office</b> is in the borough — the canonical headline measure, kept separate from the wider “operating-from” reach measure.</dd>'
     +'<dt>Active</dt><dd>Currently on the register — not removed or dissolved.</dd>'
     +'<dt>Sector turnover</dt><dd>The total latest-year income of the active organisations that report one; many small groups report none.</dd>'
-    +'<dt>NAVCA model</dt><dd>A national estimate that registered charities are about 26% of the whole VCSE sector, used to project the unregistered community groups no register captures.</dd></dl></div>';
+    +'<dt>NAVCA model</dt><dd>A national estimate that registered charities are about 26% of the whole VCFSE sector, used to project the unregistered community groups no register captures.</dd></dl></div>';
 
   function markup(title,area){
     return '<div class="wrap">'
-      +'<header class="masthead"><div><div class="eyebrow">'+esc(area)+' · Registered VCSE Sector · Living time series</div><h1>'+esc(title)+'</h1></div>'
+      +'<header class="masthead"><div><div class="eyebrow">'+esc(area)+' · Registered VCFSE Sector · Living time series</div><h1>'+esc(title)+'</h1></div>'
       +'<div class="meta">Latest snapshot <b class="j-snap">—</b><br>Updated weekly · Source: Find That Charity</div>'
-      +'<p class="lede">The registered voluntary, community and social-enterprise sector <b>based in</b> the five '+esc(area)+' authorities — registered charities (including CIOs), Community Interest Companies (CICs), registered societies / mutuals and Community Amateur Sports Clubs (CASCs). “Based in” means the registered office is in the borough. Figures describe the <b>active</b> sector and update automatically each week. Use the filters to focus on an authority.</p></header>'
+      +'<p class="lede"><b>State of the Sector</b> is a timed series produced by Redcar and Cleveland Voluntary Development Agency (RCVDA) that records the registered <b>Voluntary, Community, Faith and Social-Enterprise</b> (VCFSE) sector <b>based-in and trading from</b> the <b>five Tees Valley Authorities</b>. It brings together <b>Registered Charities</b> – including Charitable Incorporated Organisations; <b>Social Enterprises</b> – including Community Interest Companies, Registered Friendly Societies and Mutuals; and <b>Community Amateur Sports Clubs</b> (CASCs).</p></header>'
       +'<div class="note"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><line x1="12" y1="16" x2="12" y2="12"/><line x1="12" y1="8" x2="12.01" y2="8"/></svg>'
       +'<div><b>A living measure.</b> This dashboard reads the open dataset that RCVDA rebuilds every Monday from Find That Charity, so each weekly point appears automatically. The over-time charts are seeded from earlier snapshots; the detailed analytics describe the latest snapshot and build up week by week. Data: <a href="https://github.com/rcvda/tees-valley-vcse-sector" target="_blank" rel="noopener">rcvda/tees-valley-vcse-sector</a> (CC&nbsp;BY-NC-SA&nbsp;4.0).</div></div>'
       +'<div class="filterbar">'
-      +'<label>Measure</label><select class="j-seg"><option value="ALL">All VCSE (total)</option><option value="Charities">Charities</option><option value="CICs">CICs</option><option value="Societies">Societies</option><option value="CASCs">CASCs</option></select>'
+      +'<label>Measure</label><select class="j-seg"><option value="ALL">All VCFSE (total)</option><option value="Charities">Charities</option><option value="CICs">CICs</option><option value="Societies">Societies</option><option value="CASCs">CASCs</option></select>'
       +'<label style="margin-left:6px">Authority</label><select class="j-bor"><option value="TV">'+esc(area)+' (all five)</option><option value="Darlington">Darlington</option><option value="Hartlepool">Hartlepool</option><option value="Middlesbrough">Middlesbrough</option><option value="Redcar-and-Cleveland">Redcar &amp; Cleveland</option><option value="Stockton-on-Tees">Stockton-on-Tees</option></select>'
-      +'<span class="tag j-scope"></span></div>'
+      +'<span class="tag j-scope"></span>'
+      +'<span class="rangebar j-range" role="group" aria-label="Trend time range"><label>Range</label>'
+      +'<button type="button" data-r="13w">13 wks</button><button type="button" data-r="12m">12 mths</button><button type="button" data-r="all" class="on">All</button></span></div>'
       +'<section class="kpis j-kpis"><div class="loading">Loading the latest snapshot…</div></section>'
 
       +'<div class="band"><h3>Sector size over time</h3><div class="rule"></div></div>'
-      +'<section class="grid"><div class="panel col-12"><div class="panel-head"><h2 class="j-c1t">Active VCSE organisations by authority</h2><div class="sub">Based-in, active · one line per authority</div></div><div class="j-chart1"><div class="loading">Loading…</div></div><div class="legend j-leg1"></div></div></section>'
+      +'<section class="grid"><div class="panel col-12"><div class="panel-head"><h2 class="j-c1t">Active VCFSE organisations by authority</h2><div class="sub">Based-in, active · one line per authority</div></div><div class="j-chart1"><div class="loading">Loading…</div></div><div class="legend j-leg1"></div></div></section>'
       +'<section class="grid"><div class="panel col-7"><div class="panel-head"><h2 class="j-c2t">The four segments over time</h2><div class="sub">Based-in, active · one line per segment</div></div><div class="j-chart2"></div><div class="legend j-leg2"></div></div>'
       +'<div class="panel col-5"><div class="panel-head"><h2>Latest snapshot</h2><div class="sub j-mxsub">Active based-in organisations</div></div><table class="matrix j-matrix"></table></div></section>'
 
@@ -110,13 +112,13 @@
     var ASRC=root.getAttribute('data-agg-src')||'', AFB=root.getAttribute('data-agg-fallback')||'';
     var TITLE=root.getAttribute('data-title')||'State of the Sector', AREA=root.getAttribute('data-area')||'Tees Valley';
     root.innerHTML=markup(TITLE,AREA);
-    var S={ root:root, tip:tip, DATA:[], AGG:null, hidden1:{TV:true}, hidden2:{} };
+    var S={ root:root, tip:tip, DATA:[], AGG:null, hidden1:{}, hidden2:{}, range:'all' };
     S.q=function(c){ return root.querySelector(c); };
     var spineChain=[]; if(SRC)spineChain.push(SRC); if(FB&&FB!==SRC)spineChain.push(FB);
     var aggChain=[]; if(ASRC)aggChain.push(ASRC); if(AFB&&AFB!==ASRC)aggChain.push(AFB);
     var pending=2, live=false;
     function done(){ if(--pending>0) return; boot(S,live); }
-    fetchChain(spineChain.slice(),function(t,l){ if(t){ S.DATA=parseSpine(t); if(l)live=true; } done(); });
+    fetchChain(spineChain.slice(),function(t,l){ if(t){ S.DATA=normalizeClusters(parseSpine(t)); if(l)live=true; } done(); });
     fetchChain(aggChain.slice(),function(t,l){ if(t){ try{ S.AGG=JSON.parse(t); }catch(e){} } done(); });
     var reRender=function(){ if(S.DATA.length||S.AGG) render(S); };
     if('MutationObserver' in window){ new MutationObserver(reRender).observe(document.documentElement,{attributes:true,attributeFilter:['data-theme','class']}); }
@@ -124,11 +126,32 @@
     if('ResizeObserver' in window){ new ResizeObserver(reRender).observe(S.q('.j-chart1')); }
     S.q('.j-seg').addEventListener('change',function(){ render(S); });
     S.q('.j-bor').addEventListener('change',function(){ render(S); });
+    S.q('.j-range').addEventListener('click',function(e){ var b=e.target.closest('button'); if(!b)return;
+      S.range=b.getAttribute('data-r');
+      this.querySelectorAll('button').forEach(function(x){ x.classList.toggle('on',x===b); });
+      render(S); });
   }
   function parseSpine(t){
     return parseCSV(t).filter(function(r){ return r.definition==="based-in" && SEGMENTS.indexOf(r.segment)>=0 && LA_TOKEN[r.borough]; })
       .map(function(r){ return {seg:r.segment,bor:r.borough,date:r.snapshot_date,t:Date.parse(r.snapshot_date),active:+r.active||0}; })
       .filter(function(r){ return !isNaN(r.t); });
+  }
+  /* Historical seeds were captured borough-by-borough across a few days, so a
+     single logical snapshot is spread over several dates. Chain dates whose
+     consecutive gap is <= 5 days into one cluster (weekly cadence is 7 days, so
+     real weekly points never merge), stamp the cluster to its last capture day,
+     and keep the latest value per borough+segment within it. */
+  function normalizeClusters(rows){
+    if(!rows.length) return rows;
+    var ds={}; rows.forEach(function(r){ ds[r.date]=r.t; });
+    var keys=Object.keys(ds).sort(function(a,b){return ds[a]-ds[b];});
+    var canon={}, WIN=5*864e5, i=0;
+    while(i<keys.length){ var j=i; while(j+1<keys.length && (ds[keys[j+1]]-ds[keys[j]])<=WIN) j++;
+      var c=keys[j]; for(var k=i;k<=j;k++) canon[keys[k]]=c; i=j+1; }
+    var best={};
+    rows.forEach(function(r){ var cd=canon[r.date], key=cd+'|'+r.bor+'|'+r.seg;
+      if(!best[key] || r.t>best[key]._ot) best[key]={seg:r.seg,bor:r.bor,date:cd,t:Date.parse(cd),active:r.active,_ot:r.t}; });
+    return Object.keys(best).map(function(k){ var o=best[k]; delete o._ot; return o; });
   }
   function boot(S,live){
     S.live=live;
@@ -147,38 +170,41 @@
     var byDate={};
     S.DATA.forEach(function(r){ if(r.bor!==bor) return; (byDate[r.date]=byDate[r.date]||{})[r.seg]=r.active; });
     var out=[];
-    Object.keys(byDate).forEach(function(d){ var row=byDate[d],v=null;
-      if(measure==="ALL"){ if(SEGMENTS.every(function(s){return s in row;})) v=SEGMENTS.reduce(function(a,s){return a+row[s];},0); }
-      else if(measure in row){ v=row[measure]; }
-      if(v!==null) out.push({t:Date.parse(d),date:d,v:v}); });
+    Object.keys(byDate).forEach(function(d){ var row=byDate[d];
+      if(measure==="ALL"){ var have=SEGMENTS.filter(function(s){return s in row;});
+        if(have.length) out.push({t:Date.parse(d),date:d,v:have.reduce(function(a,s){return a+row[s];},0),partial:have.length<SEGMENTS.length}); }
+      else if(measure in row){ out.push({t:Date.parse(d),date:d,v:row[measure],partial:false}); } });
     return out.sort(function(a,b){return a.t-b.t;});
   }
   function tvSeries(S,measure){
     var perDate={};
-    BORO.forEach(function(b){ boroughSeries(S,b[0],measure).forEach(function(p){ (perDate[p.date]=perDate[p.date]||{})[b[0]]=p.v; }); });
-    var out=[]; Object.keys(perDate).forEach(function(d){ var row=perDate[d]; if(BORO.every(function(b){return b[0] in row;})) out.push({t:Date.parse(d),date:d,v:BORO.reduce(function(a,b){return a+row[b[0]];},0)}); });
+    BORO.forEach(function(b){ boroughSeries(S,b[0],measure).forEach(function(p){ (perDate[p.date]=perDate[p.date]||{})[b[0]]=p; }); });
+    var out=[]; Object.keys(perDate).forEach(function(d){ var row=perDate[d], bs=Object.keys(row);
+      out.push({t:Date.parse(d),date:d,v:bs.reduce(function(a,k){return a+row[k].v;},0),
+        partial:bs.length<BORO.length||bs.some(function(k){return row[k].partial;})}); });
     return out.sort(function(a,b){return a.t-b.t;});
   }
   function segmentSeries(S,scope,seg){
     if(scope==="TV"){ var perDate={};
       BORO.forEach(function(b){ S.DATA.forEach(function(r){ if(r.bor===b[0]&&r.seg===seg) (perDate[r.date]=perDate[r.date]||{})[b[0]]=r.active; }); });
-      var out=[]; Object.keys(perDate).forEach(function(d){ var row=perDate[d]; if(BORO.every(function(b){return b[0] in row;})) out.push({t:Date.parse(d),date:d,v:BORO.reduce(function(a,b){return a+row[b[0]];},0)}); });
+      var out=[]; Object.keys(perDate).forEach(function(d){ var row=perDate[d], bs=Object.keys(row);
+        out.push({t:Date.parse(d),date:d,v:bs.reduce(function(a,k){return a+row[k];},0),partial:bs.length<BORO.length}); });
       return out.sort(function(a,b){return a.t-b.t;}); }
-    return S.DATA.filter(function(r){return r.bor===scope&&r.seg===seg;}).map(function(r){return {t:r.t,date:r.date,v:r.active};}).sort(function(a,b){return a.t-b.t;});
+    return S.DATA.filter(function(r){return r.bor===scope&&r.seg===seg;}).map(function(r){return {t:r.t,date:r.date,v:r.active,partial:false};}).sort(function(a,b){return a.t-b.t;});
   }
 
   function render(S){
     var col=colours(S.root); S.col=col;
     var measure=S.q('.j-seg').value, scope=S.q('.j-bor').value;
     var sLabel=scope==="TV"?"Tees Valley":(BORO.filter(function(b){return b[0]===scope;})[0]||["",scope])[1];
-    S.q('.j-scope').innerHTML="Showing <b>"+esc(measure==="ALL"?"All VCSE":measure)+"</b> · "+esc(sLabel);
+    S.q('.j-scope').innerHTML="Showing <b>"+esc(measure==="ALL"?"All VCFSE":measure)+"</b> · "+esc(sLabel);
     var A=scopeAgg(S,scope);
     renderKPIs(S,A,sLabel);
     // trends
     if(S.DATA.length){
       var series1=BORO.map(function(b){ return {key:b[0],name:b[1],color:col.bor[b[0]],pts:boroughSeries(S,b[0],measure)}; });
-      series1.push({key:"TV",name:"Tees Valley total",color:col.tv,pts:tvSeries(S,measure),dashed:true});
-      S.q('.j-c1t').textContent=(measure==="ALL"?"Active VCSE organisations":("Active "+measure))+" by authority";
+      series1.push({key:"TV",name:"Tees Valley total",color:col.tv,pts:tvSeries(S,measure),dashed:true,secondary:true});
+      S.q('.j-c1t').textContent=(measure==="ALL"?"Active VCFSE organisations":("Active "+measure))+" by authority";
       drawChart(S,'.j-chart1',series1.filter(function(s){return !S.hidden1[s.key]&&s.pts.length;}),'.j-leg1',series1,S.hidden1);
       var series2=SEGMENTS.map(function(s){ return {key:s,name:s,color:col.seg[s],pts:segmentSeries(S,scope,s)}; });
       S.q('.j-c2t').textContent="The four segments over time — "+sLabel;
@@ -188,17 +214,34 @@
     if(A) renderDetail(S,A,sLabel);
   }
 
+  /* KPI strip — two data-basis groups. The first two tiles describe the whole
+     registered VCFSE sector (and the NAVCA whole-sector projection); the other
+     four are charity-derived — income and websites only exist on the Charity
+     Commission register, so they are grouped and captioned as charities-only.
+     The website rate is therefore charities-denominated (has_web / total
+     charities), not diluted by the non-charity segments that cannot file one. */
   function renderKPIs(S,A,sLabel){
-    var box=S.q('.j-kpis'); box.innerHTML="";
-    function tile(v,l,s,bar){ var d=document.createElement('div'); d.className="kpi"; if(bar)d.style.setProperty('--bar',bar);
-      d.innerHTML='<div class="v tnum">'+esc(v)+'</div><div class="l">'+esc(l)+'</div><div class="s">'+esc(s)+'</div>'; box.appendChild(d); }
-    if(!A){ tile("—","Loading…","",S.col.tv); return; }
-    tile(commas(A.active), sLabel+" · active VCSE", "based-in · "+fmtDate(latestDate(S)), S.col.tv);
-    tile("~"+commas(A.navca.total), "Estimated whole sector", "incl. unregistered (NAVCA)", S.col.accent);
-    tile(gbp(A.sector_value), "Sector turnover", "latest-year income reported", S.col.seg.Charities);
-    tile(gbpFull(A.median_income), "Median income", "of those reporting", S.col.seg.CICs);
-    tile(A.concentration.top10+"%", "Top-10 share", "of the sector's income", S.col.seg.CASCs);
-    tile(A.web_pct+"%", "With a website", commas(A.has_web)+" active organisations", S.col.seg.Societies);
+    var box=S.q('.j-kpis');
+    if(!A){ box.innerHTML='<div class="loading">Loading the latest snapshot…</div>'; return; }
+    function tiles(items){ return '<div class="ktiles">'+items.map(function(it){
+      return '<div class="kpi"><div class="v tnum">'+esc(it[0])+'</div><div class="l">'+esc(it[1])+'</div><div class="s">'+esc(it[2])+'</div></div>'; }).join('')+'</div>'; }
+    var charN=(A.legal&&A.legal.total_charities)||0;
+    var webChar=charN?Math.round(100*A.has_web/charN):A.web_pct;
+    var allTiles=[
+      [commas(A.active),"Active organisations","based-in · "+fmtDate(latestDate(S))],
+      ["~"+commas(A.navca.total),"Estimated whole sector","incl. unregistered (NAVCA)"]
+    ];
+    var charTiles=[
+      [gbp(A.sector_value),"Sector turnover","latest-year income"],
+      [gbpFull(A.median_income),"Median income","of those reporting"],
+      [A.concentration.top10+"%","Top-10 share","of charity income"],
+      [webChar+"%","Declared a website","of registered charities"]
+    ];
+    box.innerHTML='<div class="kpiblock">'
+      +'<div class="kgroup g-all"><div class="ghead"><span class="sw sw-all"></span>All VCFSE · whole registered sector</div>'+tiles(allTiles)+'</div>'
+      +'<div class="kdiv" aria-hidden="true"></div>'
+      +'<div class="kgroup g-char"><div class="ghead"><span class="sw sw-char"></span>Registered charities only</div>'+tiles(charTiles)+'</div></div>'
+      +'<p class="kfoot"><b>Income and website figures cover registered charities only.</b> CICs, registered societies and CASCs don’t file income or a website through their registers, so the sector’s true turnover and online presence are higher than shown.</p>';
   }
 
   function renderDetail(S,A,sLabel){
@@ -269,34 +312,81 @@
     t.innerHTML=head+body+foot;
   }
 
+  function niceStep(x){ if(x<=0)return 1; var p=Math.pow(10,Math.floor(Math.log(x)/Math.LN10)), f=x/p; return (f<1.5?1:f<3?2:f<7?5:10)*p; }
+  function fitScale(vals){
+    if(!vals.length) return {v0:0,v1:1};
+    var dmin=Math.min.apply(null,vals), dmax=Math.max.apply(null,vals), sp=(dmax-dmin)||dmax||1;
+    var a=(dmin<=dmax*0.2)?0:(dmin-sp*0.15), b=dmax+sp*0.12;
+    var st=niceStep((b-a)/4); a=Math.max(0,Math.floor(a/st)*st); b=Math.ceil(b/st)*st; if(b<=a)b=a+st;
+    return {v0:a,v1:b};
+  }
   function drawChart(S,hostSel,series,legSel,allSeries,hiddenMap){
     var host=S.q(hostSel), tip=S.tip;
-    var W=host.clientWidth||680, H=300, P={t:14,r:16,b:30,l:38};
-    var ts=[],vs=[]; series.forEach(function(s){s.pts.forEach(function(p){ts.push(p.t);vs.push(p.v);});});
+    var cardBg=getComputedStyle((host.closest&&host.closest('.panel'))||host).backgroundColor||'#fff';
+    var cut=-Infinity;
+    if(S.range && S.range!=='all'){ var days=(S.range==='13w')?91:365, mx=-Infinity;
+      allSeries.forEach(function(s){s.pts.forEach(function(p){if(p.t>mx)mx=p.t;});}); cut=mx-days*864e5; }
+    var vseries=series.map(function(s){ return {key:s.key,name:s.name,color:s.color,dashed:s.dashed,secondary:s.secondary,pts:s.pts.filter(function(p){return p.t>=cut;})}; });
     var leg=S.q(legSel); leg.innerHTML="";
     allSeries.forEach(function(s){ if(!s.pts.length) return;
       var b=document.createElement('button'); b.setAttribute('aria-pressed',hiddenMap[s.key]?"false":"true");
       b.innerHTML='<span class="dot" style="background:'+s.color+'"></span>'+esc(s.name);
       b.addEventListener('click',function(){ hiddenMap[s.key]=!hiddenMap[s.key]; render(S); }); leg.appendChild(b); });
+    var anyPartial=vseries.some(function(s){return s.pts.some(function(p){return p.partial;});});
+    var pri=vseries.filter(function(s){return !s.secondary && s.pts.length;});
+    var sec=vseries.filter(function(s){return s.secondary && s.pts.length;});
+    var dual=(pri.length>0 && sec.length>0);
+    if(dual){ var sn=document.createElement('span'); sn.className='leg-note'; sn.innerHTML='<span class="ax2-key" style="background:'+sec[0].color+'"></span>right axis'; leg.appendChild(sn); }
+    if(anyPartial){ var pn=document.createElement('span'); pn.className='leg-note'; pn.innerHTML='<span class="mk-part-key"></span>partial snapshot'; leg.appendChild(pn); }
+    var ts=[]; vseries.forEach(function(s){s.pts.forEach(function(p){ts.push(p.t);});});
     if(!ts.length){ host.innerHTML='<div class="loading">No data for this selection yet.</div>'; return; }
+    var W=host.clientWidth||680, H=300, P={t:14,r:(dual?52:20),b:30,l:42};
     var t0=Math.min.apply(null,ts), t1=Math.max.apply(null,ts); if(t0===t1){t0-=6e8;t1+=6e8;}
-    var v1=Math.max.apply(null,vs), v0=Math.min(0,Math.min.apply(null,vs)); if(v1===v0)v1=v0+1;
-    var step=(v1>400?100:(v1>100?50:20)); v1=Math.ceil(v1/step)*step;
+    var leftVals=[]; (dual?pri:vseries).forEach(function(s){s.pts.forEach(function(p){leftVals.push(p.v);});});
+    var L=fitScale(leftVals);
+    var rightVals=[]; sec.forEach(function(s){s.pts.forEach(function(p){rightVals.push(p.v);});});
+    var R=dual?fitScale(rightVals):L;
     function X(t){return P.l+(t-t0)/(t1-t0)*(W-P.l-P.r);}
-    function Y(v){return H-P.b-(v-v0)/(v1-v0)*(H-P.t-P.b);}
+    function YL(v){return H-P.b-(v-L.v0)/(L.v1-L.v0)*(H-P.t-P.b);}
+    function YR(v){return H-P.b-(v-R.v0)/(R.v1-R.v0)*(H-P.t-P.b);}
+    function yFor(s){return (s.secondary&&dual)?YR(s.v):YL(s.v);}
     var svg='<svg class="chart" viewBox="0 0 '+W+' '+H+'" width="100%" preserveAspectRatio="xMidYMid meet" role="img">';
-    for(var i=0;i<=4;i++){ var vv=v0+(v1-v0)*i/4, y=Y(vv); svg+='<line class="grid-l" x1="'+P.l+'" y1="'+y+'" x2="'+(W-P.r)+'" y2="'+y+'"/><text class="axlab" x="'+(P.l-7)+'" y="'+(y+3)+'" text-anchor="end">'+Math.round(vv)+'</text>'; }
+    for(var i=0;i<=4;i++){ var y=H-P.b-(H-P.t-P.b)*i/4;
+      svg+='<line class="grid-l" x1="'+P.l+'" y1="'+y.toFixed(1)+'" x2="'+(W-P.r)+'" y2="'+y.toFixed(1)+'"/>';
+      svg+='<text class="axlab" x="'+(P.l-7)+'" y="'+(y+3).toFixed(1)+'" text-anchor="end">'+commas(Math.round(L.v0+(L.v1-L.v0)*i/4))+'</text>';
+      if(dual) svg+='<text class="axlab ax2" x="'+(W-P.r+7)+'" y="'+(y+3).toFixed(1)+'" text-anchor="start" fill="'+sec[0].color+'">'+commas(Math.round(R.v0+(R.v1-R.v0)*i/4))+'</text>';
+    }
     svg+='<line class="axis" x1="'+P.l+'" y1="'+(H-P.b)+'" x2="'+(W-P.r)+'" y2="'+(H-P.b)+'"/>';
-    var allDates={}; series.forEach(function(s){s.pts.forEach(function(p){allDates[p.date]=p.t;});});
-    var dk=Object.keys(allDates).sort(function(a,b){return allDates[a]-allDates[b];}); var every=Math.ceil(dk.length/6);
-    dk.forEach(function(d,idx){ if(idx%every!==0 && idx!==dk.length-1) return; svg+='<text class="axlab" x="'+X(allDates[d])+'" y="'+(H-P.b+16)+'" text-anchor="middle">'+fmtShort(d)+'</text>'; });
-    var topKey=null,topV=-1; series.forEach(function(s){var lv=s.pts[s.pts.length-1].v; if(lv>topV){topV=lv;topKey=s.key;}});
-    var marks='';
-    series.forEach(function(s){ var d=''; s.pts.forEach(function(p,i){ d+=(i?'L':'M')+X(p.t).toFixed(1)+' '+Y(p.v).toFixed(1)+' '; });
-      svg+='<path class="series" d="'+d+'" stroke="'+s.color+'"'+(s.dashed?' stroke-dasharray="5 4" stroke-width="1.8"':'')+'/>';
-      s.pts.forEach(function(p){ marks+='<circle class="mk" cx="'+X(p.t)+'" cy="'+Y(p.v)+'" r="3.4" fill="'+s.color+'"/>';
-        marks+='<circle class="mk-hit" cx="'+X(p.t)+'" cy="'+Y(p.v)+'" r="11" data-l="'+esc(s.name+' · '+fmtDate(p.date)+': '+p.v)+'"/>'; });
-      if(s.key===topKey){ var last=s.pts[s.pts.length-1]; svg+='<text class="dlab" x="'+(X(last.t)+6)+'" y="'+(Y(last.v)+3)+'" fill="'+s.color+'">'+last.v+'</text>'; } });
+    var allDates={}; vseries.forEach(function(s){s.pts.forEach(function(p){allDates[p.date]=p.t;});});
+    var dk=Object.keys(allDates).sort(function(a,b){return allDates[a]-allDates[b];});
+    var lastLX=-1e9, minLGap=52;
+    dk.forEach(function(d,idx){
+      var lx=X(allDates[d]), isEnd=(idx===0||idx===dk.length-1);
+      if(!isEnd && (lx-lastLX)<minLGap) return;
+      var la=(lx<=P.l+2?'start':(lx>=W-P.r-2?'end':'middle'));
+      svg+='<text class="axlab" x="'+lx.toFixed(1)+'" y="'+(H-P.b+16)+'" text-anchor="'+la+'">'+fmtShort(d)+'</text>'; lastLX=lx;
+    });
+    var topKey=null,topV=-1; pri.forEach(function(s){ var lv=s.pts[s.pts.length-1].v; if(lv>topV){topV=lv;topKey=s.key;}});
+    var marks='', endlabs=[];
+    vseries.forEach(function(s){
+      var YP=function(v){return (s.secondary&&dual)?YR(v):YL(v);};
+      var comp=s.pts.filter(function(p){return !p.partial;});
+      if(comp.length){ var d=''; comp.forEach(function(p,i){ d+=(i?'L':'M')+X(p.t).toFixed(1)+' '+YP(p.v).toFixed(1)+' '; });
+        svg+='<path class="series" d="'+d+'" stroke="'+s.color+'"'+(s.dashed?' stroke-dasharray="5 4" stroke-width="1.8"':'')+'/>'; }
+      var showAll=comp.length<=14;
+      s.pts.forEach(function(p,i){
+        var isEndPt=(i===0||i===s.pts.length-1);
+        if(p.partial){ marks+='<circle class="mk" cx="'+X(p.t).toFixed(1)+'" cy="'+YP(p.v).toFixed(1)+'" r="3.2" fill="'+cardBg+'" stroke="'+s.color+'" stroke-width="1.6"/>'; }
+        else if(showAll||isEndPt){ marks+='<circle class="mk" cx="'+X(p.t).toFixed(1)+'" cy="'+YP(p.v).toFixed(1)+'" r="3.4" fill="'+s.color+'" stroke="'+cardBg+'" stroke-width="1.2"/>'; }
+        marks+='<circle class="mk-hit" cx="'+X(p.t).toFixed(1)+'" cy="'+YP(p.v).toFixed(1)+'" r="11" data-l="'+esc(s.name+' · '+fmtDate(p.date)+': '+commas(p.v)+(p.partial?' · partial':''))+'"/>';
+      });
+      if(comp.length){ var last=comp[comp.length-1];
+        if(s.secondary&&dual){ endlabs.push({x:X(last.t)-7,y:YP(last.v)+3,color:s.color,text:commas(last.v),anchor:'end'}); }
+        else if(s.key===topKey && !dual){ endlabs.push({x:X(last.t)+6,y:YP(last.v)+3,color:s.color,text:commas(last.v),anchor:'start'}); } }
+    });
+    endlabs.sort(function(a,b){return a.y-b.y;});
+    for(var e=1;e<endlabs.length;e++){ if(endlabs[e].y-endlabs[e-1].y<13) endlabs[e].y=endlabs[e-1].y+13; }
+    endlabs.forEach(function(l){ svg+='<text class="dlab" x="'+l.x.toFixed(1)+'" y="'+l.y.toFixed(1)+'" text-anchor="'+(l.anchor||'start')+'" fill="'+l.color+'">'+l.text+'</text>'; });
     svg+=marks+'</svg>'; host.innerHTML=svg;
     host.querySelectorAll('.mk-hit').forEach(function(c){
       c.addEventListener('mousemove',function(e){ tip.textContent=c.getAttribute('data-l'); tip.style.opacity=1; tip.style.left=(e.clientX+12)+'px'; tip.style.top=(e.clientY-10)+'px'; });

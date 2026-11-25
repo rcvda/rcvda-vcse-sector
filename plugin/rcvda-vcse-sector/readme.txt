@@ -2,7 +2,7 @@
 Contributors: RCVDA
 Requires at least: 6.0
 Tested up to: 6.6
-Stable tag: 0.2.1
+Stable tag: 0.3.0
 License: GPLv2 or later
 
 "State of the Sector" — a living, weekly-updated dashboard of the registered VCSE sector size across the five Tees Valley authorities.
@@ -27,6 +27,9 @@ estate-wide and tracks dark mode). No external JavaScript libraries are used.
 [rcvda_vcse_sector title="State of the Sector"]  — override the heading
 
 == Changelog ==
+= 0.3.0 =
+New masthead intro and VCFSE house terminology across the dashboard. The KPI strip is rebuilt as two data-basis groups — "All VCFSE · whole registered sector" (active count + NAVCA whole-sector estimate) as white grey-edged tiles, and "Registered charities only" (turnover, median income, top-10 share, website) as filled charity-indigo tiles, with a caption explaining that income and websites exist only on the Charity Commission register. The website figure is now charities-denominated (declared a website divided by registered charities) rather than diluted across the non-charity segments. No change to the data spine, over-time charts or snapshot-detail sections.
+
 = 0.2.1 =
 Light-mode fix: panels now read as white cards. The card fill is a --card token that resolves to the theme's own `base` in light and `surface` in dark, instead of using the light-blue `surface` tint for every panel. `surface` is kept for the single callout note. Bar rails repointed to `divider` so they stay visible on the white cards. No data or behaviour change.
 
