@@ -2,6 +2,13 @@
 
 All notable changes to this plugin, most recent first. Format: `## YYYY-MM-DD — vX.Y.Z — description`.
 
+## 2026-11-25 — v0.4.8 — Lucide wayfinding glyphs + borough scope tag
+
+- Section band headings carry a 20px Lucide marker in brand blue (trending-up, chart-pie, calendar, pound-sterling, globe, building, book-open), using the band’s existing `h3 svg` hook.
+- Six panel heads carry an 18px inline Lucide glyph (Turnover/pound-sterling, Large vs small/scale, Income concentration/chart-pie, Digital presence/globe, Projected whole sector/users, Ten largest/building) — money is always pound-sterling, organisation always building.
+- When a borough is selected, each scoped panel gains a top-right scope tag: a map-pin plus the borough name, in the borough colour (an AA-safe shade on light — Middlesbrough #ac6300, Stockton #1a79bd — and the dark-mode variants on dark). Hidden for “Tees Valley (all five)”, and not shown on the all-authority panels (authority chart, latest-snapshot matrix) or the glossary.
+- Glyphs are inline Lucide paths (1.5 stroke, currentColor, aria-hidden), consistent with WEB.md → Iconography.
+
 ## 2026-11-25 — v0.4.7 — Founded chart: Societies lead the stack
 
 - In “When the sector was founded” the stack order is now Societies, Charities, CICs, CASCs — so registered societies always sit at the front (left) of each bar and the legend matches. Only the founded chart is affected; other charts and tables keep their order.

@@ -14,6 +14,21 @@
   var SEG_TOKEN={Charities:["--c-charity","#211D47"],CICs:["--c-cic","#E52D13"],Societies:["--c-society","#6C1D45"],CASCs:["--c-casc","#0E8A4F"]};
   var DECADES=["Pre-1960","1960s","1970s","1980s","1990s","2000s","2010s","2020s"];
   var BANDS=["£1m +","£500k - £1m","£250k - £500k","£100k - £250k","£75k - £100k","£50k - £75k","Over 25k","Over 10k","Under 10k"];
+  var VIC={
+    'trending-up':'<path d="M16 7h6v6"/><path d="m22 7-8.5 8.5-5-5L2 17"/>',
+    'chart-pie':'<path d="M21.21 15.89A10 10 0 1 1 8 2.83"/><path d="M22 12A10 10 0 0 0 12 2v10z"/>',
+    'calendar':'<path d="M8 2v4"/><path d="M16 2v4"/><rect width="18" height="18" x="3" y="4" rx="2"/><path d="M3 10h18"/>',
+    'pound-sterling':'<path d="M18 7c0-5.333-8-5.333-8 0"/><path d="M10 7v14"/><path d="M6 21h12"/><path d="M6 13h10"/>',
+    'globe':'<circle cx="12" cy="12" r="10"/><path d="M12 2a14.5 14.5 0 0 0 0 20 14.5 14.5 0 0 0 0-20"/><path d="M2 12h20"/>',
+    'building':'<rect width="16" height="20" x="4" y="2" rx="2" ry="2"/><path d="M9 22v-4h6v4"/><path d="M8 6h.01"/><path d="M16 6h.01"/><path d="M12 6h.01"/><path d="M12 10h.01"/><path d="M12 14h.01"/><path d="M16 10h.01"/><path d="M16 14h.01"/><path d="M8 10h.01"/><path d="M8 14h.01"/>',
+    'book-open':'<path d="M12 7v14"/><path d="M3 18a1 1 0 0 1-1-1V4a1 1 0 0 1 1-1h5a4 4 0 0 1 4 4 4 4 0 0 1 4-4h5a1 1 0 0 1 1 1v13a1 1 0 0 1-1 1h-6a3 3 0 0 0-3 3 3 3 0 0 0-3-3z"/>',
+    'scale':'<path d="m16 16 3-8 3 8c-.87.65-1.92 1-3 1s-2.13-.35-3-1Z"/><path d="m2 16 3-8 3 8c-.87.65-1.92 1-3 1s-2.13-.35-3-1Z"/><path d="M7 21h10"/><path d="M12 3v18"/><path d="M3 7h2c2 0 5-1 7-2 2 1 5 2 7 2h2"/>',
+    'users':'<path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M22 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/>',
+    'map-pin':'<path d="M20 10c0 6-8 12-8 12s-8-6-8-12a8 8 0 0 1 16 0Z"/><circle cx="12" cy="10" r="3"/>'};
+  function vicon(n,sz){ return '<svg width="'+sz+'" height="'+sz+'" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">'+(VIC[n]||'')+'</svg>'; }
+  var LA_INK_LIGHT={"Darlington":"#900030","Hartlepool":"#248000","Middlesbrough":"#ac6300","Redcar-and-Cleveland":"#217887","Stockton-on-Tees":"#1a79bd"};
+  var LA_INK_DARK={"Darlington":"#C24A72","Hartlepool":"#5AAE3A","Middlesbrough":"#F2A133","Redcar-and-Cleveland":"#4FA3B2","Stockton-on-Tees":"#5AAEE6"};
+  function rcIsDark(){ var t=document.documentElement.getAttribute('data-theme'); if(t) return t==='dark'; return !!(window.matchMedia&&window.matchMedia('(prefers-color-scheme:dark)').matches); }
   var MONTHS=["Jan","Feb","Mar","Apr","May","Jun","Jul","Aug","Sep","Oct","Nov","Dec"];
 
   function fmtDate(s){ if(!s) return "—"; var p=s.split('-'); return (+p[2])+" "+MONTHS[+p[1]-1]+" "+p[0]; }
@@ -83,32 +98,32 @@
       +'<button type="button" data-r="13w">13 wks</button><button type="button" data-r="12m">12 mths</button><button type="button" data-r="all" class="on">All</button></span></div>'
       +'<section class="kpis j-kpis"><div class="loading">Loading the latest snapshot…</div></section>'
 
-      +'<div class="band"><h3>Sector size over time</h3><div class="rule"></div></div>'
-      +'<section class="grid"><div class="panel col-12"><div class="panel-head"><h2 class="j-c1t">Active VCFSE organisations by authority</h2><div class="sub">Based-in, active · one line per authority</div></div><div class="j-chart1"><div class="loading">Loading…</div></div><div class="legend j-leg1"></div></div></section>'
+      +'<div class="band"><h3>'+vicon("trending-up",20)+'Sector size over time</h3><div class="rule"></div></div>'
+      +'<section class="grid"><div class="panel col-12 panel--noscope"><div class="panel-head"><h2 class="j-c1t">Active VCFSE organisations by authority</h2><div class="sub">Based-in, active · one line per authority</div></div><div class="j-chart1"><div class="loading">Loading…</div></div><div class="legend j-leg1"></div></div></section>'
       +'<section class="grid"><div class="panel col-7"><div class="panel-head"><h2 class="j-c2t">The four segments over time</h2><div class="sub">Based-in, active · one line per segment</div></div><div class="j-chart2"></div><div class="legend j-leg2"></div></div>'
-      +'<div class="panel col-5"><div class="panel-head"><h2>Latest snapshot</h2><div class="sub j-mxsub">Active based-in organisations</div></div><table class="matrix j-matrix"></table></div></section>'
+      +'<div class="panel col-5 panel--noscope"><div class="panel-head"><h2>Latest snapshot</h2><div class="sub j-mxsub">Active based-in organisations</div></div><table class="matrix j-matrix"></table></div></section>'
 
-      +'<div class="band"><h3>The sector by type</h3><div class="rule"></div></div>'
+      +'<div class="band"><h3>'+vicon("chart-pie",20)+'The sector by type</h3><div class="rule"></div></div>'
       +'<section class="grid"><div class="panel col-6"><div class="panel-head"><h2>Active sector by type</h2><div class="sub j-typesub"></div></div><div class="bars j-type"></div></div>'
-      +'<div class="panel col-6"><div class="panel-head"><h2>Projected whole sector</h2><div class="sub">What NAVCA predicts vs what’s on the register</div></div><div class="j-proj"></div></div></section>'
+      +'<div class="panel col-6"><div class="panel-head"><h2>'+vicon("users",18)+'Projected whole sector</h2><div class="sub">What NAVCA predicts vs what’s on the register</div></div><div class="j-proj"></div></div></section>'
 
-      +'<div class="band"><h3>Structure &amp; age</h3><div class="rule"></div></div>'
+      +'<div class="band"><h3>'+vicon("calendar",20)+'Structure &amp; age</h3><div class="rule"></div></div>'
       +'<section class="grid"><div class="panel col-12"><div class="panel-head"><h2>When the sector was founded</h2><div class="sub">Active organisations by decade of registration, coloured by type (oldest to most recent). CASCs carry no registration date, so are not shown.</div></div><div class="bars j-decades"></div><div class="legend j-decleg"></div></div></section>'
 
-      +'<div class="band"><h3>Money</h3><div class="rule"></div></div>'
-      +'<section class="grid"><div class="panel col-6"><div class="panel-head"><h2>Turnover of the active sector</h2><div class="sub j-incsub"></div></div><div class="bars j-income"></div></div>'
-      +'<div class="panel col-6"><div class="panel-head"><h2>Large vs small</h2><div class="sub">How the money concentrates by organisation size</div></div><div class="j-size"></div></div>'
-      +'<div class="panel col-12"><div class="panel-head"><h2>Income concentration</h2><div class="sub j-concsub"></div></div><div class="conc-bar"><div class="top j-conctop"></div></div><div class="mini j-concmini"></div></div></section>'
+      +'<div class="band"><h3>'+vicon("pound-sterling",20)+'Money</h3><div class="rule"></div></div>'
+      +'<section class="grid"><div class="panel col-6"><div class="panel-head"><h2>'+vicon("pound-sterling",18)+'Turnover of the active sector</h2><div class="sub j-incsub"></div></div><div class="bars j-income"></div></div>'
+      +'<div class="panel col-6"><div class="panel-head"><h2>'+vicon("scale",18)+'Large vs small</h2><div class="sub">How the money concentrates by organisation size</div></div><div class="j-size"></div></div>'
+      +'<div class="panel col-12"><div class="panel-head"><h2>'+vicon("chart-pie",18)+'Income concentration</h2><div class="sub j-concsub"></div></div><div class="conc-bar"><div class="top j-conctop"></div></div><div class="mini j-concmini"></div></div></section>'
 
-      +'<div class="band"><h3>Digital &amp; projection</h3><div class="rule"></div></div>'
-      +'<section class="grid"><div class="panel col-6"><div class="panel-head"><h2>Digital presence</h2><div class="sub">Active organisations with a website</div></div><div class="donut-wrap"><svg class="j-donut" width="122" height="122" viewBox="0 0 132 132" role="img"></svg><div class="mini j-digmini" style="flex:1"></div></div></div>'
+      +'<div class="band"><h3>'+vicon("globe",20)+'Digital &amp; projection</h3><div class="rule"></div></div>'
+      +'<section class="grid"><div class="panel col-6"><div class="panel-head"><h2>'+vicon("globe",18)+'Digital presence</h2><div class="sub">Active organisations with a website</div></div><div class="donut-wrap"><svg class="j-donut" width="122" height="122" viewBox="0 0 132 132" role="img"></svg><div class="mini j-digmini" style="flex:1"></div></div></div>'
       +'<div class="panel col-6"><div class="panel-head"><h2>Charity legal structure</h2><div class="sub j-legalsub"></div></div><div class="split j-legalsplit"></div><div class="mini j-legalmini"></div></div></section>'
 
-      +'<div class="band"><h3>The largest organisations</h3><div class="rule"></div></div>'
-      +'<section class="grid"><div class="panel col-12"><div class="panel-head"><h2>Ten largest active organisations by income</h2><div class="sub j-topsub"></div></div><table class="toptable j-top"></table></div></section>'
+      +'<div class="band"><h3>'+vicon("building",20)+'The largest organisations</h3><div class="rule"></div></div>'
+      +'<section class="grid"><div class="panel col-12"><div class="panel-head"><h2>'+vicon("building",18)+'Ten largest active organisations by income</h2><div class="sub j-topsub"></div></div><table class="toptable j-top"></table></div></section>'
 
-      +'<div class="band"><h3>Glossary</h3><div class="rule"></div></div>'
-      +'<section class="grid"><div class="panel col-12">'+GLOSS+'</div></section>'
+      +'<div class="band"><h3>'+vicon("book-open",20)+'Glossary</h3><div class="rule"></div></div>'
+      +'<section class="grid"><div class="panel col-12 panel--noscope">'+GLOSS+'</div></section>'
 
       +'<footer><b>Method.</b> Candidates are drawn from Find That Charity for the five '+esc(area)+' local-authority areas, classified by registered organisation type and filtered to those whose <b>registered office (HQ)</b> is in the borough. Scope: registered charities (including CIOs), CICs, registered societies / mutuals and CASCs; statutory bodies (schools, NHS, councils) excluded. Each weekly run recomputes the counts and the analytics; figures describe the active sector. The over-time series is seeded from earlier dated snapshots. <span class="j-built"></span>'
       +'<br><b>Sources.</b> Organisation records aggregated by <b>Find That Charity</b> (findthatcharity.uk, David Kane) from the primary UK registers — the <b>Charity Commission for England &amp; Wales</b>, <b>Companies House</b> (CICs), the <b>FCA Mutuals Public Register</b> (registered societies) and <b>HMRC</b> (CASCs). Register data © the respective bodies under the Open Government Licence v3.0; Find That Charity is published under CC-BY 4.0.'
@@ -206,6 +221,13 @@
     var measure=S.q('.j-seg').value, scope=S.q('.j-bor').value;
     S.root.classList.toggle('rc-borough', scope!=='TV');
     if(scope!=='TV'){ S.root.style.setProperty('--sel', col.bor[scope]); }
+    (function(){ var tag='';
+      if(scope!=='TV'){ var nm=(BORO.filter(function(b){return b[0]===scope;})[0]||['',scope])[1];
+        var ink=(rcIsDark()?LA_INK_DARK:LA_INK_LIGHT)[scope]||col.bor[scope];
+        tag='<span class="scopetag" style="color:'+ink+'">'+vicon('map-pin',15)+'<span>'+esc(nm)+'</span></span>'; }
+      S.root.querySelectorAll('.panel:not(.panel--noscope)').forEach(function(p){ var ex=p.querySelector(':scope > .scopetag');
+        if(!tag){ if(ex) ex.remove(); p.classList.remove('has-scopetag'); return; }
+        if(ex){ ex.outerHTML=tag; } else { p.insertAdjacentHTML('afterbegin', tag); } p.classList.add('has-scopetag'); }); })();
     var sLabel=scope==="TV"?"Tees Valley":(BORO.filter(function(b){return b[0]===scope;})[0]||["",scope])[1];
     S.q('.j-scope').innerHTML="Showing <b>"+esc(measure==="ALL"?"All VCFSE":measure)+"</b> · "+esc(sLabel);
     var A=scopeAgg(S,scope);
