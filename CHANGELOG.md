@@ -2,6 +2,12 @@
 
 All notable changes to this plugin, most recent first. Format: `## YYYY-MM-DD — vX.Y.Z — description`.
 
+## 2026-11-25 — v0.4.9 — Smart time-range default; label fixes
+
+- The over-time charts open on a new **Recent** range that fits the dense, regular-cadence run of whatever series are shown (snapshots within 120 days of each other), so sparse historical seed points no longer stretch the axis. **All** still shows the full back-history (now to 2020), and the scale fits the selected borough — a borough with earlier data shows more under All. Replaced the 13-week button with Recent.
+- Masthead intro now expands the abbreviations on first use: “Charitable Incorporated Organisations (CIOs)” and “Community Interest Companies (CICs)”.
+- The Charities segment now reads “Registered Charities” wherever it appears as a label (active-sector bars, the segment legend, the founded-chart legend); the data keys and the compact matrix header are unchanged.
+
 ## 2026-11-25 — v0.4.8 — Lucide wayfinding glyphs + borough scope tag
 
 - Section band headings carry a 20px Lucide marker in brand blue (trending-up, chart-pie, calendar, pound-sterling, globe, building, book-open), using the band’s existing `h3 svg` hook.

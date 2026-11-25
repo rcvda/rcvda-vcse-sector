@@ -9,6 +9,7 @@
 (function(){
   "use strict";
   var SEGMENTS=["Charities","CICs","Societies","CASCs"];
+  function segLabel(s){ return s==="Charities"?"Registered Charities":s; }
   var BORO=[["Darlington","Darlington"],["Hartlepool","Hartlepool"],["Middlesbrough","Middlesbrough"],["Redcar-and-Cleveland","Redcar & Cleveland"],["Stockton-on-Tees","Stockton-on-Tees"]];
   var LA_TOKEN={"Darlington":["--la-darlington","#900030"],"Hartlepool":["--la-hartlepool","#248000"],"Middlesbrough":["--la-middlesbrough","#EF8A00"],"Redcar-and-Cleveland":["--la-redcar-cleveland","#217887"],"Stockton-on-Tees":["--la-stockton","#1D8AD7"]};
   var SEG_TOKEN={Charities:["--c-charity","#211D47"],CICs:["--c-cic","#E52D13"],Societies:["--c-society","#6C1D45"],CASCs:["--c-casc","#0E8A4F"]};
@@ -79,7 +80,7 @@
     return '<div class="wrap">'
       +'<header class="masthead"><div><div class="eyebrow">'+esc(area)+' · Registered VCFSE Sector · Living time series</div><h1>'+esc(title)+'</h1></div>'
       +'<div class="meta">Latest snapshot <b class="j-snap">—</b><br>Updated weekly · Source: Find That Charity</div>'
-      +'<p class="lede"><b>State of the Sector</b> is a timed series produced by Redcar and Cleveland Voluntary Development Agency (RCVDA) that records the registered <b>Voluntary, Community, Faith and Social-Enterprise</b> (VCFSE) sector <b>based-in and trading from</b> the <b>five Tees Valley Authorities</b>. It brings together <b>Registered Charities</b> – including Charitable Incorporated Organisations; <b>Social Enterprises</b> – including Community Interest Companies, Registered Friendly Societies and Mutuals; and <b>Community Amateur Sports Clubs</b> (CASCs).</p></header>'
+      +'<p class="lede"><b>State of the Sector</b> is a timed series produced by Redcar and Cleveland Voluntary Development Agency (RCVDA) that records the registered <b>Voluntary, Community, Faith and Social-Enterprise</b> (VCFSE) sector <b>based-in and trading from</b> the <b>five Tees Valley Authorities</b>. It brings together <b>Registered Charities</b> – including Charitable Incorporated Organisations (CIOs); <b>Social Enterprises</b> – including Community Interest Companies (CICs), Registered Friendly Societies and Mutuals; and <b>Community Amateur Sports Clubs</b> (CASCs).</p></header>'
       +'<div class="note"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><line x1="12" y1="16" x2="12" y2="12"/><line x1="12" y1="8" x2="12.01" y2="8"/></svg>'
       +'<div><b>A living measure.</b> This dashboard reads the open dataset that RCVDA rebuilds every Monday from Find That Charity, so each weekly point appears automatically. The over-time charts are seeded from earlier snapshots; the detailed analytics describe the latest snapshot and build up week by week. Data: <a href="https://github.com/rcvda/tees-valley-vcse-sector" target="_blank" rel="noopener">rcvda/tees-valley-vcse-sector</a> (CC&nbsp;BY-NC-SA&nbsp;4.0).</div></div>'
       +'<div class="filterbar">'
@@ -95,7 +96,7 @@
       +'</div>'
       +'<span class="tag j-scope"></span>'
       +'<span class="rangebar j-range" role="group" aria-label="Trend time range"><label>Range</label>'
-      +'<button type="button" data-r="13w">13 wks</button><button type="button" data-r="12m">12 mths</button><button type="button" data-r="all" class="on">All</button></span></div>'
+      +'<button type="button" data-r="fit" class="on">Recent</button><button type="button" data-r="12m">12 mths</button><button type="button" data-r="all">All</button></span></div>'
       +'<section class="kpis j-kpis"><div class="loading">Loading the latest snapshot…</div></section>'
 
       +'<div class="band"><h3>'+vicon("trending-up",20)+'Sector size over time</h3><div class="rule"></div></div>'
@@ -135,7 +136,7 @@
     var ASRC=root.getAttribute('data-agg-src')||'', AFB=root.getAttribute('data-agg-fallback')||'';
     var TITLE=root.getAttribute('data-title')||'State of the Sector', AREA=root.getAttribute('data-area')||'Tees Valley';
     root.innerHTML=markup(TITLE,AREA);
-    var S={ root:root, tip:tip, DATA:[], AGG:null, hidden1:{}, hidden2:{}, range:'all' };
+    var S={ root:root, tip:tip, DATA:[], AGG:null, hidden1:{}, hidden2:{}, range:'fit' };
     S.q=function(c){ return root.querySelector(c); };
     var spineChain=[]; if(SRC)spineChain.push(SRC); if(FB&&FB!==SRC)spineChain.push(FB);
     var aggChain=[]; if(ASRC)aggChain.push(ASRC); if(AFB&&AFB!==ASRC)aggChain.push(AFB);
@@ -238,7 +239,7 @@
       series1.push({key:"TV",name:"Tees Valley total",color:col.tv,pts:tvSeries(S,measure),dashed:true,secondary:true});
       S.q('.j-c1t').textContent=(measure==="ALL"?"Active VCFSE organisations":("Active "+measure))+" by authority";
       drawChart(S,'.j-chart1',series1.filter(function(s){return !S.hidden1[s.key]&&s.pts.length;}),'.j-leg1',series1,S.hidden1);
-      var series2=SEGMENTS.map(function(s){ return {key:s,name:s,color:col.seg[s],pts:segmentSeries(S,scope,s)}; });
+      var series2=SEGMENTS.map(function(s){ return {key:s,name:segLabel(s),color:col.seg[s],pts:segmentSeries(S,scope,s)}; });
       S.q('.j-c2t').textContent="The four segments over time — "+sLabel;
       drawChart(S,'.j-chart2',series2.filter(function(s){return !S.hidden2[s.key]&&s.pts.length;}),'.j-leg2',series2,S.hidden2);
       renderMatrix(S);
@@ -279,7 +280,7 @@
     S.q('.j-typesub').textContent="Active based-in organisations · "+sLabel;
     var maxSeg=Math.max.apply(null,SEGMENTS.map(function(s){return A.by_segment[s]||0;}))||1;
     S.q('.j-type').innerHTML=SEGMENTS.map(function(s){ var n=A.by_segment[s]||0;
-      return '<div class="bar-row"><div class="lab">'+s+'</div><div class="track"><div class="fill" style="width:'+(100*n/maxSeg)+'%;background:'+col.seg[s]+'"></div></div><div class="val">'+commas(n)+'</div></div>'; }).join("");
+      return '<div class="bar-row"><div class="lab">'+segLabel(s)+'</div><div class="track"><div class="fill" style="width:'+(100*n/maxSeg)+'%;background:'+col.seg[s]+'"></div></div><div class="val">'+commas(n)+'</div></div>'; }).join("");
     // legal
     var L=A.legal; S.q('.j-legalsub').textContent=commas(L.total_charities)+" active registered charities";
     var inc=L.incorporated, uninc=L.unincorporated, tot=inc+uninc||1;
@@ -293,10 +294,10 @@
     function decTot(d){ return decSegs(d).reduce(function(a,x){return a+x[1];},0); }
     var maxD=Math.max.apply(null,DECADES.map(decTot))||1;
     S.q('.j-decades').innerHTML=DECADES.map(function(d){ var tot=decTot(d);
-      var stack=decSegs(d).filter(function(x){return x[1]>0;}).map(function(x){ var c=x[0]?col.seg[x[0]]:col.accent; return '<span style="width:'+(100*x[1]/maxD)+'%;background:'+c+'" title="'+esc((x[0]||'All')+': '+commas(x[1]))+'"></span>'; }).join('');
+      var stack=decSegs(d).filter(function(x){return x[1]>0;}).map(function(x){ var c=x[0]?col.seg[x[0]]:col.accent; return '<span style="width:'+(100*x[1]/maxD)+'%;background:'+c+'" title="'+esc((x[0]?segLabel(x[0]):'All')+': '+commas(x[1]))+'"></span>'; }).join('');
       return '<div class="bar-row"><div class="lab">'+esc(d)+'</div><div class="track stack">'+stack+'</div><div class="val">'+commas(tot)+'</div></div>'; }).join("");
     var present=DEC_ORDER.filter(function(s){ return DECADES.some(function(d){ var v=A.decades[d]; return v&&typeof v==='object'&&(v[s]||0)>0; }); });
-    S.q('.j-decleg').innerHTML=present.map(function(s){ return '<span class="legitem"><span class="dot" style="background:'+col.seg[s]+'"></span>'+esc(s)+'</span>'; }).join('');
+    S.q('.j-decleg').innerHTML=present.map(function(s){ return '<span class="legitem"><span class="dot" style="background:'+col.seg[s]+'"></span>'+esc(segLabel(s))+'</span>'; }).join('');
     // income bands
     S.q('.j-incsub').textContent=commas(A.no_income)+" report no income · avg "+gbpFull(A.avg_income);
     var maxB=Math.max.apply(null,BANDS.map(function(b){return A.income_bands[b]||0;}))||1;
@@ -359,7 +360,10 @@
     var host=S.q(hostSel), tip=S.tip;
     var cardBg=getComputedStyle((host.closest&&host.closest('.panel'))||host).backgroundColor||'#fff';
     var cut=-Infinity;
-    if(S.range && S.range!=='all'){ var days=(S.range==='13w')?91:365, mx=-Infinity;
+    if(S.range==='fit'){
+      var mx=-Infinity; series.forEach(function(s){s.pts.forEach(function(p){if(p.t>mx)mx=p.t;});});
+      if(mx>-Infinity) cut=mx-548*864e5;
+    } else if(S.range && S.range!=='all'){ var days=(S.range==='13w')?91:365, mx=-Infinity;
       allSeries.forEach(function(s){s.pts.forEach(function(p){if(p.t>mx)mx=p.t;});}); cut=mx-days*864e5; }
     var vseries=series.map(function(s){ return {key:s.key,name:s.name,color:s.color,dashed:s.dashed,secondary:s.secondary,pts:s.pts.filter(function(p){return p.t>=cut;})}; });
     var leg=S.q(legSel); leg.innerHTML="";
