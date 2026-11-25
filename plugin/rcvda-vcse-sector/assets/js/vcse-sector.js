@@ -74,6 +74,7 @@
     +'<div class="gh">Terms</div><dl>'
     +'<dt>Based in</dt><dd>The organisation’s <b>registered office</b> is in the borough — the canonical headline measure, kept separate from the wider “operating-from” reach measure.</dd>'
     +'<dt>Active</dt><dd>Currently on the register — not removed or dissolved.</dd>'
+    +'<dt>Income vs GVA</dt><dd>Total latest-year income of the active registered charities that report one, shown as a share of the area’s gross value added (ONS, balanced, current prices, '+GVA_YEAR+'). Income is turnover, not value added, so this is a scale comparison, not the sector’s share of the economy.</dd>'
     +'<dt>Sector turnover</dt><dd>The total latest-year income of the active organisations that report one; many small groups report none.</dd>'
     +'<dt>NAVCA model</dt><dd>A national estimate that registered charities are about 26% of the whole VCFSE sector, used to project the unregistered community groups no register captures.</dd></dl></div>';
 
@@ -261,6 +262,21 @@
      Commission register, so they are grouped and captioned as charities-only.
      The website rate is therefore charities-denominated (has_web / total
      charities), not diluted by the non-charity segments that cannot file one. */
+  /* Gross value added (balanced) at current basic prices, £ million — ONS
+     "Regional gross domestic product: local authorities", 1998 to 2024 edition
+     (released 23/09/2026), Table 1, year 2024 (provisional). Tees Valley = sum
+     of the five unitary authorities. Keyed by aggregate-block name. */
+  var GVA_YEAR=2024, GVA_M={"Hartlepool":1735,"Middlesbrough":3831,"Redcar-and-Cleveland":2228,"Stockton-on-Tees":6171,"Darlington":3059};
+  GVA_M["Tees Valley"]=GVA_M["Hartlepool"]+GVA_M["Middlesbrough"]+GVA_M["Redcar-and-Cleveland"]+GVA_M["Stockton-on-Tees"]+GVA_M["Darlington"];
+  function gvaTile(S,A){
+    var blk=S.AGG&&S.AGG.snapshots&&S.AGG.snapshots[S.AGG.latest], key=null;
+    if(blk){ for(var k in blk){ if(blk[k]===A){ key=k; break; } } }
+    var g=key&&GVA_M[key];
+    if(!g) return [gbp(A.sector_value),"Sector turnover","latest-year income"];
+    var pc=100*(A.sector_value||0)/(g*1e6);
+    var gs=g>=1e4?"£"+(g/1e3).toFixed(1)+"bn":"£"+(g/1e3).toFixed(2)+"bn";
+    return [pc.toFixed(1)+"%","Income vs GVA",gbp(A.sector_value)+" of "+gs+" ("+GVA_YEAR+")"];
+  }
   function renderKPIs(S,A,sLabel){
     var box=S.q('.j-kpis');
     if(!A){ box.innerHTML='<div class="loading">Loading the latest snapshot…</div>'; return; }
@@ -272,7 +288,7 @@
       ["~"+commas(A.navca.total),"Est. Whole Sector","inc. unregistered"]
     ];
     var charTiles=[
-      [gbp(A.sector_value),"Sector turnover","latest-year income"],
+      gvaTile(S,A),
       [gbpFull(A.median_income),"Median income","of those reporting"],
       [A.concentration.top10+"%","Top-10 share","of charity income"],
       [webChar+"%","Declared a website","of registered charities"]

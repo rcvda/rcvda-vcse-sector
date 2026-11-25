@@ -2,6 +2,13 @@
 
 All notable changes to this plugin, most recent first. Format: `## YYYY-MM-DD — vX.Y.Z — description`.
 
+## 2026-11-25 — v0.5.16 — KPI strip: replace Sector turnover with Income vs GVA
+
+- The first charity tile now shows active charities' latest-year income as a share of the selected area's gross value added, with the income and GVA in the sub-line (e.g. Tees Valley 2.1% — £351m of £17.0bn).
+- GVA is ONS *Regional gross domestic product: local authorities* (1998 to 2024 edition, released 23/09/2026), Table 1, balanced GVA at current basic prices, 2024 (provisional); Tees Valley is the sum of the five authorities. Held as a constant in the JS until the data runner carries it.
+- Each authority is now divided by its own GVA; the September aggregates used one fixed denominator for every area.
+- Glossary entry added, noting income is turnover rather than value added, so this is a scale comparison, not a share of the economy.
+
 ## 2026-11-25 — v0.5.15 — Latest snapshot matrix: one line per row; fix misaligned row rules
 
 - Number cells no longer wrap, so each change arrow sits beside its figure instead of dropping below it; tightened cell padding and arrow width so the table fits the existing col-5 panel without widening it.
