@@ -2,6 +2,8 @@
 
 All notable changes to this plugin, most recent first. Format: `## YYYY-MM-DD — vX.Y.Z — description`.
 
+## 2026-11-25 — v0.5.9 — Keep section headers and their glyphs fixed; theme only the chart data fills to the selected authority
+
 ## 2026-11-25 — v0.5.8 — Theme borough-sensitive section headers and default-blue chart fills to the selected authority's colour
 
 ## 2026-11-25 — v0.5.7 — Show the end-of-line value on every series line, not just the top line
