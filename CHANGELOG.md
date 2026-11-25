@@ -2,6 +2,15 @@
 
 All notable changes to this plugin, most recent first. Format: `## YYYY-MM-DD — vX.Y.Z — description`.
 
+## 2026-11-25 — v0.4.0 — Borough location pills; uniform KPI tiles; label tidy-up
+
+- Authority filter is now a row of borough-coloured location pills (the cycle-map model) in place of the dropdown: a “Tees Valley (all five)” pill in TVCA navy plus one per borough, each a 2px-outline chip that fills when selected; colours resolve from rcvda-core’s --la-*/--tv-navy tokens with the DESIGN.md borough hexes as fallback (dark text on Middlesbrough and Stockton). Selection drives every scope exactly as the dropdown did.
+- KPI tiles render at a uniform 165×116 (fixed height, was min-height), so all six cards match in width and height regardless of label length.
+- Whole-sector tile relabelled “Est. Whole Sector” (was “Estimated whole sector / incl. unregistered (NAVCA)”); the NAVCA/unregistered explanation moves into the strip caption.
+- Active-count tile relabelled “Registered Orgs” (was “Active organisations”).
+- Strip caption now opens with “Whole sector count includes unregistered organisations projected through the NAVCA model.” ahead of the existing charities-only note.
+- No data, chart or behaviour change.
+
 ## 2026-11-24 — v0.3.0 — Intro rewrite, VCFSE terminology, two-group KPI strip
 
 - New masthead intro: "State of the Sector is a timed series produced by RCVDA that records the registered Voluntary, Community, Faith and Social-Enterprise (VCFSE) sector based-in and trading from the five Tees Valley Authorities", naming the three families — Registered Charities (incl. CIOs); Social Enterprises (incl. CICs, registered societies / mutuals); and CASCs.

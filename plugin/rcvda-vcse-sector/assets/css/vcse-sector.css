@@ -40,6 +40,12 @@ html[data-theme="dark"] .rcvda-vcse-sector{ --c-charity:#8E88D4; --c-cic:#F2644C
 .rcvda-vcse-sector .filterbar label{font-size:.82rem;font-weight:700;color:var(--wp--preset--color--brand-light,#033E8C);display:flex;align-items:center;gap:6px;}
 .rcvda-vcse-sector .filterbar select{font:inherit;font-size:.92rem;font-weight:700;color:var(--wp--preset--color--contrast,#0E1F40);background:var(--wp--preset--color--base,#EEF3F8);border:1px solid var(--wp--preset--color--divider,#D4DEEA);border-radius:8px;padding:7px 30px 7px 12px;cursor:pointer;-webkit-appearance:none;appearance:none;background-image:url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 12 12'><path d='M2 4l4 4 4-4' stroke='%23808a9c' stroke-width='1.6' fill='none' stroke-linecap='round'/></svg>");background-repeat:no-repeat;background-position:right 10px center;}
 .rcvda-vcse-sector .filterbar select:focus-visible{outline:2px solid var(--wp--preset--color--brand-light,#033E8C);outline-offset:1px;}
+.rcvda-vcse-sector .filterbar .borchips{display:flex;flex-wrap:wrap;gap:.4rem;align-items:center;flex:1 1 100%;order:-1;margin-bottom:2px;}
+.rcvda-vcse-sector .borchip{font:inherit;font-size:.82rem;font-weight:700;line-height:1;padding:7px 13px;border-radius:999px;cursor:pointer;background:var(--card,#FFFFFF);color:var(--wp--preset--color--contrast,#0E1F40);border:2px solid var(--cat,#2A3B72);}
+.rcvda-vcse-sector .borchip:hover{filter:brightness(1.06);}
+.rcvda-vcse-sector .borchip:focus-visible{outline:3px solid var(--wp--preset--color--brand-light,#033E8C);outline-offset:1px;}
+.rcvda-vcse-sector .borchip.is-active{background:var(--cat,#2A3B72);border-color:var(--cat,#2A3B72);color:#fff;}
+.rcvda-vcse-sector .borchip[data-value="Middlesbrough"].is-active,.rcvda-vcse-sector .borchip[data-value="Stockton-on-Tees"].is-active{color:#1a1a1a;}
 .rcvda-vcse-sector .filterbar .tag{font-size:.82rem;color:var(--wp--preset--color--muted,#51607A);}
 .rcvda-vcse-sector .filterbar .tag b{color:var(--wp--preset--color--contrast,#0E1F40);font-variant-numeric:tabular-nums;}
 .rcvda-vcse-sector .rangebar{display:inline-flex;align-items:center;gap:4px;margin-left:auto;}
@@ -61,7 +67,7 @@ html[data-theme="dark"] .rcvda-vcse-sector{ --c-charity:#8E88D4; --c-cic:#F2644C
 .rcvda-vcse-sector .ktiles{display:flex;gap:13px;flex-wrap:wrap;}
 .rcvda-vcse-sector .kdiv{width:1px;align-self:stretch;background:var(--wp--preset--color--divider,#D4DEEA);margin-top:26px;}
 @container (max-width:1100px){.rcvda-vcse-sector .kdiv{display:none;}}
-.rcvda-vcse-sector .kpi{width:165px;min-height:116px;border-radius:12px;padding:15px 17px 13px;display:flex;flex-direction:column;gap:2px;}
+.rcvda-vcse-sector .kpi{width:165px;height:116px;border-radius:12px;padding:15px 17px 13px;display:flex;flex-direction:column;gap:2px;}
 .rcvda-vcse-sector .g-all .kpi{background:var(--card,#FFFFFF);border:1.5px solid var(--greyedge,#B7C0CC);box-shadow:0 1px 3px rgba(14,31,64,.05);}
 .rcvda-vcse-sector .g-char .kpi{background:var(--c-charity,#211D47);box-shadow:0 2px 6px rgba(14,31,64,.14);}
 .rcvda-vcse-sector .kpi .v{font-size:1.6rem;font-weight:800;line-height:1.05;}

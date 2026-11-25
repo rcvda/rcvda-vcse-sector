@@ -69,7 +69,15 @@
       +'<div><b>A living measure.</b> This dashboard reads the open dataset that RCVDA rebuilds every Monday from Find That Charity, so each weekly point appears automatically. The over-time charts are seeded from earlier snapshots; the detailed analytics describe the latest snapshot and build up week by week. Data: <a href="https://github.com/rcvda/tees-valley-vcse-sector" target="_blank" rel="noopener">rcvda/tees-valley-vcse-sector</a> (CC&nbsp;BY-NC-SA&nbsp;4.0).</div></div>'
       +'<div class="filterbar">'
       +'<label>Measure</label><select class="j-seg"><option value="ALL">All VCFSE (total)</option><option value="Charities">Charities</option><option value="CICs">CICs</option><option value="Societies">Societies</option><option value="CASCs">CASCs</option></select>'
-      +'<label style="margin-left:6px">Authority</label><select class="j-bor"><option value="TV">'+esc(area)+' (all five)</option><option value="Darlington">Darlington</option><option value="Hartlepool">Hartlepool</option><option value="Middlesbrough">Middlesbrough</option><option value="Redcar-and-Cleveland">Redcar &amp; Cleveland</option><option value="Stockton-on-Tees">Stockton-on-Tees</option></select>'
+      +'<input type="hidden" class="j-bor" value="TV">'
+      +'<div class="borchips j-borchips" role="group" aria-label="Authority">'
+      +'<button type="button" class="borchip is-active" data-value="TV" aria-pressed="true" style="--cat:var(--tv-navy,#2A3B72)">'+esc(area)+' (all five)</button>'
+      +'<button type="button" class="borchip" data-value="Darlington" aria-pressed="false" style="--cat:var(--la-darlington,#900030)">Darlington</button>'
+      +'<button type="button" class="borchip" data-value="Hartlepool" aria-pressed="false" style="--cat:var(--la-hartlepool,#248000)">Hartlepool</button>'
+      +'<button type="button" class="borchip" data-value="Middlesbrough" aria-pressed="false" style="--cat:var(--la-middlesbrough,#EF8A00)">Middlesbrough</button>'
+      +'<button type="button" class="borchip" data-value="Redcar-and-Cleveland" aria-pressed="false" style="--cat:var(--la-redcar-cleveland,#217887)">Redcar &amp; Cleveland</button>'
+      +'<button type="button" class="borchip" data-value="Stockton-on-Tees" aria-pressed="false" style="--cat:var(--la-stockton,#1D8AD7)">Stockton-on-Tees</button>'
+      +'</div>'
       +'<span class="tag j-scope"></span>'
       +'<span class="rangebar j-range" role="group" aria-label="Trend time range"><label>Range</label>'
       +'<button type="button" data-r="13w">13 wks</button><button type="button" data-r="12m">12 mths</button><button type="button" data-r="all" class="on">All</button></span></div>'
@@ -125,7 +133,7 @@
     if(window.matchMedia){ try{ window.matchMedia('(prefers-color-scheme:dark)').addEventListener('change',reRender); }catch(e){} }
     if('ResizeObserver' in window){ new ResizeObserver(reRender).observe(S.q('.j-chart1')); }
     S.q('.j-seg').addEventListener('change',function(){ render(S); });
-    S.q('.j-bor').addEventListener('change',function(){ render(S); });
+    S.root.querySelectorAll('.j-borchips .borchip').forEach(function(b){ b.addEventListener('click',function(){ var hid=S.q('.j-bor'); if(hid.value===b.getAttribute('data-value')) return; hid.value=b.getAttribute('data-value'); S.root.querySelectorAll('.j-borchips .borchip').forEach(function(x){ var on=(x===b); x.classList.toggle('is-active',on); x.setAttribute('aria-pressed',on?'true':'false'); }); render(S); }); });
     S.q('.j-range').addEventListener('click',function(e){ var b=e.target.closest('button'); if(!b)return;
       S.range=b.getAttribute('data-r');
       this.querySelectorAll('button').forEach(function(x){ x.classList.toggle('on',x===b); });
@@ -228,8 +236,8 @@
     var charN=(A.legal&&A.legal.total_charities)||0;
     var webChar=charN?Math.round(100*A.has_web/charN):A.web_pct;
     var allTiles=[
-      [commas(A.active),"Active organisations","based-in · "+fmtDate(latestDate(S))],
-      ["~"+commas(A.navca.total),"Estimated whole sector","incl. unregistered (NAVCA)"]
+      [commas(A.active),"Registered Orgs","based-in · "+fmtDate(latestDate(S))],
+      ["~"+commas(A.navca.total),"Est. Whole Sector",""]
     ];
     var charTiles=[
       [gbp(A.sector_value),"Sector turnover","latest-year income"],
@@ -241,7 +249,7 @@
       +'<div class="kgroup g-all"><div class="ghead"><span class="sw sw-all"></span>All VCFSE · whole registered sector</div>'+tiles(allTiles)+'</div>'
       +'<div class="kdiv" aria-hidden="true"></div>'
       +'<div class="kgroup g-char"><div class="ghead"><span class="sw sw-char"></span>Registered charities only</div>'+tiles(charTiles)+'</div></div>'
-      +'<p class="kfoot"><b>Income and website figures cover registered charities only.</b> CICs, registered societies and CASCs don’t file income or a website through their registers, so the sector’s true turnover and online presence are higher than shown.</p>';
+      +'<p class="kfoot">Whole sector count includes unregistered organisations projected through the NAVCA model. <b>Income and website figures cover registered charities only.</b> CICs, registered societies and CASCs don’t file income or a website through their registers, so the sector’s true turnover and online presence are higher than shown.</p>';
   }
 
   function renderDetail(S,A,sLabel){
