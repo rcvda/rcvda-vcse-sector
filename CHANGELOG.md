@@ -2,6 +2,10 @@
 
 All notable changes to this plugin, most recent first. Format: `## YYYY-MM-DD — vX.Y.Z — description`.
 
+## 2026-11-25 — v0.4.7 — Founded chart: Societies lead the stack
+
+- In “When the sector was founded” the stack order is now Societies, Charities, CICs, CASCs — so registered societies always sit at the front (left) of each bar and the legend matches. Only the founded chart is affected; other charts and tables keep their order.
+
 ## 2026-11-25 — v0.4.6 — Founded chart: horizontal bars coloured by type
 
 - “When the sector was founded” is now a horizontal bar per decade, each bar stacked in the four segment colours (Charities, CICs, Societies, CASCs) with a legend, so the type mix within each decade is visible — e.g. the pre-1960 base is all registered societies and the 2020s are CIC-led. Falls back to a single-colour bar if the data still carries the old flat shape.

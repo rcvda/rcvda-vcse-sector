@@ -266,13 +266,14 @@
     S.q('.j-legalmini').innerHTML=[["CIO — foundation",L.cio_foundation],["CIO — association",L.cio_association],["Charitable company",L.charitable_company],["Trust",L.trust]]
       .map(function(r){return '<div class="r"><span class="k">'+r[0]+'</span><span>'+commas(r[1])+'</span></div>';}).join("");
     // decades — horizontal bars, stacked by segment type (handles legacy flat shape too)
-    function decSegs(d){ var v=A.decades[d]; if(v&&typeof v==='object'){ return SEGMENTS.map(function(s){return [s,v[s]||0];}); } return [["",(+v||0)]]; }
+    var DEC_ORDER=["Societies","Charities","CICs","CASCs"];
+    function decSegs(d){ var v=A.decades[d]; if(v&&typeof v==='object'){ return DEC_ORDER.map(function(s){return [s,v[s]||0];}); } return [["",(+v||0)]]; }
     function decTot(d){ return decSegs(d).reduce(function(a,x){return a+x[1];},0); }
     var maxD=Math.max.apply(null,DECADES.map(decTot))||1;
     S.q('.j-decades').innerHTML=DECADES.map(function(d){ var tot=decTot(d);
       var stack=decSegs(d).filter(function(x){return x[1]>0;}).map(function(x){ var c=x[0]?col.seg[x[0]]:col.accent; return '<span style="width:'+(100*x[1]/maxD)+'%;background:'+c+'" title="'+esc((x[0]||'All')+': '+commas(x[1]))+'"></span>'; }).join('');
       return '<div class="bar-row"><div class="lab">'+esc(d)+'</div><div class="track stack">'+stack+'</div><div class="val">'+commas(tot)+'</div></div>'; }).join("");
-    var present=SEGMENTS.filter(function(s){ return DECADES.some(function(d){ var v=A.decades[d]; return v&&typeof v==='object'&&(v[s]||0)>0; }); });
+    var present=DEC_ORDER.filter(function(s){ return DECADES.some(function(d){ var v=A.decades[d]; return v&&typeof v==='object'&&(v[s]||0)>0; }); });
     S.q('.j-decleg').innerHTML=present.map(function(s){ return '<span class="legitem"><span class="dot" style="background:'+col.seg[s]+'"></span>'+esc(s)+'</span>'; }).join('');
     // income bands
     S.q('.j-incsub').textContent=commas(A.no_income)+" report no income · avg "+gbpFull(A.avg_income);
