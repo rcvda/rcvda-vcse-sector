@@ -2,6 +2,10 @@
 
 All notable changes to this plugin, most recent first. Format: `## YYYY-MM-DD — vX.Y.Z — description`.
 
+## 2026-11-25 — v0.5.11 — Move the Measure control onto the by-authority chart it drives; keep Range as the section-level time control
+
+## 2026-11-25 — v0.5.10 — Keep the Ten-largest table neutral; theme only standalone data charts, not table chrome
+
 ## 2026-11-25 — v0.5.9 — Keep section headers and their glyphs fixed; theme only the chart data fills to the selected authority
 
 ## 2026-11-25 — v0.5.8 — Theme borough-sensitive section headers and default-blue chart fills to the selected authority's colour
