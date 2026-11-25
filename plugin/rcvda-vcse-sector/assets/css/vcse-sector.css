@@ -58,18 +58,31 @@ html[data-theme="dark"] .rcvda-vcse-sector{ --c-charity:#8E88D4; --c-cic:#F2644C
 .rcvda-vcse-sector .trendctl select,.rcvda-vcse-sector .filterbar select{font:inherit;font-size:.92rem;font-weight:700;color:var(--wp--preset--color--contrast,#0E1F40);background:var(--wp--preset--color--base,#EEF3F8);border:1px solid var(--wp--preset--color--divider,#D4DEEA);border-radius:8px;padding:7px 30px 7px 12px;cursor:pointer;-webkit-appearance:none;appearance:none;background-image:url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 12 12'><path d='M2 4l4 4 4-4' stroke='%23808a9c' stroke-width='1.6' fill='none' stroke-linecap='round'/></svg>");background-repeat:no-repeat;background-position:right 10px center;}
 .rcvda-vcse-sector .trendctl select:focus-visible,.rcvda-vcse-sector .filterbar select:focus-visible{outline:2px solid var(--wp--preset--color--brand-light,#033E8C);outline-offset:1px;}
 .rcvda-vcse-sector .filterbar .borchips{display:flex;flex-wrap:wrap;gap:.4rem;align-items:center;flex:1 1 100%;order:-1;margin-bottom:2px;}
-.rcvda-vcse-sector .borchip{font:inherit;font-size:.82rem;font-weight:700;line-height:1;padding:7px 13px;border-radius:999px;cursor:pointer;background:var(--card,#FFFFFF);color:var(--wp--preset--color--contrast,#0E1F40);border:2px solid var(--cat,#2A3B72);}
-.rcvda-vcse-sector .borchip:hover{filter:brightness(1.06);}
+/* Filter pills — the estate's canonical pill shape (10px corners, padding .5em 1em) with the
+   category-colour scheme (DESIGN.md: Filter pills / tabs, amended 25/11/2026): white chip,
+   2px outline in the category colour (borough / VCFSE organisation type; Tees Valley navy for
+   whole-area and "All"), hover = tint of the same colour, selected = filled with it. */
+.rcvda-vcse-sector .borchip{font:inherit;font-size:.82rem;font-weight:700;line-height:1;padding:.5em 1em;border-radius:10px;cursor:pointer;background:var(--card,#FFFFFF);color:var(--wp--preset--color--contrast,#0E1F40);border:2px solid var(--cat,#2A3B72);}
+.rcvda-vcse-sector .borchip:hover{background:color-mix(in srgb,var(--cat,#2A3B72) 22%,var(--card,#FFFFFF));}
+.rcvda-vcse-sector .borchip.is-active:hover{background:var(--cat,#2A3B72);filter:brightness(.92);}
 .rcvda-vcse-sector .borchip:focus-visible{outline:3px solid var(--wp--preset--color--brand-light,#033E8C);outline-offset:1px;}
 .rcvda-vcse-sector .borchip.is-active{background:var(--cat,#2A3B72);border-color:var(--cat,#2A3B72);color:#fff;}
 .rcvda-vcse-sector .borchip[data-value="Middlesbrough"].is-active,.rcvda-vcse-sector .borchip[data-value="Stockton-on-Tees"].is-active{color:#1a1a1a;}
+/* dark: the organisation-type dark variants are light fills, so selected text goes navy (AA 5.0-7.1:1) */
+html[data-theme="dark"] .rcvda-vcse-sector .borchip.is-active:is([data-value="Charities"],[data-value="CICs"],[data-value="Societies"],[data-value="CASCs"]){color:#1B1740;}
+@media (prefers-color-scheme:dark){html:not([data-theme]) .rcvda-vcse-sector .borchip.is-active:is([data-value="Charities"],[data-value="CICs"],[data-value="Societies"],[data-value="CASCs"]){color:#1B1740;}}
 .rcvda-vcse-sector .trendctl .tag,.rcvda-vcse-sector .filterbar .tag{font-size:.82rem;color:var(--wp--preset--color--muted,#51607A);}
 .rcvda-vcse-sector .trendctl .tag b,.rcvda-vcse-sector .filterbar .tag b{color:var(--wp--preset--color--contrast,#0E1F40);font-variant-numeric:tabular-nums;}
 .rcvda-vcse-sector .segchips{display:inline-flex;flex-wrap:wrap;gap:.4rem;align-items:center;}
 .rcvda-vcse-sector .rangebar{display:inline-flex;align-items:center;gap:4px;margin-left:auto;}
 .rcvda-vcse-sector .rangebar label{margin-right:2px;}
-.rcvda-vcse-sector .rangebar button{font:inherit;font-size:.76rem;font-weight:700;color:var(--wp--preset--color--muted,#51607A);background:transparent;border:1px solid var(--wp--preset--color--divider,#D4DEEA);border-radius:999px;padding:5px 11px;cursor:pointer;}
-.rcvda-vcse-sector .rangebar button.on{color:#fff;background:var(--wp--preset--color--brand-light,#033E8C);border-color:var(--wp--preset--color--brand-light,#033E8C);}
+/* range buttons: pill shape; selected = Tees Valley navy (dark: its dark variant), hover = navy tint */
+.rcvda-vcse-sector .rangebar{--rng:var(--tv-navy,#2A3B72);}
+html[data-theme="dark"] .rcvda-vcse-sector .rangebar{--rng:#5A6BA8;}
+@media (prefers-color-scheme:dark){html:not([data-theme]) .rcvda-vcse-sector .rangebar{--rng:#5A6BA8;}}
+.rcvda-vcse-sector .rangebar button{font:inherit;font-size:.76rem;font-weight:700;color:var(--wp--preset--color--muted,#51607A);background:transparent;border:1px solid var(--wp--preset--color--divider,#D4DEEA);border-radius:10px;padding:5px 11px;cursor:pointer;}
+.rcvda-vcse-sector .rangebar button:hover{border-color:var(--rng);color:var(--wp--preset--color--contrast,#0E1F40);background:color-mix(in srgb,var(--rng) 15%,transparent);}
+.rcvda-vcse-sector .rangebar button.on,.rcvda-vcse-sector .rangebar button.on:hover{color:#fff;background:var(--rng);border-color:var(--rng);}
 .rcvda-vcse-sector .rangebar button:focus-visible{outline:2px solid var(--wp--preset--color--brand-light,#033E8C);outline-offset:1px;}
 .rcvda-vcse-sector .leg-note{display:inline-flex;align-items:center;gap:6px;font-size:.76rem;color:var(--wp--preset--color--muted,#51607A);opacity:.9;}
 .rcvda-vcse-sector .leg-note .mk-part-key{width:10px;height:10px;border-radius:50%;background:var(--card,#FFFFFF);border:1.6px solid var(--wp--preset--color--muted,#51607A);display:inline-block;flex:none;}
@@ -138,6 +151,8 @@ html[data-theme="dark"] .rcvda-vcse-sector{ --c-charity:#8E88D4; --c-cic:#F2644C
 .rcvda-vcse-sector .legend{display:flex;flex-wrap:wrap;gap:6px 16px;margin-top:14px;font-size:.78rem;color:var(--wp--preset--color--muted,#51607A);}
 .rcvda-vcse-sector .legend button{font:inherit;font-size:.78rem;color:var(--wp--preset--color--muted,#51607A);background:none;border:none;cursor:pointer;display:inline-flex;align-items:center;gap:7px;padding:2px 4px;border-radius:6px;}
 .rcvda-vcse-sector .legend button[aria-pressed="false"]{opacity:.35;text-decoration:line-through;}
+.rcvda-vcse-sector .legend button:hover{text-decoration:underline;}
+.rcvda-vcse-sector .legend button:focus-visible{outline:2px solid var(--wp--preset--color--brand-light,#033E8C);outline-offset:1px;}
 .rcvda-vcse-sector .legend .dot{width:11px;height:11px;border-radius:3px;flex:none;}
 
 /* horizontal bars */

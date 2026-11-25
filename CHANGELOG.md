@@ -2,6 +2,15 @@
 
 All notable changes to this plugin, most recent first. Format: `## YYYY-MM-DD — vX.Y.Z — description`.
 
+## 2026-11-25 — v0.5.23 — Filter pills: standard shape, category-colour hover, Tees Valley navy range
+
+- Authority and Measure pills take the estate's standard pill shape (10px corners, padding .5em 1em) and keep the dashboard's colour scheme: white chip, 2px outline in the category colour, filled when selected. Text size unchanged (.82rem) so the authority row stays on one line.
+- Hover now shows the pill's own colour: a tint of its borough / organisation-type colour (Tees Valley navy for the whole-area and All pills). Previously a 6% brightness change, invisible on the white chips. Selected pills darken slightly on hover.
+- Dark mode: selected organisation-type pills use navy text (`#1B1740`) on their light dark-mode fills — white failed AA (3.1–3.4:1); now 5.0–7.1:1.
+- Range buttons (Recent / 12 mths / All): selected state moves from brand-light blue to **Tees Valley navy** (`#2A3B72`; dark `#5A6BA8`, white text 5.1:1), with a matching hover; 10px corners.
+- Legend toggles: underline on hover and a keyboard focus outline.
+- Follows DESIGN.md *Filter pills / tabs* as amended 25/11/2026 (category-colour pills for data tools).
+
 ## 2026-11-25 — v0.5.22 — Employees and Volunteers tiles read live data
 
 - The Employees and Volunteers tiles now read `workforce` from the weekly aggregates (from the 25/11/2026 snapshot), summed from each active charity's latest annual return, with the reporting count in the sub-line. The fixed 08/09/2026 figures remain only as a fallback for snapshots without `workforce`.
