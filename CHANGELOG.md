@@ -2,6 +2,10 @@
 
 All notable changes to this plugin, most recent first. Format: `## YYYY-MM-DD — vX.Y.Z — description`.
 
+## 2026-11-25 — v0.5.19 — Founded chart: 1px seam between stacked segments in light mode
+
+- In *When the sector was founded*, each segment after the first in a stacked bar now carries a 1px card-coloured (white) seam on its left edge in light mode, so neighbouring segment colours no longer merge. Drawn as an inset shadow, so segment widths and totals are unchanged. Dark mode unchanged.
+
 ## 2026-11-25 — v0.5.18 — KPI strip: group keys move below the tiles
 
 - The two group keys (All VCFSE · whole registered sector / Registered charities only) now sit below the tiles and directly above their matching footnotes, so each key heads its own note rather than floating above the strip. Still aligned to the 2 + 4 tile split; spacing adjusted (key 14px below the tiles, note 6px below the key). Employees/Volunteers sub-lines shortened to "N reporting · Sep 2026" so they stay on one line (full date is in the footnote). No other change to the tiles or the narrow-width behaviour.
