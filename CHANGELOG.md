@@ -2,6 +2,11 @@
 
 All notable changes to this plugin, most recent first. Format: `## YYYY-MM-DD — vX.Y.Z — description`.
 
+## 2026-11-25 — v0.5.1 — Trend chart scopes to borough; total leads the legend
+
+- The “Sector size over time” authority chart now responds to the borough pills: “Tees Valley (all five)” shows every borough line plus the total (legend toggles still let you compare any subset); selecting a borough scopes the chart to that borough’s single trend line, with the title and borough scope tag updating to match.
+- Tees Valley total now leads the chart legend instead of trailing it.
+
 ## 2026-11-25 — v0.5.0 — Move Measure and Range to the trend charts
 
 - The Measure and Range controls move out of the top filter bar (which now holds only the global borough pills) into a controls row directly under the “Sector size over time” heading — beside the over-time charts they actually drive. The headline KPIs and detail panels respond only to the borough pills, so the controls now sit at the level they affect.

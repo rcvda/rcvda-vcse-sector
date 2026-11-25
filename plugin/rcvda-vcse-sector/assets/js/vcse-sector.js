@@ -99,7 +99,7 @@
 
       +'<div class="band"><h3>'+vicon("trending-up",20)+'Sector size over time</h3><div class="rule"></div></div>'
       +'<div class="trendctl"><label>Measure</label><input type="hidden" class="j-seg" value="ALL"><div class="segchips" role="group" aria-label="Measure"><button type="button" class="borchip is-active" data-value="ALL" aria-pressed="true" style="--cat:var(--tv-navy,#2A3B72)">All VCFSE</button><button type="button" class="borchip" data-value="Charities" aria-pressed="false" style="--cat:var(--c-charity,#211D47)">Registered Charities</button><button type="button" class="borchip" data-value="CICs" aria-pressed="false" style="--cat:var(--c-cic,#E52D13)">CICs</button><button type="button" class="borchip" data-value="Societies" aria-pressed="false" style="--cat:var(--c-society,#6C1D45)">Societies</button><button type="button" class="borchip" data-value="CASCs" aria-pressed="false" style="--cat:var(--c-casc,#0E8A4F)">CASCs</button></div><span class="tag j-scope"></span><span class="rangebar j-range" role="group" aria-label="Trend time range"><label>Range</label><button type="button" data-r="fit" class="on">Recent</button><button type="button" data-r="12m">12 mths</button><button type="button" data-r="all">All</button></span></div>'
-      +'<section class="grid"><div class="panel col-12 panel--noscope"><div class="panel-head"><h2 class="j-c1t">Active VCFSE organisations by authority</h2><div class="sub">Based-in, active · one line per authority</div></div><div class="j-chart1"><div class="loading">Loading…</div></div><div class="legend j-leg1"></div></div></section>'
+      +'<section class="grid"><div class="panel col-12"><div class="panel-head"><h2 class="j-c1t">Active VCFSE organisations by authority</h2><div class="sub j-c1sub">Based-in, active · one line per authority</div></div><div class="j-chart1"><div class="loading">Loading…</div></div><div class="legend j-leg1"></div></div></section>'
       +'<section class="grid"><div class="panel col-7"><div class="panel-head"><h2 class="j-c2t">The four segments over time</h2><div class="sub">Based-in, active · one line per segment</div></div><div class="j-chart2"></div><div class="legend j-leg2"></div></div>'
       +'<div class="panel col-5 panel--noscope"><div class="panel-head"><h2>Latest snapshot</h2><div class="sub j-mxsub">Active based-in organisations</div></div><table class="matrix j-matrix"></table></div></section>'
 
@@ -234,9 +234,17 @@
     renderKPIs(S,A,sLabel);
     // trends
     if(S.DATA.length){
-      var series1=BORO.map(function(b){ return {key:b[0],name:b[1],color:col.bor[b[0]],pts:boroughSeries(S,b[0],measure)}; });
-      series1.push({key:"TV",name:"Tees Valley total",color:col.tv,pts:tvSeries(S,measure),dashed:true,secondary:true});
-      S.q('.j-c1t').textContent=(measure==="ALL"?"Active VCFSE organisations":("Active "+measure))+" by authority";
+      var series1;
+      if(scope==="TV"){
+        series1=[{key:"TV",name:"Tees Valley total",color:col.tv,pts:tvSeries(S,measure),dashed:true,secondary:true}];
+        BORO.forEach(function(b){ series1.push({key:b[0],name:b[1],color:col.bor[b[0]],pts:boroughSeries(S,b[0],measure)}); });
+        S.q('.j-c1t').textContent=(measure==="ALL"?"Active VCFSE organisations":("Active "+segLabel(measure)))+" by authority";
+        S.q('.j-c1sub').textContent="Based-in, active \u00b7 one line per authority";
+      } else {
+        series1=[{key:scope,name:sLabel,color:col.bor[scope],pts:boroughSeries(S,scope,measure)}];
+        S.q('.j-c1t').textContent=(measure==="ALL"?"Active VCFSE organisations":("Active "+segLabel(measure)))+" in "+sLabel;
+        S.q('.j-c1sub').textContent="Based-in, active";
+      }
       drawChart(S,'.j-chart1',series1.filter(function(s){return !S.hidden1[s.key]&&s.pts.length;}),'.j-leg1',series1,S.hidden1);
       var series2=SEGMENTS.map(function(s){ return {key:s,name:segLabel(s),color:col.seg[s],pts:segmentSeries(S,scope,s)}; });
       S.q('.j-c2t').textContent="The four segments over time — "+sLabel;
