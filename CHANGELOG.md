@@ -2,6 +2,10 @@
 
 All notable changes to this plugin, most recent first. Format: `## YYYY-MM-DD — vX.Y.Z — description`.
 
+## 2026-11-25 — v0.5.18 — KPI strip: group keys move below the tiles
+
+- The two group keys (All VCFSE · whole registered sector / Registered charities only) now sit below the tiles and directly above their matching footnotes, so each key heads its own note rather than floating above the strip. Still aligned to the 2 + 4 tile split; spacing adjusted (key 14px below the tiles, note 6px below the key). Employees/Volunteers sub-lines shortened to "N reporting · Sep 2026" so they stay on one line (full date is in the footnote). No other change to the tiles or the narrow-width behaviour.
+
 ## 2026-11-25 — v0.5.17 — KPI strip: restore Sector turnover; Income vs GVA second; Employees and Volunteers tiles
 
 - Sector turnover is back as the first charity tile (v0.5.16 had replaced it). Income vs GVA moves to second, replacing Median income; its sub-line now reads "of £Xbn GVA (2024)" since turnover sits beside it. Falls back to Median income if an area has no GVA figure.
