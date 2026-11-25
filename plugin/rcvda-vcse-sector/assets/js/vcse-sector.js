@@ -98,7 +98,7 @@
       +'<section class="kpis j-kpis"><div class="loading">Loading the latest snapshot…</div></section>'
 
       +'<div class="band"><h3>'+vicon("trending-up",20)+'Sector size over time</h3><div class="rule"></div></div>'
-      +'<div class="trendctl"><span class="rangebar j-range" role="group" aria-label="Trend time range"><label>Range</label><button type="button" data-r="fit" class="on">Recent</button><button type="button" data-r="12m">12 mths</button><button type="button" data-r="all">All</button></span></div>'
+      +'<div class="trendctl rangebox"><div class="rangehead"><label>Range</label><span class="rangebar j-range" role="group" aria-label="Trend time range"><button type="button" data-r="fit" class="on">Recent</button><button type="button" data-r="12m">12 mths</button><button type="button" data-r="all">All</button></span><span class="rangeout j-rangeout"></span></div><div class="rangeline j-rangeline"></div></div>'
       +'<section class="grid"><div class="panel col-7"><div class="panel-head"><h2 class="j-c2t">Active VCFSE over time</h2><div class="sub">Based-in, active · total and four segments</div></div><div class="j-chart2"></div><div class="legend j-leg2"></div></div>'
       +'<div class="panel col-5 panel--noscope"><div class="panel-head"><h2>Latest snapshot</h2><div class="sub j-mxsub">Active based-in organisations</div></div><table class="matrix j-matrix"></table></div></section>'
       +'<section class="grid"><div class="panel col-12"><div class="panel-head"><h2 class="j-c1t">Active VCFSE organisations by authority</h2><div class="sub j-c1sub">Based-in, active · one line per authority</div></div><div class="trendctl trendctl--inpanel"><label>Measure</label><input type="hidden" class="j-seg" value="ALL"><div class="segchips" role="group" aria-label="Measure"><button type="button" class="borchip is-active" data-value="ALL" aria-pressed="true" style="--cat:var(--tv-navy,#2A3B72)">All VCFSE</button><button type="button" class="borchip" data-value="Charities" aria-pressed="false" style="--cat:var(--c-charity,#211D47)">Registered Charities</button><button type="button" class="borchip" data-value="CICs" aria-pressed="false" style="--cat:var(--c-cic,#E52D13)">CICs</button><button type="button" class="borchip" data-value="Societies" aria-pressed="false" style="--cat:var(--c-society,#6C1D45)">Societies</button><button type="button" class="borchip" data-value="CASCs" aria-pressed="false" style="--cat:var(--c-casc,#0E8A4F)">CASCs</button></div><span class="tag j-scope"></span></div><div class="j-chart1"><div class="loading">Loading…</div></div><div class="legend j-leg1"></div></div></section>'
@@ -219,6 +219,9 @@
   function render(S){
     var col=colours(S.root); S.col=col;
     var measure=S.q('.j-seg').value, scope=S.q('.j-bor').value;
+    computeWindow(S);
+    if(S.q('.j-rangeout')) S.q('.j-rangeout').textContent=(S.winFrom!=null?fmtTS(S.winFrom)+" \u2013 "+fmtTS(S.winTo):"");
+    renderRangeLine(S);
     S.root.classList.toggle('rc-borough', scope!=='TV');
     if(scope!=='TV'){ var selInk=(rcIsDark()?LA_INK_DARK:LA_INK_LIGHT)[scope]||col.bor[scope]; S.root.style.setProperty('--sel', col.bor[scope]); S.root.style.setProperty('--sel-ink', selInk); S.accFill=col.bor[scope]; S.accInk=selInk; } else { S.accFill=col.accent; S.accInk=col.accent; }
     (function(){ var tag='';
@@ -364,13 +367,8 @@
   function drawChart(S,hostSel,series,legSel,allSeries,hiddenMap){
     var host=S.q(hostSel), tip=S.tip;
     var cardBg=getComputedStyle((host.closest&&host.closest('.panel'))||host).backgroundColor||'#fff';
-    var cut=-Infinity;
-    if(S.range==='fit'){
-      var mx=-Infinity; series.forEach(function(s){s.pts.forEach(function(p){if(p.t>mx)mx=p.t;});});
-      if(mx>-Infinity) cut=mx-548*864e5;
-    } else if(S.range && S.range!=='all'){ var days=(S.range==='13w')?91:365, mx=-Infinity;
-      allSeries.forEach(function(s){s.pts.forEach(function(p){if(p.t>mx)mx=p.t;});}); cut=mx-days*864e5; }
-    var vseries=series.map(function(s){ return {key:s.key,name:s.name,color:s.color,dashed:s.dashed,secondary:s.secondary,pts:s.pts.filter(function(p){return p.t>=cut && !p.partial;})}; });
+    var lo=(S.winFrom!=null)?S.winFrom:-Infinity, hi=(S.winTo!=null)?S.winTo:Infinity;
+    var vseries=series.map(function(s){ return {key:s.key,name:s.name,color:s.color,dashed:s.dashed,secondary:s.secondary,pts:s.pts.filter(function(p){return p.t>=lo && p.t<=hi && !p.partial;})}; });
     var leg=S.q(legSel); leg.innerHTML="";
     allSeries.forEach(function(s){ if(!s.pts.length) return;
       var b=document.createElement('button'); b.setAttribute('aria-pressed',hiddenMap[s.key]?"false":"true");
@@ -437,6 +435,35 @@
       c.addEventListener('mouseleave',function(){ tip.style.opacity=0; }); });
   }
 
+  function spineDates(S){ var dm={}; (S.DATA||[]).forEach(function(r){ if(r&&r.date!=null) dm[r.date]=r.t; }); return Object.keys(dm).map(function(d){return {date:d,t:dm[d]};}).sort(function(a,b){return a.t-b.t;}); }
+  function computeWindow(S){ var ds=spineDates(S); if(!ds.length){ S.winFrom=null; S.winTo=null; return; } var t0=ds[0].t, t1=ds[ds.length-1].t; S.winTo=t1; if(S.range==='custom'){ if(S.winFrom==null||S.winFrom<t0||S.winFrom>t1) S.winFrom=t0; return; } if(S.range==='all'){ S.winFrom=t0; } else if(S.range==='12m'){ S.winFrom=Math.max(t0,t1-365*864e5); } else { S.winFrom=Math.max(t0,t1-548*864e5); } }
+  function fmtTS(t){ var d=new Date(t); return MONTHS[d.getUTCMonth()]+" "+String(d.getUTCFullYear()).slice(2); }
+  function renderRangeLine(S){
+    var host=S.q('.j-rangeline'); if(!host) return;
+    var ds=spineDates(S); if(ds.length<2){ host.innerHTML=''; return; }
+    var t0=ds[0].t, t1=ds[ds.length-1].t, W=host.clientWidth||620, H=34, Pl=10, Pr=10, base=H-14;
+    function X(t){ return Pl+(t-t0)/(t1-t0)*(W-Pl-Pr); }
+    var from=(S.winFrom!=null)?S.winFrom:t0, to=(S.winTo!=null)?S.winTo:t1;
+    S._rl={t0:t0,t1:t1,W:W,ds:ds,X:X};
+    var svg='<svg class="rlsvg" width="100%" height="'+H+'" viewBox="0 0 '+W+' '+H+'" preserveAspectRatio="none" role="img" aria-label="Data timeline and selected range">';
+    svg+='<line class="rl-base" x1="'+Pl+'" y1="'+base+'" x2="'+(W-Pr)+'" y2="'+base+'"/>';
+    svg+='<rect class="rl-win" x="'+X(from).toFixed(1)+'" y="'+(base-6)+'" width="'+Math.max(0,(X(to)-X(from))).toFixed(1)+'" height="12" rx="2"/>';
+    ds.forEach(function(d){ var x=X(d.t), on=(d.t>=from&&d.t<=to); svg+='<line class="rl-tick'+(on?' on':'')+'" x1="'+x.toFixed(1)+'" y1="'+(base-6)+'" x2="'+x.toFixed(1)+'" y2="'+(base+4)+'"/>'; });
+    var hx=X(from).toFixed(1);
+    svg+='<g class="rl-h"><line x1="'+hx+'" y1="'+(base-10)+'" x2="'+hx+'" y2="'+(base+6)+'"/><circle cx="'+hx+'" cy="'+(base-2)+'" r="5.5"/></g>';
+    svg+='</svg>';
+    host.innerHTML=svg+'<span class="rl-lab rl-lab-l">'+esc(fmtShort(ds[0].date))+'</span><span class="rl-lab rl-lab-r">'+esc(fmtShort(ds[ds.length-1].date))+'</span>';
+    if(!host.__rlbound){ host.__rlbound=1; var dragging=false;
+      function pxOf(e){ var r=host.getBoundingClientRect(); return (e.clientX-r.left)/r.width*S._rl.W; }
+      function nearestT(px){ var best=S._rl.ds[0], bd=1e18; S._rl.ds.forEach(function(d){ var dx=Math.abs(S._rl.X(d.t)-px); if(dx<bd){bd=dx;best=d;} }); return best.t; }
+      function live(px){ S.winFrom=nearestT(px); S.winTo=S._rl.t1; renderRangeLine(S); }
+      function commit(){ S.range='custom'; var rb=S.q('.j-range'); if(rb) rb.querySelectorAll('button').forEach(function(x){x.classList.remove('on');}); render(S); }
+      host.addEventListener('pointerdown',function(e){ dragging=true; try{host.setPointerCapture(e.pointerId);}catch(_){} live(pxOf(e)); e.preventDefault(); });
+      host.addEventListener('pointermove',function(e){ if(!dragging)return; live(pxOf(e)); });
+      host.addEventListener('pointerup',function(e){ if(!dragging)return; dragging=false; commit(); });
+      host.addEventListener('pointercancel',function(){ if(!dragging)return; dragging=false; commit(); });
+    }
+  }
   function bootAll(){ var tip=ensureTip(); var list=document.querySelectorAll('.rcvda-vcse-sector'); for(var i=0;i<list.length;i++){ if(!list[i].__sots){ list[i].__sots=1; initOne(list[i],tip); } } }
   if(document.readyState!=="loading") bootAll(); else document.addEventListener('DOMContentLoaded',bootAll);
 })();

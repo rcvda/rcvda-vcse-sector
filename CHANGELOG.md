@@ -2,6 +2,8 @@
 
 All notable changes to this plugin, most recent first. Format: `## YYYY-MM-DD — vX.Y.Z — description`.
 
+## 2026-11-25 — v0.5.12 — Add a data-point timeline range control (tick per snapshot, draggable start handle) alongside the Recent/12m/All presets
+
 ## 2026-11-25 — v0.5.11 — Move the Measure control onto the by-authority chart it drives; keep Range as the section-level time control
 
 ## 2026-11-25 — v0.5.10 — Keep the Ten-largest table neutral; theme only standalone data charts, not table chrome
