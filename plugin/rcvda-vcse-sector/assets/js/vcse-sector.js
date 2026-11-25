@@ -372,7 +372,7 @@
       if(mx>-Infinity) cut=mx-548*864e5;
     } else if(S.range && S.range!=='all'){ var days=(S.range==='13w')?91:365, mx=-Infinity;
       allSeries.forEach(function(s){s.pts.forEach(function(p){if(p.t>mx)mx=p.t;});}); cut=mx-days*864e5; }
-    var vseries=series.map(function(s){ return {key:s.key,name:s.name,color:s.color,dashed:s.dashed,secondary:s.secondary,pts:s.pts.filter(function(p){return p.t>=cut;})}; });
+    var vseries=series.map(function(s){ return {key:s.key,name:s.name,color:s.color,dashed:s.dashed,secondary:s.secondary,pts:s.pts.filter(function(p){return p.t>=cut && !p.partial;})}; });
     var leg=S.q(legSel); leg.innerHTML="";
     allSeries.forEach(function(s){ if(!s.pts.length) return;
       var b=document.createElement('button'); b.setAttribute('aria-pressed',hiddenMap[s.key]?"false":"true");

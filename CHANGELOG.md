@@ -2,6 +2,10 @@
 
 All notable changes to this plugin, most recent first. Format: `## YYYY-MM-DD — vX.Y.Z — description`.
 
+## 2026-11-25 — v0.5.2 — Drop partial snapshots from the trend charts
+
+- The over-time charts no longer plot partial snapshots (dates where the “All VCFSE” total was built from an incomplete set of segments). These produced misleading dots — e.g. a borough appearing to drop to a third of its size and back — because the counts weren’t comparable. Only complete snapshots are charted now. Individual-measure trends (Registered Charities, CICs, etc.) are unaffected and keep their full history, since single-segment readings are always complete.
+
 ## 2026-11-25 — v0.5.1 — Trend chart scopes to borough; total leads the legend
 
 - The “Sector size over time” authority chart now responds to the borough pills: “Tees Valley (all five)” shows every borough line plus the total (legend toggles still let you compare any subset); selecting a borough scopes the chart to that borough’s single trend line, with the title and borough scope tag updating to match.
