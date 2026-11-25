@@ -2,14 +2,20 @@
 
 All notable changes to this plugin, most recent first. Format: `## YYYY-MM-DD — vX.Y.Z — description`.
 
+## 2026-11-25 — v0.4.1 — Est. Whole Sector sublabel; full-width caption
+
+- The “Est. Whole Sector” tile now shows “inc. unregistered” on its sublabel line (was blank).
+- The KPI-strip caption runs full width (the 92ch cap is removed) and opens with “Whole sector count” in bold.
+
 ## 2026-11-25 — v0.4.0 — Borough location pills; uniform KPI tiles; label tidy-up
 
 - Authority filter is now a row of borough-coloured location pills (the cycle-map model) in place of the dropdown: a “Tees Valley (all five)” pill in TVCA navy plus one per borough, each a 2px-outline chip that fills when selected; colours resolve from rcvda-core’s --la-*/--tv-navy tokens with the DESIGN.md borough hexes as fallback (dark text on Middlesbrough and Stockton). Selection drives every scope exactly as the dropdown did.
+- “The sector by type” now pairs Active sector by type with Projected whole sector; Charity legal structure moves into the “Digital & projection” row for the moment (panels swapped — each still reads its own data).
 - KPI tiles render at a uniform 165×116 (fixed height, was min-height), so all six cards match in width and height regardless of label length.
 - Whole-sector tile relabelled “Est. Whole Sector” (was “Estimated whole sector / incl. unregistered (NAVCA)”); the NAVCA/unregistered explanation moves into the strip caption.
 - Active-count tile relabelled “Registered Orgs” (was “Active organisations”).
 - Strip caption now opens with “Whole sector count includes unregistered organisations projected through the NAVCA model.” ahead of the existing charities-only note.
-- No data, chart or behaviour change.
+- No change to the data spine, the computed figures or the chart logic.
 
 ## 2026-11-24 — v0.3.0 — Intro rewrite, VCFSE terminology, two-group KPI strip
 

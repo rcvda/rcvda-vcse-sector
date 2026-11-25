@@ -90,7 +90,7 @@
 
       +'<div class="band"><h3>The sector by type</h3><div class="rule"></div></div>'
       +'<section class="grid"><div class="panel col-6"><div class="panel-head"><h2>Active sector by type</h2><div class="sub j-typesub"></div></div><div class="bars j-type"></div></div>'
-      +'<div class="panel col-6"><div class="panel-head"><h2>Charity legal structure</h2><div class="sub j-legalsub"></div></div><div class="split j-legalsplit"></div><div class="mini j-legalmini"></div></div></section>'
+      +'<div class="panel col-6"><div class="panel-head"><h2>Projected whole sector</h2><div class="sub">What NAVCA predicts vs what’s on the register</div></div><div class="j-proj"></div></div></section>'
 
       +'<div class="band"><h3>Structure &amp; age</h3><div class="rule"></div></div>'
       +'<section class="grid"><div class="panel col-12"><div class="panel-head"><h2>When the sector was founded</h2><div class="sub">Active organisations by decade of registration (oldest to most recent)</div></div><div class="cols j-decades"></div></div></section>'
@@ -102,7 +102,7 @@
 
       +'<div class="band"><h3>Digital &amp; projection</h3><div class="rule"></div></div>'
       +'<section class="grid"><div class="panel col-6"><div class="panel-head"><h2>Digital presence</h2><div class="sub">Active organisations with a website</div></div><div class="donut-wrap"><svg class="j-donut" width="122" height="122" viewBox="0 0 132 132" role="img"></svg><div class="mini j-digmini" style="flex:1"></div></div></div>'
-      +'<div class="panel col-6"><div class="panel-head"><h2>Projected whole sector</h2><div class="sub">What NAVCA predicts vs what’s on the register</div></div><div class="j-proj"></div></div></section>'
+      +'<div class="panel col-6"><div class="panel-head"><h2>Charity legal structure</h2><div class="sub j-legalsub"></div></div><div class="split j-legalsplit"></div><div class="mini j-legalmini"></div></div></section>'
 
       +'<div class="band"><h3>The largest organisations</h3><div class="rule"></div></div>'
       +'<section class="grid"><div class="panel col-12"><div class="panel-head"><h2>Ten largest active organisations by income</h2><div class="sub j-topsub"></div></div><table class="toptable j-top"></table></div></section>'
@@ -237,7 +237,7 @@
     var webChar=charN?Math.round(100*A.has_web/charN):A.web_pct;
     var allTiles=[
       [commas(A.active),"Registered Orgs","based-in · "+fmtDate(latestDate(S))],
-      ["~"+commas(A.navca.total),"Est. Whole Sector",""]
+      ["~"+commas(A.navca.total),"Est. Whole Sector","inc. unregistered"]
     ];
     var charTiles=[
       [gbp(A.sector_value),"Sector turnover","latest-year income"],
@@ -249,7 +249,7 @@
       +'<div class="kgroup g-all"><div class="ghead"><span class="sw sw-all"></span>All VCFSE · whole registered sector</div>'+tiles(allTiles)+'</div>'
       +'<div class="kdiv" aria-hidden="true"></div>'
       +'<div class="kgroup g-char"><div class="ghead"><span class="sw sw-char"></span>Registered charities only</div>'+tiles(charTiles)+'</div></div>'
-      +'<p class="kfoot">Whole sector count includes unregistered organisations projected through the NAVCA model. <b>Income and website figures cover registered charities only.</b> CICs, registered societies and CASCs don’t file income or a website through their registers, so the sector’s true turnover and online presence are higher than shown.</p>';
+      +'<p class="kfoot"><b>Whole sector count</b> includes unregistered organisations projected through the NAVCA model. <b>Income and website figures cover registered charities only.</b> CICs, registered societies and CASCs don’t file income or a website through their registers, so the sector’s true turnover and online presence are higher than shown.</p>';
   }
 
   function renderDetail(S,A,sLabel){

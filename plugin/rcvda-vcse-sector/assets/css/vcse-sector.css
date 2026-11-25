@@ -79,7 +79,7 @@ html[data-theme="dark"] .rcvda-vcse-sector{ --c-charity:#8E88D4; --c-cic:#F2644C
 .rcvda-vcse-sector .g-char .kpi .v{color:var(--char-ink,#fff);}
 .rcvda-vcse-sector .g-char .kpi .l{color:var(--char-ink-2,rgba(255,255,255,.92));}
 .rcvda-vcse-sector .g-char .kpi .s{color:var(--char-ink-3,rgba(255,255,255,.62));}
-.rcvda-vcse-sector .kfoot{margin:14px 0 2px;font-size:.78rem;color:var(--wp--preset--color--muted,#51607A);max-width:92ch;line-height:1.5;}
+.rcvda-vcse-sector .kfoot{margin:14px 0 2px;font-size:.78rem;color:var(--wp--preset--color--muted,#51607A);max-width:none;line-height:1.5;}
 .rcvda-vcse-sector .kfoot b{color:var(--wp--preset--color--contrast,#0E1F40);font-weight:700;}
 .rcvda-vcse-sector .band{display:flex;align-items:center;gap:10px;margin:30px 0 4px;}
 .rcvda-vcse-sector .band h3{font-size:1rem;font-weight:800;color:var(--wp--preset--color--contrast,#0E1F40);display:flex;align-items:center;gap:8px;}
