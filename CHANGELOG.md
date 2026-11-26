@@ -2,6 +2,24 @@
 
 All notable changes to this plugin, most recent first. Format: `## YYYY-MM-DD — vX.Y.Z — description`.
 
+## 2026-11-26 — v0.5.25 — Structure panels full width: overall split + two groups with shares and percentages; CIC legal form; AA split-bar labels
+
+- **Registered Charities’ Legal Structure** and **Social Enterprise Types** are now full width and stacked. Each opens with its overall split bar, then two groups side by side (one column on narrow screens), each with its own bar and list:
+  - Social Enterprise Types — **Community Interest Companies** (Limited by Guarantee / Limited by Shares / Converted / Closed at Companies House, from the new `social_enterprise.cic_structure`) and **Registered Societies** (Community Benefit Societies, Co-operative Societies, Credit Unions, Working Men’s Clubs, Friendly Societies, Other Registered Societies).
+  - Registered Charities’ Legal Structure — **Incorporated** (CIO — Foundation, CIO — Association, Charitable Company, Other Incorporated) and **Unincorporated** (Trust, Other Unincorporated (Mainly Associations)).
+- Rows show the count and its share of the group (`349 · 91%`, `<1%` for a single small item); group headings show their share of the whole (`385 · 79%`). Items are ordered largest first; zero rows hidden; a group without its breakdown says so.
+- Sub-types use the new DESIGN.md *Sub-type shades* of each group colour (CSS `--sh-cic-*`, `--sh-soc-*`, `--sh-chr-*`, `--sh-unc-*`, light and dark), each ≥3:1 against the panel; shade 1 is the group colour and goes to the largest item.
+- CIC legal form from each CIC's public Companies House page (lookup 26/11/2026, all 706 based-in CICs); Tees Valley 25/11: 349 guarantee, 35 shares, 1 listed active by FTC but converted/closed at Companies House.
+- List labels in Title Case.
+- Split-bar labels meet AA: light-mode CIC segment uses the DESIGN.md chip-safe shade `#E02C13` (white 4.6:1, was 4.45:1); dark-mode split labels are navy `#1B1740` (5.0:1 or better; white was 2.4–3.4:1).
+- Verified by running the plugin script against the bundled data in light and dark: no script errors.
+
+## 2026-11-26 — v0.5.24 — Headings in Title Case; Registered Charities’ Legal Structure
+
+- Every section band and panel heading moved from sentence case to Title Case (articles, "and", "vs" and prepositions of three letters or fewer stay lower case), including the three headings built in code (by authority, in a borough, over time). E.g. *When the Sector Was Founded*, *Turnover of the Active Sector*, *Ten Largest Active Organisations by Income*.
+- *Charity legal structure* renamed **Registered Charities’ Legal Structure**.
+- Headings only — no tile labels, glossary terms, data or layout changed.
+
 ## 2026-11-25 — v0.5.23 — Filter pills: standard shape, category-colour hover, Tees Valley navy range
 
 - Authority and Measure pills take the estate's standard pill shape (10px corners, padding .5em 1em) and keep the dashboard's colour scheme: white chip, 2px outline in the category colour, filled when selected. Text size unchanged (.82rem) so the authority row stays on one line.

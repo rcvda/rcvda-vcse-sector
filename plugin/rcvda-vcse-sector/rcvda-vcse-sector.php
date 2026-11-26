@@ -2,7 +2,7 @@
 /**
  * Plugin Name:       RCVDA VCSE Sector
  * Description:       "State of the Sector" living dashboard. Renders the Tees Valley registered-VCSE sector as a weekly-updated time series plus detailed current-snapshot analytics (by type, legal structure, decade founded, income/turnover, size, concentration, digital, projection, ten largest) via the [rcvda_vcse_sector] shortcode — read live from the public open-data repo over the jsDelivr CDN, with automatic fallback to a bundled copy. Headline measure is based-in (registered office in the borough). Data lives in rcvda/tees-valley-vcse-sector.
- * Version:           0.5.23
+ * Version:           0.5.25
  * Author:            RCVDA
  * License:           GPL-2.0-or-later
  * Text Domain:       rcvda-vcse-sector
@@ -13,7 +13,7 @@
 
 if ( ! defined( 'ABSPATH' ) ) { exit; }
 
-define( 'RCVDA_VCSE_SECTOR_VER', '0.5.23' );
+define( 'RCVDA_VCSE_SECTOR_VER', '0.5.25' );
 define( 'RCVDA_VCSE_SECTOR_URL', plugin_dir_url( __FILE__ ) );
 define( 'RCVDA_VCSE_SECTOR_DIR', plugin_dir_path( __FILE__ ) );
 

@@ -171,10 +171,24 @@ html[data-theme="dark"] .rcvda-vcse-sector .rangebar{--rng:#5A6BA8;}
 /* split bars + mini lists */
 .rcvda-vcse-sector .split{display:flex;height:26px;border-radius:7px;overflow:hidden;gap:2px;}
 .rcvda-vcse-sector .split > div{display:flex;align-items:center;justify-content:center;color:#fff;font-size:.75rem;font-weight:700;min-width:2px;}
+/* AA on split-bar labels: light CIC segment uses the DESIGN.md chip-safe shade (white 4.6:1);
+   in dark the fills are the light dark-mode variants, so labels go navy */
+html:not([data-theme="dark"]) .rcvda-vcse-sector .split > .seg-cic{background:#E02C13 !important;}
+@media (prefers-color-scheme:dark){html:not([data-theme]) .rcvda-vcse-sector .split > .seg-cic{background:var(--c-cic) !important;}}
+html[data-theme="dark"] .rcvda-vcse-sector .split > div{color:#1B1740;}
+@media (prefers-color-scheme:dark){html:not([data-theme]) .rcvda-vcse-sector .split > div{color:#1B1740;}}
 .rcvda-vcse-sector .mini{display:flex;flex-direction:column;gap:6px;margin-top:13px;font-size:.81rem;}
 .rcvda-vcse-sector .mini .r{display:flex;justify-content:space-between;border-bottom:1px dotted var(--wp--preset--color--divider,#D4DEEA);padding-bottom:5px;}
 .rcvda-vcse-sector .mini .r span:last-child{font-weight:700;font-variant-numeric:tabular-nums;color:var(--wp--preset--color--contrast,#0E1F40);}
 .rcvda-vcse-sector .mini .r .k{display:flex;align-items:center;gap:7px;color:var(--wp--preset--color--muted,#51607A);}
+/* Social Enterprise Types: two grouped lists (CICs, Registered Societies) */
+.rcvda-vcse-sector .j-semini{gap:14px;}
+.rcvda-vcse-sector .se-grp{display:flex;flex-direction:column;gap:6px;}
+.rcvda-vcse-sector .mini .se-head{border-bottom:1.5px solid var(--wp--preset--color--divider,#D4DEEA);}
+.rcvda-vcse-sector .mini .se-head .k{color:var(--wp--preset--color--contrast,#0E1F40);font-weight:700;}
+.rcvda-vcse-sector .se-sw{width:11px;height:11px;border-radius:3px;flex:none;display:inline-block;}
+.rcvda-vcse-sector .mini .se-sub .k{padding-left:18px;}
+.rcvda-vcse-sector .mini .se-note .k{font-style:italic;}
 .rcvda-vcse-sector .chipdot{width:9px;height:9px;border-radius:2px;flex:none;display:inline-block;}
 
 /* decade columns */
@@ -238,3 +252,20 @@ html[data-theme="dark"] .rcvda-vcse-sector .rangebar{--rng:#5A6BA8;}
 @media(max-width:700px){.rcvda-vcse-sector .gloss{columns:1}}
 @media(max-width:560px){.rcvda-vcse-sector .masthead .meta{text-align:left}.rcvda-vcse-sector .bar-row{grid-template-columns:120px 1fr 48px}}
 @media(prefers-reduced-motion:reduce){.rcvda-vcse-sector *{transition:none!important}}
+
+/* Structure panels (v0.5.25): sub-type shades of each group colour — DESIGN.md
+   "Sub-type shades". Each keeps >=3:1 against the panel in its mode; shade 1 is the
+   group colour and goes to the largest item. */
+.rcvda-vcse-sector{--sh-cic-1:#E52D13;--sh-cic-2:#A0200D;--sh-cic-3:#601308;--sh-soc-1:#6C1D45;--sh-soc-2:#7E385B;--sh-soc-3:#8F5372;--sh-soc-4:#A16E88;--sh-soc-5:#B3899E;--sh-chr-1:#211D47;--sh-chr-2:#4D4A6C;--sh-chr-3:#716E89;--sh-chr-4:#9493A7;--sh-unc-1:#033E8C;--sh-unc-2:#7797C1;}
+html[data-theme="dark"] .rcvda-vcse-sector{--sh-cic-1:#F2644C;--sh-cic-2:#F69989;--sh-cic-3:#FBCAC2;--sh-soc-1:#D06A96;--sh-soc-2:#DA8BAD;--sh-soc-3:#AB577B;--sh-soc-4:#E6AFC6;--sh-soc-5:#EFCCDB;--sh-chr-1:#8E88D4;--sh-chr-2:#7470AE;--sh-chr-3:#B4B0E3;--sh-chr-4:#D4D2EF;--sh-unc-1:#8FB4E8;--sh-unc-2:#5E7799;}
+@media (prefers-color-scheme:dark){html:not([data-theme]) .rcvda-vcse-sector{--sh-cic-1:#F2644C;--sh-cic-2:#F69989;--sh-cic-3:#FBCAC2;--sh-soc-1:#D06A96;--sh-soc-2:#DA8BAD;--sh-soc-3:#AB577B;--sh-soc-4:#E6AFC6;--sh-soc-5:#EFCCDB;--sh-chr-1:#8E88D4;--sh-chr-2:#7470AE;--sh-chr-3:#B4B0E3;--sh-chr-4:#D4D2EF;--sh-unc-1:#8FB4E8;--sh-unc-2:#5E7799;}}
+.rcvda-vcse-sector .grp2{display:grid;grid-template-columns:1fr 1fr;gap:28px;margin-top:18px;}
+@media (max-width:760px){.rcvda-vcse-sector .grp2{grid-template-columns:1fr;gap:20px;}}
+.rcvda-vcse-sector .sgrp .se-head{display:flex;justify-content:space-between;align-items:center;font-size:.86rem;padding-bottom:6px;margin-bottom:8px;border-bottom:1.5px solid var(--wp--preset--color--divider,#D4DEEA);}
+.rcvda-vcse-sector .sgrp .se-head .k{display:flex;align-items:center;gap:8px;font-weight:700;color:var(--wp--preset--color--contrast,#0E1F40);}
+.rcvda-vcse-sector .sgrp .se-head > span:last-child{font-weight:700;font-variant-numeric:tabular-nums;color:var(--wp--preset--color--contrast,#0E1F40);}
+.rcvda-vcse-sector .bar2{display:flex;height:14px;border-radius:5px;overflow:hidden;gap:2px;margin-bottom:10px;}
+.rcvda-vcse-sector .bar2 > div{min-width:2px;}
+.rcvda-vcse-sector .sgrp .mini{margin-top:0;}
+.rcvda-vcse-sector .sgrp .mini .se-sub .k{padding-left:0;}
+.rcvda-vcse-sector .pc{font-style:normal;font-weight:400;color:var(--wp--preset--color--muted,#51607A);}
