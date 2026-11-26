@@ -109,7 +109,7 @@
       +'<div class="panel col-6"><div class="panel-head"><h2>'+vicon("users",18)+'Projected Whole Sector</h2><div class="sub">What NAVCA predicts vs what’s on the register</div></div><div class="j-proj"></div></div></section>'
 
       +'<div class="band"><h3>'+vicon("calendar",20)+'Structure &amp; Age</h3><div class="rule"></div></div>'
-      +'<section class="grid"><div class="panel col-12"><div class="panel-head"><h2>When the Sector Was Founded</h2><div class="sub">Active organisations by decade of registration, coloured by type (oldest to most recent). CASCs carry no registration date, so are not shown.</div></div><div class="bars j-decades"></div><div class="legend j-decleg"></div></div></section>'
+      +'<section class="grid"><div class="panel col-12"><div class="panel-head"><h2>When the Sector Was Founded</h2><div class="sub j-decsub">Active organisations by decade of registration, coloured by type (oldest to most recent). CASCs carry no registration date, so are not shown.</div></div><div class="bars j-decades"></div><div class="legend j-decleg"></div></div></section>'
       +'<section class="grid"><div class="panel col-12"><div class="panel-head"><h2>Registered Charities\u2019 Legal Structure</h2><div class="sub j-legalsub"></div></div><div class="split j-legalsplit"></div><div class="grp2 j-legalgrp"></div></div>'
       +'<div class="panel col-12"><div class="panel-head"><h2>Social Enterprise Types</h2><div class="sub j-sesub"></div></div><div class="split j-sesplit"></div><div class="grp2 j-segrp"></div></div></section>'
 
@@ -322,11 +322,13 @@
 
   function renderDetail(S,A,sLabel){
     var col=S.col;
+    // Count + share cell for bar rows: count and percentage in fixed columns so both align.
+    function cp(n,d,pre){ return '<span class="cn">'+(pre||'')+commas(n)+'</span><em class="pc">'+pct(n,d)+'</em>'; }
     // by type
-    S.q('.j-typesub').textContent="Active based-in organisations · "+sLabel;
+    S.q('.j-typesub').textContent="Active based-in organisations · "+sLabel+" · % of "+commas(A.active)+" active";
     var maxSeg=Math.max.apply(null,SEGMENTS.map(function(s){return A.by_segment[s]||0;}))||1;
     S.q('.j-type').innerHTML=SEGMENTS.map(function(s){ var n=A.by_segment[s]||0;
-      return '<div class="bar-row"><div class="lab">'+segLabel(s)+'</div><div class="track"><div class="fill" style="width:'+(100*n/maxSeg)+'%;background:'+col.seg[s]+'"></div></div><div class="val">'+commas(n)+'</div></div>'; }).join("");
+      return '<div class="bar-row"><div class="lab">'+segLabel(s)+'</div><div class="track"><div class="fill" style="width:'+(100*n/maxSeg)+'%;background:'+col.seg[s]+'"></div></div><div class="val">'+cp(n,A.active)+'</div></div>'; }).join("");
     // Structure panels (full width): an overall split, then two groups side by side, each
     // with its own bar and list. Sub-types take DESIGN.md shades of the group colour
     // (--sh-<group>-<n>, light/dark in CSS), assigned largest first. Rows show the count and
@@ -344,8 +346,8 @@
     (function(){
       var cic=A.by_segment.CICs||0, soc=A.by_segment.Societies||0, tot=cic+soc||1, SE=A.social_enterprise||{};
       S.q('.j-sesub').textContent=commas(cic+soc)+" active social enterprises (CASCs counted separately)";
-      S.q('.j-sesplit').innerHTML='<div class="seg-cic" style="flex:'+cic+';background:'+col.seg.CICs+'" title="Community Interest Companies">'+(cic/tot>0.12?"Community Interest Companies "+commas(cic):"")+'</div>'
-        +'<div style="flex:'+soc+';background:'+col.seg.Societies+'" title="Registered Societies">'+(soc/tot>0.12?"Registered Societies "+commas(soc):"")+'</div>';
+      S.q('.j-sesplit').innerHTML='<div class="seg-cic" style="flex:'+cic+';background:'+col.seg.CICs+'" title="Community Interest Companies">'+(cic/tot>0.12?"Community Interest Companies "+commas(cic)+" · "+pct(cic,tot):"")+'</div>'
+        +'<div style="flex:'+soc+';background:'+col.seg.Societies+'" title="Registered Societies">'+(soc/tot>0.12?"Registered Societies "+commas(soc)+" · "+pct(soc,tot):"")+'</div>';
       var CS=SE.cic_structure||{}, T=SE.society_types||{};
       S.q('.j-segrp').innerHTML=
         grpHTML("Community Interest Companies",cic,cic+soc,col.seg.CICs,'cic',[["Limited by Guarantee",CS.guarantee||0],["Limited by Shares",CS.shares||0],["Converted / Closed at Companies House",CS.converted||0],["Not Yet Checked",CS.unknown||0]],"Shares / Guarantee Split Not Yet Available")
@@ -354,8 +356,8 @@
     // legal
     var L=A.legal; S.q('.j-legalsub').textContent=commas(L.total_charities)+" active registered charities";
     var inc=L.incorporated, uninc=L.unincorporated, tot=inc+uninc||1;
-    S.q('.j-legalsplit').innerHTML='<div style="flex:'+inc+';background:'+col.seg.Charities+'" title="Incorporated">'+(inc/tot>0.12?"Incorporated "+commas(inc):"")+'</div>'
-      +'<div style="flex:'+uninc+';background:'+col.accent+'" title="Unincorporated">'+(uninc/tot>0.12?"Unincorporated "+commas(uninc):"")+'</div>';
+    S.q('.j-legalsplit').innerHTML='<div style="flex:'+inc+';background:'+col.seg.Charities+'" title="Incorporated">'+(inc/tot>0.12?"Incorporated "+commas(inc)+" · "+pct(inc,tot):"")+'</div>'
+      +'<div style="flex:'+uninc+';background:'+col.accent+'" title="Unincorporated">'+(uninc/tot>0.12?"Unincorporated "+commas(uninc)+" · "+pct(uninc,tot):"")+'</div>';
     var incOther=Math.max(0,inc-L.cio_foundation-L.cio_association-L.charitable_company), uncOther=Math.max(0,uninc-L.trust);
     S.q('.j-legalgrp').innerHTML=
       grpHTML("Incorporated",inc,inc+uninc,col.seg.Charities,'chr',[["CIO \u2014 Foundation",L.cio_foundation],["CIO \u2014 Association",L.cio_association],["Charitable Company",L.charitable_company],["Other Incorporated",incOther]])
@@ -364,41 +366,43 @@
     var DEC_ORDER=["Societies","Charities","CICs","CASCs"];
     function decSegs(d){ var v=A.decades[d]; if(v&&typeof v==='object'){ return DEC_ORDER.map(function(s){return [s,v[s]||0];}); } return [["",(+v||0)]]; }
     function decTot(d){ return decSegs(d).reduce(function(a,x){return a+x[1];},0); }
-    var maxD=Math.max.apply(null,DECADES.map(decTot))||1;
+    var maxD=Math.max.apply(null,DECADES.map(decTot))||1, allD=DECADES.reduce(function(a,d){return a+decTot(d);},0);
+    S.q('.j-decsub').textContent="Active organisations by decade of registration, coloured by type (oldest to most recent) · % of the "+commas(allD)+" with a registration date. CASCs carry no registration date, so are not shown.";
     S.q('.j-decades').innerHTML=DECADES.map(function(d){ var tot=decTot(d);
       var stack=decSegs(d).filter(function(x){return x[1]>0;}).map(function(x){ var c=x[0]?col.seg[x[0]]:col.accent; return '<span style="width:'+(100*x[1]/maxD)+'%;background:'+c+'" title="'+esc((x[0]?segLabel(x[0]):'All')+': '+commas(x[1]))+'"></span>'; }).join('');
-      return '<div class="bar-row"><div class="lab">'+esc(d)+'</div><div class="track stack">'+stack+'</div><div class="val">'+commas(tot)+'</div></div>'; }).join("");
+      return '<div class="bar-row"><div class="lab">'+esc(d)+'</div><div class="track stack">'+stack+'</div><div class="val">'+cp(tot,allD)+'</div></div>'; }).join("");
     var present=DEC_ORDER.filter(function(s){ return DECADES.some(function(d){ var v=A.decades[d]; return v&&typeof v==='object'&&(v[s]||0)>0; }); });
     S.q('.j-decleg').innerHTML=present.map(function(s){ return '<span class="legitem"><span class="dot" style="background:'+col.seg[s]+'"></span>'+esc(segLabel(s))+'</span>'; }).join('');
     // income bands
-    S.q('.j-incsub').textContent=commas(A.no_income)+" report no income · avg "+gbpFull(A.avg_income);
+    var repN=BANDS.reduce(function(a,b){return a+(A.income_bands[b]||0);},0);
+    S.q('.j-incsub').textContent="% of the "+commas(repN)+" charities reporting income · "+commas(A.no_income)+" report none · avg "+gbpFull(A.avg_income);
     var maxB=Math.max.apply(null,BANDS.map(function(b){return A.income_bands[b]||0;}))||1;
     S.q('.j-income').innerHTML=BANDS.map(function(b){ var n=A.income_bands[b]||0;
-      return '<div class="bar-row"><div class="lab">'+b+'</div><div class="track"><div class="fill" style="width:'+(100*n/maxB)+'%"></div></div><div class="val">'+commas(n)+'</div></div>'; }).join("");
+      return '<div class="bar-row"><div class="lab">'+b+'</div><div class="track"><div class="fill" style="width:'+(100*n/maxB)+'%"></div></div><div class="val">'+cp(n,repN)+'</div></div>'; }).join("");
     // size
     var sz=A.size, sv=A.sector_value||1;
     S.q('.j-size').innerHTML=[["large","£100k and over"],["medium","£10k–£100k"],["small","under £10k"],["none","no income reported"]].map(function(k){ var b=sz[k[0]];
       return '<div class="size-row"><div class="sl">'+({large:"Large",medium:"Medium",small:"Small",none:"None"})[k[0]]+'<small>'+k[1]+'</small></div>'
         +'<div class="track"><div class="fill" style="width:'+(b.pct||(b.n?2:0))+'%;background:'+S.accFill+'"></div></div>'
-        +'<div class="sv">'+commas(b.n)+'<small>'+gbp(b.val)+' · '+b.pct+'%</small></div></div>'; }).join("");
+        +'<div class="sv">'+commas(b.n)+'<small>'+gbp(b.val)+' · '+pct(b.val,sv)+'</small></div></div>'; }).join("");
     // concentration
     S.q('.j-concsub').textContent="Share of the sector's "+gbp(A.sector_value)+" held by the largest organisations";
     var t10=A.concentration.top10; S.q('.j-conctop').style.width=t10+"%"; S.q('.j-conctop').textContent=t10>=12?("Top 10 = "+t10+"%"):"";
     S.q('.j-concmini').innerHTML='<div class="r"><span class="k">Largest 10 organisations</span><span>'+t10+'% of the money</span></div><div class="r"><span class="k">Largest 25 organisations</span><span>'+A.concentration.top25+'% of the money</span></div>';
     // digital donut
-    var pct=A.web_pct, r=52, c=2*Math.PI*r, on=c*pct/100;
+    var wp=A.web_pct, r=52, c=2*Math.PI*r, on=c*wp/100;
     S.q('.j-donut').innerHTML='<circle cx="66" cy="66" r="52" fill="none" stroke="'+col.muted+'" stroke-opacity=".25" stroke-width="16"/>'
       +'<circle cx="66" cy="66" r="52" fill="none" stroke="'+S.accFill+'" stroke-width="16" stroke-linecap="round" stroke-dasharray="'+on+' '+c+'" transform="rotate(-90 66 66)"/>'
-      +'<text x="66" y="62" text-anchor="middle" font-size="24" font-weight="800" fill="'+S.accInk+'">'+pct+'%</text>'
+      +'<text x="66" y="62" text-anchor="middle" font-size="24" font-weight="800" fill="'+S.accInk+'">'+Math.round(wp)+'%</text>'
       +'<text x="66" y="82" text-anchor="middle" font-size="11" fill="'+col.muted+'">have a site</text>';
-    S.q('.j-digmini').innerHTML='<div class="r"><span class="k">With a website</span><span>'+commas(A.has_web)+'</span></div><div class="r"><span class="k">No website found</span><span>'+commas(A.active-A.has_web)+'</span></div>';
+    S.q('.j-digmini').innerHTML='<div class="r"><span class="k">With a website</span><span>'+commas(A.has_web)+' <em class="pc">· '+pct(A.has_web,A.active)+'</em></span></div><div class="r"><span class="k">No website found</span><span>'+commas(A.active-A.has_web)+' <em class="pc">· '+pct(A.active-A.has_web,A.active)+'</em></span></div>';
     // projection
     var nv=A.navca;
     S.q('.j-proj').innerHTML='<div class="mini" style="margin-top:2px">'
-      +'<div class="r"><span class="k">Registered charities (on the register)</span><span>'+commas(nv.registered)+'</span></div>'
-      +'<div class="r"><span class="k">Unregistered community groups (est.)</span><span>~'+commas(nv.community)+'</span></div>'
-      +'<div class="r"><span class="k">Social enterprises (est.)</span><span>~'+commas(nv.social)+'</span></div>'
-      +'<div class="r" style="border-bottom:none"><span class="k"><b>Estimated whole sector</b></span><span><b>~'+commas(nv.total)+'</b></span></div></div>';
+      +'<div class="r"><span class="k">Registered charities (on the register)</span><span>'+commas(nv.registered)+' <em class="pc">· '+pct(nv.registered,nv.total)+'</em></span></div>'
+      +'<div class="r"><span class="k">Unregistered community groups (est.)</span><span>~'+commas(nv.community)+' <em class="pc">· '+pct(nv.community,nv.total)+'</em></span></div>'
+      +'<div class="r"><span class="k">Social enterprises (est.)</span><span>~'+commas(nv.social)+' <em class="pc">· '+pct(nv.social,nv.total)+'</em></span></div>'
+      +'<div class="r" style="border-bottom:none"><span class="k"><b>Estimated whole sector</b></span><span><b>~'+commas(nv.total)+'</b> <em class="pc">· 100%</em></span></div></div>';
     // top10
     S.q('.j-topsub').textContent="By latest-year income · "+sLabel;
     var maxI=(A.top10[0]&&A.top10[0].income)||1;

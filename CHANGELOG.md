@@ -2,6 +2,17 @@
 
 All notable changes to this plugin, most recent first. Format: `## YYYY-MM-DD — vX.Y.Z — description`.
 
+## 2026-11-26 — v0.5.26 — Percentages beside counts across the dashboard
+
+- Every breakdown now shows each count with its share, using the same `pct()` rounding (whole numbers, `<1%` for small non-zero items):
+  - **Active Sector by Type**, **When the Sector Was Founded** and **Turnover of the Active Sector** bar rows: count and percentage in their own aligned columns (new `.val .cn` / `.val .pc` grid; value column widened to 94px, 84px under 560px).
+  - **Projected Whole Sector** rows (`1,050 · 26%`, `~2,746 · 68%`, `~242 · 6%`), with **100%** beside the Estimated whole sector total that they break down.
+  - **Digital Presence** rows (`677 · 43%`, `910 · 57%`); the donut now rounds to a whole number (42.7% → 43%) to match.
+  - Legal-structure and social-enterprise split-bar labels (`Incorporated 516 · 49%`).
+  - **Large vs Small** money shares use the same rounding, so Small reads `<1%` instead of `0%`.
+- Each panel's sub-line names the base its percentages are of: "% of 1,587 active", "% of the 1,537 with a registration date" (CASCs carry no date), "% of the 963 charities reporting income".
+- Fixed a latent name clash: the digital donut's local `pct` variable shadowed the `pct()` helper; renamed to `wp`.
+
 ## 2026-11-26 — v0.5.25 — Structure panels full width: overall split + two groups with shares and percentages; CIC legal form; AA split-bar labels
 
 - **Registered Charities’ Legal Structure** and **Social Enterprise Types** are now full width and stacked. Each opens with its overall split bar, then two groups side by side (one column on narrow screens), each with its own bar and list:

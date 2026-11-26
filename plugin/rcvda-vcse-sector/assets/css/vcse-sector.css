@@ -269,3 +269,9 @@ html[data-theme="dark"] .rcvda-vcse-sector{--sh-cic-1:#F2644C;--sh-cic-2:#F69989
 .rcvda-vcse-sector .sgrp .mini{margin-top:0;}
 .rcvda-vcse-sector .sgrp .mini .se-sub .k{padding-left:0;}
 .rcvda-vcse-sector .pc{font-style:normal;font-weight:400;color:var(--wp--preset--color--muted,#51607A);}
+/* v0.5.26 — count · share in bar rows: count and percentage in their own fixed columns so both align */
+.rcvda-vcse-sector .bar-row{grid-template-columns:150px 1fr 94px;}
+.rcvda-vcse-sector .bar-row .val{display:grid;grid-template-columns:1fr 3.1em;column-gap:6px;align-items:baseline;}
+.rcvda-vcse-sector .bar-row .val .cn{text-align:right;}
+.rcvda-vcse-sector .bar-row .val .pc{text-align:right;font-weight:400;}
+@media(max-width:560px){.rcvda-vcse-sector .bar-row{grid-template-columns:110px 1fr 84px}}
