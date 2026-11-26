@@ -2,7 +2,7 @@
 Contributors: RCVDA
 Requires at least: 6.0
 Tested up to: 6.6
-Stable tag: 0.5.26
+Stable tag: 0.5.27
 License: GPLv2 or later
 
 "State of the Sector" — a living, weekly-updated dashboard of the registered VCSE sector size across the five Tees Valley authorities.

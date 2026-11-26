@@ -275,3 +275,20 @@ html[data-theme="dark"] .rcvda-vcse-sector{--sh-cic-1:#F2644C;--sh-cic-2:#F69989
 .rcvda-vcse-sector .bar-row .val .cn{text-align:right;}
 .rcvda-vcse-sector .bar-row .val .pc{text-align:right;font-weight:400;}
 @media(max-width:560px){.rcvda-vcse-sector .bar-row{grid-template-columns:110px 1fr 84px}}
+/* Turnover Compared With the Business Base (ONS bands) */
+.rcvda-vcse-sector{--ons-all:#7A8494;--ons-np:#6B7BB8;}
+html[data-theme="dark"] .rcvda-vcse-sector{--ons-all:#8C97A8;--ons-np:#5A6BA8;}
+.rcvda-vcse-sector .ons-row{display:grid;grid-template-columns:120px 1fr 150px 150px 150px;align-items:center;gap:12px;font-size:.81rem;padding:4px 0;border-bottom:1px solid var(--wp--preset--color--divider,#D4DEEA);}
+.rcvda-vcse-sector .ons-row .lab{white-space:nowrap;color:var(--wp--preset--color--contrast,#0E1F40);}
+.rcvda-vcse-sector .ons-head{font-weight:700;font-size:.76rem;color:var(--wp--preset--color--muted,#51607A);border-bottom-width:2px;}
+.rcvda-vcse-sector .ons-head .ons-v{display:flex;justify-content:flex-end;align-items:center;gap:6px;text-align:right;}
+.rcvda-vcse-sector .ons-tot{font-weight:700;border-bottom:none;}
+.rcvda-vcse-sector .ons-bars{display:flex;flex-direction:column;gap:2px;}
+.rcvda-vcse-sector .ons-bars span{display:block;height:5px;border-radius:2px;}
+.rcvda-vcse-sector .ons-v{display:grid;grid-template-columns:1fr 3.1em;column-gap:6px;font-variant-numeric:tabular-nums;color:var(--wp--preset--color--contrast,#0E1F40);}
+.rcvda-vcse-sector .ons-v .cn{text-align:right;font-weight:700;}
+.rcvda-vcse-sector .ons-v .pc{text-align:right;}
+.rcvda-vcse-sector .ons-mini{margin-top:14px;}
+.rcvda-vcse-sector .ons-hl{display:inline-flex;align-items:center;gap:5px;margin-left:18px;font-weight:700;font-variant-numeric:tabular-nums;}
+.rcvda-vcse-sector .ons-note{font-size:.74rem;color:var(--wp--preset--color--muted,#51607A);margin:12px 0 0;line-height:1.45;}
+@media(max-width:760px){.rcvda-vcse-sector .ons-row{grid-template-columns:84px repeat(3,minmax(0,1fr));gap:6px;font-size:.74rem}.rcvda-vcse-sector .ons-row>:nth-child(2){display:none}.rcvda-vcse-sector .ons-v{grid-template-columns:1fr;}.rcvda-vcse-sector .ons-v .cn{display:none}.rcvda-vcse-sector .ons-head .ons-v{font-size:.66rem;align-items:flex-end}.rcvda-vcse-sector .ons-hl{margin-left:10px}}

@@ -116,7 +116,8 @@
       +'<div class="band"><h3>'+vicon("pound-sterling",20)+'Money</h3><div class="rule"></div></div>'
       +'<section class="grid"><div class="panel col-6"><div class="panel-head"><h2>'+vicon("pound-sterling",18)+'Turnover of the Active Sector</h2><div class="sub j-incsub"></div></div><div class="bars j-income"></div></div>'
       +'<div class="panel col-6"><div class="panel-head"><h2>'+vicon("scale",18)+'Large vs Small</h2><div class="sub">How the money concentrates by organisation size</div></div><div class="j-size"></div></div>'
-      +'<div class="panel col-12"><div class="panel-head"><h2>'+vicon("chart-pie",18)+'Income Concentration</h2><div class="sub j-concsub"></div></div><div class="conc-bar"><div class="top j-conctop"></div></div><div class="mini j-concmini"></div></div></section>'
+      +'<div class="panel col-12"><div class="panel-head"><h2>'+vicon("chart-pie",18)+'Income Concentration</h2><div class="sub j-concsub"></div></div><div class="conc-bar"><div class="top j-conctop"></div></div><div class="mini j-concmini"></div></div>'
+      +'<div class="panel col-12"><div class="panel-head"><h2>'+vicon("building",18)+'Turnover Compared With the Business Base</h2><div class="sub j-onssub"></div></div><div class="j-onscmp"></div></div></section>'
 
       +'<div class="band"><h3>'+vicon("globe",20)+'Digital &amp; Projection</h3><div class="rule"></div></div>'
       +'<section class="grid"><div class="panel col-6"><div class="panel-head"><h2>'+vicon("globe",18)+'Digital Presence</h2><div class="sub">Active organisations with a website</div></div><div class="donut-wrap"><svg class="j-donut" width="122" height="122" viewBox="0 0 132 132" role="img"></svg><div class="mini j-digmini" style="flex:1"></div></div></div></section>'
@@ -269,6 +270,14 @@
      of the five unitary authorities. Keyed by aggregate-block name. */
   var GVA_YEAR=2024, GVA_M={"Hartlepool":1735,"Middlesbrough":3831,"Redcar-and-Cleveland":2228,"Stockton-on-Tees":6171,"Darlington":3059};
   GVA_M["Tees Valley"]=GVA_M["Hartlepool"]+GVA_M["Middlesbrough"]+GVA_M["Redcar-and-Cleveland"]+GVA_M["Stockton-on-Tees"]+GVA_M["Darlington"];
+  /* Tees Valley business base by turnover — ONS UK Business Counts, enterprises by
+     industry and turnover size band (Nomis NM_199_1), March 2026, all industries.
+     "all" = all VAT and/or PAYE based enterprises; "np" = legal status "Non-profit body
+     or mutual association". Counts are rounded by ONS to the nearest 5, so each total
+     here is the sum of its bands. Refresh annually (released each autumn). */
+  var ONS_TB_DATE="March 2026", ONS_TB_LABELS=["\u00a30\u2013\u00a349k","\u00a350k\u2013\u00a399k","\u00a3100k\u2013\u00a3249k","\u00a3250k\u2013\u00a3499k","\u00a3500k\u2013\u00a3999k","\u00a31m\u2013\u00a31.99m","\u00a32m\u2013\u00a34.99m","\u00a35m\u2013\u00a39.99m","\u00a310m\u2013\u00a349.99m","\u00a350m+"],
+  ONS_TB={"Darlington":{all:[410, 675, 1200, 500, 290, 180, 110, 35, 35, 15],np:[15, 15, 25, 25, 10, 10, 5, 0, 0, 0]},"Hartlepool":{all:[235, 430, 850, 325, 190, 110, 55, 20, 25, 5],np:[5, 15, 25, 25, 10, 5, 5, 0, 0, 0]},"Middlesbrough":{all:[330, 700, 1310, 540, 315, 170, 120, 55, 40, 20],np:[5, 20, 25, 15, 20, 10, 5, 0, 0, 0]},"Redcar-and-Cleveland":{all:[295, 705, 1165, 400, 290, 145, 95, 40, 25, 15],np:[10, 20, 35, 25, 15, 5, 5, 0, 0, 0]},"Stockton-on-Tees":{all:[610, 1185, 2010, 780, 460, 315, 225, 90, 85, 25],np:[10, 25, 40, 30, 25, 10, 5, 0, 0, 0]}};
+  ONS_TB["Tees Valley"]=(function(){ var t={all:[0,0,0,0,0,0,0,0,0,0],np:[0,0,0,0,0,0,0,0,0,0]}; ["Hartlepool","Middlesbrough","Redcar-and-Cleveland","Stockton-on-Tees","Darlington"].forEach(function(k){ for(var i=0;i<10;i++){ t.all[i]+=ONS_TB[k].all[i]; t.np[i]+=ONS_TB[k].np[i]; } }); return t; })();
   function gvaTile(S,A){
     var blk=S.AGG&&S.AGG.snapshots&&S.AGG.snapshots[S.AGG.latest], key=null;
     if(blk){ for(var k in blk){ if(blk[k]===A){ key=k; break; } } }
@@ -389,6 +398,27 @@
     S.q('.j-concsub').textContent="Share of the sector's "+gbp(A.sector_value)+" held by the largest organisations";
     var t10=A.concentration.top10; S.q('.j-conctop').style.width=t10+"%"; S.q('.j-conctop').textContent=t10>=12?("Top 10 = "+t10+"%"):"";
     S.q('.j-concmini').innerHTML='<div class="r"><span class="k">Largest 10 organisations</span><span>'+t10+'% of the money</span></div><div class="r"><span class="k">Largest 25 organisations</span><span>'+A.concentration.top25+'% of the money</span></div>';
+    // ONS business-base comparison — same ten turnover bands for all three series.
+    (function(){
+      var key=aggKey(S,A), O=ONS_TB[key], ch=A.income_bands_ons, host=S.q('.j-onscmp');
+      if(!O||!ch){ S.q('.j-onssub').textContent="Not available for this selection"; host.innerHTML=""; return; }
+      function sum(a){ return a.reduce(function(x,y){return x+y;},0); }
+      var ser=[{k:"all",name:"All Businesses",d:O.all,c:"var(--ons-all)"},{k:"np",name:"Non-profit Bodies",d:O.np,c:"var(--ons-np)"},{k:"ch",name:"Registered Charities",d:ch,c:col.seg.Charities}];
+      ser.forEach(function(s){ s.t=sum(s.d); });
+      var mx=0; ser.forEach(function(s){ s.d.forEach(function(n){ mx=Math.max(mx,s.t?n/s.t:0); }); }); mx=mx||1;
+      function share(s,from){ return sum(s.d.slice(from))/(s.t||1); }
+      S.q('.j-onssub').textContent="Share of each group in the ONS turnover bands \u00b7 "+(key==="Tees Valley"?"Tees Valley":sLabel)+" \u00b7 businesses from ONS UK Business Counts ("+ONS_TB_DATE+"), charities from the latest snapshot";
+      var head='<div class="ons-row ons-head"><div class="lab">Turnover</div><div></div>'+ser.map(function(s){ return '<div class="ons-v"><span class="se-sw" style="background:'+s.c+'"></span>'+s.name+'</div>'; }).join('')+'</div>';
+      var rows=ONS_TB_LABELS.map(function(l,i){
+        var bars=ser.map(function(s){ return '<span style="width:'+(100*(s.t?s.d[i]/s.t:0)/mx)+'%;background:'+(s.d[i]?s.c:'transparent')+'" title="'+esc(s.name+': '+commas(s.d[i]))+'"></span>'; }).join('');
+        return '<div class="ons-row"><div class="lab">'+l+'</div><div class="ons-bars">'+bars+'</div>'+ser.map(function(s){ return '<div class="ons-v"><span class="cn">'+commas(s.d[i])+'</span><em class="pc">'+pct(s.d[i],s.t)+'</em></div>'; }).join('')+'</div>';
+      }).join('');
+      var tot='<div class="ons-row ons-tot"><div class="lab">Total</div><div></div>'+ser.map(function(s){ return '<div class="ons-v"><span class="cn">'+commas(s.t)+'</span><em class="pc">100%</em></div>'; }).join('')+'</div>';
+      var hl='<div class="mini ons-mini">'+[["\u00a3100k and over",2],["\u00a3500k and over",4],["\u00a31m and over",5]].map(function(x){
+        return '<div class="r"><span class="k">'+x[0]+'</span><span>'+ser.map(function(s){ return '<span class="ons-hl"><span class="se-sw" style="background:'+s.c+'"></span>'+Math.round(100*share(s,x[1]))+'%</span>'; }).join('')+'</span></div>'; }).join('')+'</div>';
+      host.innerHTML='<div class="ons-tbl">'+head+rows+tot+'</div>'+hl
+        +'<p class="ons-note"><b>Businesses</b> are VAT and/or PAYE registered enterprises on the ONS business register; sole traders registered for neither are not counted. ONS rounds each count to the nearest 5, so totals are the sum of the bands. Business turnover is mostly from VAT returns for an earlier year. <b>Non-profit bodies</b> are the register\u2019s \u201cNon-profit body or mutual association\u201d legal status. <b>Registered charities</b> are active based-in charities reporting income, by latest annual income ('+commas(A.no_income)+' organisations report none and are not shown).</p>';
+    })();
     // digital donut
     var wp=A.web_pct, r=52, c=2*Math.PI*r, on=c*wp/100;
     S.q('.j-donut').innerHTML='<circle cx="66" cy="66" r="52" fill="none" stroke="'+col.muted+'" stroke-opacity=".25" stroke-width="16"/>'

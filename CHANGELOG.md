@@ -2,6 +2,15 @@
 
 All notable changes to this plugin, most recent first. Format: `## YYYY-MM-DD — vX.Y.Z — description`.
 
+## 2026-11-26 — v0.5.27 — Money: Turnover Compared With the Business Base (ONS turnover bands)
+
+- New full-width panel at the end of **Money**: the ten ONS UK Business Counts turnover bands (£0–£49k to £50m+), with three groups side by side — **All Businesses** and **Non-profit Bodies** (ONS legal status "Non-profit body or mutual association") from Nomis NM_199_1, March 2026, then our **Registered Charities** by latest annual income. Each band shows count · % for each group, with a Total row at 100%, plus summary lines for £100k, £500k and £1m and over (Tees Valley: 69% / 75% / 28%; 20% / 26% / 10%; 11% / 12% / 5%).
+- Follows the borough filter: ONS figures are held per local authority (`ONS_TB`, fixed in the JS like `GVA_M`; Tees Valley = sum of the five). ONS rounds counts to the nearest 5, so totals are the sum of the bands. Refresh annually.
+- Charity counts come from the new aggregates field `income_bands_ons` (runner from 26/11/2026; 24/11 and 25/11 backfilled). Without it the panel says "Not available for this selection".
+- Colours: All Businesses neutral grey `--ons-all` (#7A8494 light / #8C97A8 dark); Non-profit Bodies a Tees Valley navy tint `--ons-np` (#6B7BB8 light, 4.1:1 on white / #5A6BA8 dark); charities keep the charity segment colour. On narrow screens the bars drop and percentages only are shown.
+- Bundled fallback data refreshed from the data repo (includes `income_bands_ons`).
+- Existing Money panels unchanged.
+
 ## 2026-11-26 — v0.5.26 — Percentages beside counts across the dashboard
 
 - Every breakdown now shows each count with its share, using the same `pct()` rounding (whole numbers, `<1%` for small non-zero items):
