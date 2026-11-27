@@ -384,10 +384,12 @@
     S.q('.j-decleg').innerHTML=present.map(function(s){ return '<span class="legitem"><span class="dot" style="background:'+col.seg[s]+'"></span>'+esc(segLabel(s))+'</span>'; }).join('');
     // income bands
     var repN=BANDS.reduce(function(a,b){return a+(A.income_bands[b]||0);},0);
-    S.q('.j-incsub').textContent="% of the "+commas(repN)+" charities reporting income · "+commas(A.no_income)+" report none · avg "+gbpFull(A.avg_income);
-    var maxB=Math.max.apply(null,BANDS.map(function(b){return A.income_bands[b]||0;}))||1;
+    var chTot=(A.by_segment&&A.by_segment.Charities)||repN, noInc=Math.max(0,chTot-repN);
+    S.q('.j-incsub').textContent="% of all "+commas(chTot)+" registered charities · "+commas(noInc)+" with no income recorded · avg "+gbpFull(A.avg_income)+" (of those reporting)";
+    var maxB=Math.max(noInc,Math.max.apply(null,BANDS.map(function(b){return A.income_bands[b]||0;})))||1;
     S.q('.j-income').innerHTML=BANDS.map(function(b){ var n=A.income_bands[b]||0;
-      return '<div class="bar-row"><div class="lab">'+b+'</div><div class="track"><div class="fill" style="width:'+(100*n/maxB)+'%"></div></div><div class="val">'+cp(n,repN)+'</div></div>'; }).join("");
+      return '<div class="bar-row"><div class="lab">'+b+'</div><div class="track"><div class="fill" style="width:'+(100*n/maxB)+'%"></div></div><div class="val">'+cp(n,chTot)+'</div></div>'; }).join("")
+      +'<div class="bar-row bar-row--none"><div class="lab">No income recorded</div><div class="track"><div class="fill" style="width:'+(100*noInc/maxB)+'%"></div></div><div class="val">'+cp(noInc,chTot)+'</div></div>';
     // size
     var sz=A.size, sv=A.sector_value||1;
     S.q('.j-size').innerHTML=[["large","£100k and over"],["medium","£10k–£100k"],["small","under £10k"],["none","no income reported"]].map(function(k){ var b=sz[k[0]];
@@ -417,7 +419,7 @@
       var hl='<div class="mini ons-mini">'+[["\u00a3100k and over",2],["\u00a3500k and over",4],["\u00a31m and over",5]].map(function(x){
         return '<div class="r"><span class="k">'+x[0]+'</span><span>'+ser.map(function(s){ return '<span class="ons-hl"><span class="se-sw" style="background:'+s.c+'"></span>'+Math.round(100*share(s,x[1]))+'%</span>'; }).join('')+'</span></div>'; }).join('')+'</div>';
       host.innerHTML='<div class="ons-tbl">'+head+rows+tot+'</div>'+hl
-        +'<p class="ons-note"><b>Businesses</b> are VAT and/or PAYE registered enterprises on the ONS business register; sole traders registered for neither are not counted. ONS rounds each count to the nearest 5, so totals are the sum of the bands. Business turnover is mostly from VAT returns for an earlier year. <b>Non-profit bodies</b> are the register\u2019s \u201cNon-profit body or mutual association\u201d legal status. <b>Registered charities</b> are active based-in charities reporting income, by latest annual income ('+commas(A.no_income)+' organisations report none and are not shown).</p>';
+        +'<p class="ons-note"><b>Businesses</b> are VAT and/or PAYE registered enterprises on the ONS business register; sole traders registered for neither are not counted. ONS rounds each count to the nearest 5, so totals are the sum of the bands. Business turnover is mostly from VAT returns for an earlier year. <b>Non-profit bodies</b> are the register\u2019s \u201cNon-profit body or mutual association\u201d legal status. <b>Registered charities</b> are active based-in charities reporting income, by latest annual income ('+commas(((A.by_segment&&A.by_segment.Charities)||0)-((A.income_bands_ons||[]).reduce(function(a,b){return a+(b||0);},0)))+' charities report none and are not shown).</p>';
     })();
     // digital donut
     var wp=A.web_pct, r=52, c=2*Math.PI*r, on=c*wp/100;

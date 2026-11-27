@@ -292,3 +292,6 @@ html[data-theme="dark"] .rcvda-vcse-sector{--ons-all:#8C97A8;--ons-np:#5A6BA8;}
 .rcvda-vcse-sector .ons-hl{display:inline-flex;align-items:center;gap:5px;margin-left:18px;font-weight:700;font-variant-numeric:tabular-nums;}
 .rcvda-vcse-sector .ons-note{font-size:.74rem;color:var(--wp--preset--color--muted,#51607A);margin:12px 0 0;line-height:1.45;}
 @media(max-width:760px){.rcvda-vcse-sector .ons-row{grid-template-columns:84px repeat(3,minmax(0,1fr));gap:6px;font-size:.74rem}.rcvda-vcse-sector .ons-row>:nth-child(2){display:none}.rcvda-vcse-sector .ons-v{grid-template-columns:1fr;}.rcvda-vcse-sector .ons-v .cn{display:none}.rcvda-vcse-sector .ons-head .ons-v{font-size:.66rem;align-items:flex-end}.rcvda-vcse-sector .ons-hl{margin-left:10px}}
+
+.rcvda-vcse-sector .bar-row--none{margin-top:5px;padding-top:7px;border-top:1px dashed var(--wp--preset--color--divider,#D4DEEA);}
+.rcvda-vcse-sector .bar-row--none .lab{font-style:italic;}

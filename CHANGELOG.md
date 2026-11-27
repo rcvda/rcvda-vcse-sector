@@ -2,6 +2,13 @@
 
 All notable changes to this plugin, most recent first. Format: `## YYYY-MM-DD — vX.Y.Z — description`.
 
+## 2026-11-27 — v0.5.28 — Charities with no income recorded shown in the turnover list
+
+- The **Turnover of the Active Sector** list now carries a **No income recorded** row — the active based-in registered charities with no income figure on the register (charities minus those reporting) — set off below Under 10k. Every row’s percentage is now out of all registered charities in scope, so the list sums to 100%.
+- Subtitle rebased: “% of all N registered charities · M with no income recorded · avg £… (of those reporting)”, replacing the earlier wording that set the all-VCFSE no-income count (which includes CICs, societies and CASCs that carry no income) against the charity list.
+- Money → ONS turnover panel note: the “report none and are not shown” figure now counts charities with no income (charities minus those reporting), not the all-VCFSE no-income total.
+- Dashboard-only; no data, runner or aggregates change.
+
 ## 2026-11-26 — v0.5.27 — Money: Turnover Compared With the Business Base (ONS turnover bands)
 
 - New full-width panel at the end of **Money**: the ten ONS UK Business Counts turnover bands (£0–£49k to £50m+), with three groups side by side — **All Businesses** and **Non-profit Bodies** (ONS legal status "Non-profit body or mutual association") from Nomis NM_199_1, March 2026, then our **Registered Charities** by latest annual income. Each band shows count · % for each group, with a Total row at 100%, plus summary lines for £100k, £500k and £1m and over (Tees Valley: 69% / 75% / 28%; 20% / 26% / 10%; 11% / 12% / 5%).
