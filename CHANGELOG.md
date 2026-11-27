@@ -2,6 +2,11 @@
 
 All notable changes to this plugin, most recent first. Format: `## YYYY-MM-DD — vX.Y.Z — description`.
 
+## 2026-11-27 — v0.5.29 — Median income shown beside the mean in the turnover list
+
+- The **Turnover of the Active Sector** subtitle now shows the **median** income beside the mean (Tees Valley: avg £364,589 · median £22,871), of those reporting. Charity income is heavily right-skewed — a few large charities pull the mean well above the typical figure — so the median gives the truer sense of a typical charity’s income. (A Median income tile already existed; this puts both at the income breakdown.)
+- Dashboard-only; no data, runner or aggregates change.
+
 ## 2026-11-27 — v0.5.28 — Charities with no income recorded shown in the turnover list
 
 - The **Turnover of the Active Sector** list now carries a **No income recorded** row — the active based-in registered charities with no income figure on the register (charities minus those reporting) — set off below Under 10k. Every row’s percentage is now out of all registered charities in scope, so the list sums to 100%.
