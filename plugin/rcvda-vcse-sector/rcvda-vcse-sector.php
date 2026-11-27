@@ -2,7 +2,7 @@
 /**
  * Plugin Name:       RCVDA VCSE Sector
  * Description:       "State of the Sector" living dashboard. Renders the Tees Valley registered-VCSE sector as a weekly-updated time series plus detailed current-snapshot analytics (by type, legal structure, decade founded, income/turnover, size, concentration, digital, projection, ten largest) via the [rcvda_vcse_sector] shortcode — read live from the public open-data repo over the jsDelivr CDN, with automatic fallback to a bundled copy. Headline measure is based-in (registered office in the borough). Data lives in rcvda/tees-valley-vcse-sector.
- * Version:           0.5.32
+ * Version:           0.5.33
  * Author:            RCVDA
  * License:           GPL-2.0-or-later
  * Text Domain:       rcvda-vcse-sector
@@ -13,7 +13,7 @@
 
 if ( ! defined( 'ABSPATH' ) ) { exit; }
 
-define( 'RCVDA_VCSE_SECTOR_VER', '0.5.32' );
+define( 'RCVDA_VCSE_SECTOR_VER', '0.5.33' );
 define( 'RCVDA_VCSE_SECTOR_URL', plugin_dir_url( __FILE__ ) );
 define( 'RCVDA_VCSE_SECTOR_DIR', plugin_dir_path( __FILE__ ) );
 
@@ -114,15 +114,19 @@ function rcvda_vcse_sector_shortcode( $atts ) {
 
 	$bundled_csv = RCVDA_VCSE_SECTOR_URL . 'assets/data/tees-valley-vcse-timeseries.csv';
 	$bundled_agg = RCVDA_VCSE_SECTOR_URL . 'assets/data/tees-valley-vcse-aggregates.json';
+	$bundled_gloss = RCVDA_VCSE_SECTOR_URL . 'assets/data/glossary/rcvda.json';
 
 	if ( $set && 'live' === $source ) {
 		$src      = rcvda_vcse_sector_cdn_url( $set['repo'], $set['path'], $atts['ref'] );
 		$fallback = $bundled_csv;
 		$asrc     = rcvda_vcse_sector_cdn_url( $set['repo'], $set['agg'], $atts['ref'] );
 		$afb      = $bundled_agg;
+		$gsrc     = rcvda_vcse_sector_cdn_url( 'rcvda/rcvda-glossary', 'build/rcvda/glossary.json', 'main' );
+		$gfb      = $bundled_gloss;
 	} else {
 		$src      = $bundled_csv; $fallback = '';
 		$asrc     = $bundled_agg; $afb = '';
+		$gsrc     = $bundled_gloss; $gfb = '';
 	}
 
 	$title = $atts['title'];
@@ -136,12 +140,14 @@ function rcvda_vcse_sector_shortcode( $atts ) {
 	$id = 'rcvda-vcse-sector-' . $n;
 
 	return sprintf(
-		'<div class="rcvda-vcse-sector" id="%s" data-src="%s" data-fallback="%s" data-agg-src="%s" data-agg-fallback="%s" data-title="%s" data-area="%s"></div>',
+		'<div class="rcvda-vcse-sector" id="%s" data-src="%s" data-fallback="%s" data-agg-src="%s" data-agg-fallback="%s" data-gloss-src="%s" data-gloss-fallback="%s" data-title="%s" data-area="%s"></div>',
 		esc_attr( $id ),
 		esc_url( $src ),
 		esc_url( $fallback ),
 		esc_url( $asrc ),
 		esc_url( $afb ),
+		esc_url( $gsrc ),
+		esc_url( $gfb ),
 		esc_attr( $title ),
 		esc_attr( $area )
 	);

@@ -2,6 +2,13 @@
 
 All notable changes to this plugin, most recent first. Format: `## YYYY-MM-DD — vX.Y.Z — description`.
 
+## 2026-11-27 — v0.5.33 — Glossary integration: term tooltips + canonical Glossary panel
+
+- Organisation-type and sub-type labels now carry a theme-aware **glossary tooltip** (dotted term → hover/focus/tap for the definition and source), wired to the labels in Active Sector by Type, the When the Sector Was Founded legend, and the Social Enterprise and Legal Structure breakdowns.
+- The **Glossary panel is now built from the canonical `rcvda` lens** of the shared estate glossary (rcvda/rcvda-glossary), read live over jsDelivr with a bundled fallback (`assets/data/glossary/rcvda.json`) — so wording updates reach the dashboard on a glossary push, no plugin release. Replaces the previously hand-written panel.
+- Dedicated per-theme popover tokens (`--gl-*`); no white-on-white in dark mode.
+- Dashboard-only; no data, runner or aggregates change.
+
 ## 2026-11-27 — v0.5.32 — Title Case org-type names in the headline footnote
 
 - The Headline Figures footnote now reads “Income and workforce figures cover **Registered Charities** only. CICs, **Registered Societies** and CASCs don’t file income or staffing through their registers…” — capitalising the formal org-type names to match the Registered Charities / Registered Societies standard.

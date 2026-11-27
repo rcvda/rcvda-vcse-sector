@@ -295,3 +295,18 @@ html[data-theme="dark"] .rcvda-vcse-sector{--ons-all:#8C97A8;--ons-np:#5A6BA8;}
 
 .rcvda-vcse-sector .bar-row--none{margin-top:5px;padding-top:7px;border-top:1px dashed var(--wp--preset--color--divider,#D4DEEA);}
 .rcvda-vcse-sector .bar-row--none .lab{font-style:italic;}
+
+.rcvda-vcse-sector .gl{border-bottom:1px dotted var(--wp--preset--color--muted,#51607A);cursor:help;position:relative;}
+.rcvda-vcse-sector .gl:focus{outline:2px solid var(--wp--preset--color--brand-light,#033E8C);outline-offset:2px;}
+.rcvda-vcse-sector{--gl-bg:#ffffff;--gl-ink:#0e1f40;--gl-bd:#c3cedc;--gl-sh:rgba(14,31,64,.18);--gl-link:#033e8c;}
+html[data-theme="dark"] .rcvda-vcse-sector{--gl-bg:#1b2c4e;--gl-ink:#e8eef6;--gl-bd:#3a4f73;--gl-sh:rgba(0,0,0,.45);--gl-link:#6f97c8;}
+@media (prefers-color-scheme:dark){html:not([data-theme]) .rcvda-vcse-sector{--gl-bg:#1b2c4e;--gl-ink:#e8eef6;--gl-bd:#3a4f73;--gl-sh:rgba(0,0,0,.45);--gl-link:#6f97c8;}}
+.rcvda-vcse-sector .gl-pop{position:absolute;left:0;top:calc(100% + 7px);width:290px;max-width:78vw;z-index:50;background:var(--gl-bg);color:var(--gl-ink);border:1px solid var(--gl-bd);border-radius:10px;padding:11px 13px;box-shadow:0 8px 24px var(--gl-sh);font-size:.78rem;line-height:1.5;font-weight:400;opacity:0;visibility:hidden;transform:translateY(-3px);transition:opacity .12s,transform .12s;text-align:left;white-space:normal;}
+.rcvda-vcse-sector .gl:hover .gl-pop,.rcvda-vcse-sector .gl:focus .gl-pop,.rcvda-vcse-sector .gl.gl-open .gl-pop{opacity:1;visibility:visible;transform:translateY(0);}
+.rcvda-vcse-sector .gl-pop .gl-t{display:block;font-weight:800;margin-bottom:4px;}
+.rcvda-vcse-sector .gl-pop .gl-src{display:block;margin-top:7px;font-size:.72rem;}
+.rcvda-vcse-sector .gl-pop .gl-src a,.rcvda-vcse-sector .gloss .gl-src a{color:var(--gl-link);text-decoration:underline;}
+.rcvda-vcse-sector .gloss dt{font-weight:700;color:var(--wp--preset--color--contrast,#0E1F40);margin-top:9px;}
+.rcvda-vcse-sector .gloss dd{margin:2px 0 0;color:var(--wp--preset--color--contrast,#0E1F40);}
+.rcvda-vcse-sector .gloss .gl-abbr{font-weight:400;color:var(--wp--preset--color--muted,#51607A);}
+.rcvda-vcse-sector .gloss .gl-src{font-size:.72rem;margin-left:4px;}

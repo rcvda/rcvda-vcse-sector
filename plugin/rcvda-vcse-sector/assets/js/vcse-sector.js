@@ -66,17 +66,19 @@
       .catch(function(){ clearTimeout(to); fetchChain(urls,cb); });
   }
 
-  var GLOSS='<div class="gloss"><div class="gh">Organisation types</div><dl>'
-    +'<dt>Registered charity</dt><dd>On the Charity Commission register. <b>Includes CIOs</b> — this counts every registered charity, whatever its legal structure.</dd>'
-    +'<dt>CIC — Community Interest Company</dt><dd>A company that trades for community benefit, regulated by the CIC Regulator, not the Charity Commission — so not a charity.</dd>'
-    +'<dt>Registered society / mutual</dt><dd>A co-operative or community benefit society registered with the FCA. Includes credit unions and working men’s clubs.</dd>'
-    +'<dt>CASC — Community Amateur Sports Club</dt><dd>A local sports club registered with HMRC for tax reliefs.</dd></dl>'
-    +'<div class="gh">Terms</div><dl>'
-    +'<dt>Based in</dt><dd>The organisation’s <b>registered office</b> is in the borough — the canonical headline measure, kept separate from the wider “operating-from” reach measure.</dd>'
-    +'<dt>Active</dt><dd>Currently on the register — not removed or dissolved.</dd>'
-    +'<dt>Income vs GVA</dt><dd>Total latest-year income of the active registered charities that report one, shown as a share of the area’s gross value added (ONS, balanced, current prices, '+GVA_YEAR+'). Income is turnover, not value added, so this is a scale comparison, not the sector’s share of the economy.</dd>'
-    +'<dt>Sector turnover</dt><dd>The total latest-year income of the active organisations that report one; many small groups report none.</dd>'
-    +'<dt>NAVCA model</dt><dd>A national estimate that registered charities are about 26% of the whole VCFSE sector, used to project the unregistered community groups no register captures.</dd></dl></div>';
+  var GL_WIRE={"Registered Charities":"registered-charity","CICs":"community-interest-company","Community Interest Companies":"community-interest-company","Registered Societies":"registered-society","CASCs":"community-amateur-sports-club","Charitable Company":"charitable-company","CIO \u2014 Foundation":"charitable-incorporated-organisation","CIO \u2014 Association":"charitable-incorporated-organisation","Community Benefit Societies":"community-benefit-society","Co-operative Societies":"co-operative-society","Credit Unions":"credit-union","Friendly Societies":"friendly-society","Working Men\u2019s Clubs":"working-mens-club"};
+  var GL_PANEL=[["Organisation types",["registered-charity","charitable-incorporated-organisation","charitable-company","community-interest-company","registered-society","co-operative-society","community-benefit-society","credit-union","friendly-society","working-mens-club","community-amateur-sports-club"]],["Measures \u0026 terms",["vcfse","based-in","active-organisation","sector-turnover","gross-value-added","uk-business-counts-turnover-bands","navca-model"]]];
+  var _GL=null;
+  function gl(label){ var id=GL_WIRE[label], e=id&&_GL&&_GL[id]; if(!e) return esc(label);
+    var src=e.source_url?'<span class="gl-src">Source: <a href="'+esc(e.source_url)+'" target="_blank" rel="noopener">'+esc(e.source||e.source_url)+'</a></span>':'';
+    return '<span class="gl" tabindex="0">'+esc(label)+'<span class="gl-pop"><b class="gl-t">'+esc(e.term)+'</b>'+esc(e.definition)+src+'</span></span>'; }
+  function buildGloss(S){ var host=S.q('.j-gloss'); if(!host) return; if(!S.GLOSS){ host.innerHTML=''; return; }
+    host.innerHTML=GL_PANEL.map(function(sec){ var items=sec[1].map(function(id){ var e=S.GLOSS[id]; if(!e) return '';
+      var ab=(e.abbr&&e.abbr!==e.term)?' <span class="gl-abbr">('+esc(e.abbr)+')</span>':'';
+      var src=e.source_url?'<span class="gl-src"><a href="'+esc(e.source_url)+'" target="_blank" rel="noopener">'+esc(e.source||'Source')+'</a></span>':'';
+      return '<dt>'+esc(e.term)+ab+'</dt><dd>'+esc(e.definition)+' '+src+'</dd>'; }).join('');
+      return '<div class="gh">'+esc(sec[0])+'</div><dl>'+items+'</dl>'; }).join(''); }
+
 
   function markup(title,area){
     return '<div class="wrap">'
@@ -126,7 +128,7 @@
       +'<section class="grid"><div class="panel col-12"><div class="panel-head"><h2>'+vicon("building",18)+'Ten Largest Active Organisations by Income</h2><div class="sub j-topsub"></div></div><table class="toptable j-top"></table></div></section>'
 
       +'<div class="band band--noscope"><h3>'+vicon("book-open",20)+'Glossary</h3><div class="rule"></div></div>'
-      +'<section class="grid"><div class="panel col-12 panel--noscope">'+GLOSS+'</div></section>'
+      +'<section class="grid"><div class="panel col-12 panel--noscope"><div class="gloss j-gloss"></div></div></section>'
 
       +'<footer><b>Method.</b> Candidates are drawn from Find That Charity for the five '+esc(area)+' local-authority areas, classified by registered organisation type and filtered to those whose <b>registered office (HQ)</b> is in the borough. Scope: registered charities (including CIOs), CICs, registered societies / mutuals and CASCs; statutory bodies (schools, NHS, councils) excluded. Each weekly run recomputes the counts and the analytics; figures describe the active sector. The over-time series is seeded from earlier dated snapshots. <span class="j-built"></span>'
       +'<br><b>Sources.</b> Organisation records aggregated by <b>Find That Charity</b> (findthatcharity.uk, David Kane) from the primary UK registers — the <b>Charity Commission for England &amp; Wales</b>, <b>Companies House</b> (CICs), the <b>FCA Mutuals Public Register</b> (registered societies) and <b>HMRC</b> (CASCs). Register data © the respective bodies under the Open Government Licence v3.0; Find That Charity is published under CC-BY 4.0.'
@@ -136,16 +138,21 @@
   function initOne(root,tip){
     var SRC=root.getAttribute('data-src')||'', FB=root.getAttribute('data-fallback')||'';
     var ASRC=root.getAttribute('data-agg-src')||'', AFB=root.getAttribute('data-agg-fallback')||'';
+    var GSRC=root.getAttribute('data-gloss-src')||'', GFB=root.getAttribute('data-gloss-fallback')||'';
     var TITLE=root.getAttribute('data-title')||'State of the Sector', AREA=root.getAttribute('data-area')||'Tees Valley';
     root.innerHTML=markup(TITLE,AREA);
-    var S={ root:root, tip:tip, DATA:[], AGG:null, hidden1:{}, hidden2:{}, range:'fit' };
+    var S={ root:root, tip:tip, DATA:[], AGG:null, GLOSS:null, hidden1:{}, hidden2:{}, range:'fit' };
     S.q=function(c){ return root.querySelector(c); };
     var spineChain=[]; if(SRC)spineChain.push(SRC); if(FB&&FB!==SRC)spineChain.push(FB);
     var aggChain=[]; if(ASRC)aggChain.push(ASRC); if(AFB&&AFB!==ASRC)aggChain.push(AFB);
-    var pending=2, live=false;
+    var pending=3, live=false;
     function done(){ if(--pending>0) return; boot(S,live); }
     fetchChain(spineChain.slice(),function(t,l){ if(t){ S.DATA=normalizeClusters(parseSpine(t)); if(l)live=true; } done(); });
     fetchChain(aggChain.slice(),function(t,l){ if(t){ try{ S.AGG=JSON.parse(t); }catch(e){} } done(); });
+    var glossChain=[]; if(GSRC)glossChain.push(GSRC); if(GFB&&GFB!==GSRC)glossChain.push(GFB);
+    fetchChain(glossChain.slice(),function(t,l){ if(t){ try{ var gj=JSON.parse(t), gm={}; (gj.entries||[]).forEach(function(e){ gm[e.id]=e; }); S.GLOSS=gm; }catch(e){} } done(); });
+    document.addEventListener('click',function(ev){ if(!S.root.contains(ev.target)) S.root.querySelectorAll('.gl.gl-open').forEach(function(x){x.classList.remove('gl-open');}); });
+    S.root.addEventListener('click',function(e){ var g=e.target.closest('.gl'); if(e.target.closest('.gl-pop a')) return; S.root.querySelectorAll('.gl.gl-open').forEach(function(x){ if(x!==g) x.classList.remove('gl-open'); }); if(g){ e.stopPropagation(); g.classList.toggle('gl-open'); } });
     var reRender=function(){ if(S.DATA.length||S.AGG) render(S); };
     if('MutationObserver' in window){ new MutationObserver(reRender).observe(document.documentElement,{attributes:true,attributeFilter:['data-theme','class']}); }
     if(window.matchMedia){ try{ window.matchMedia('(prefers-color-scheme:dark)').addEventListener('change',reRender); }catch(e){} }
@@ -219,7 +226,7 @@
     return S.DATA.filter(function(r){return r.bor===scope&&r.seg===seg;}).map(function(r){return {t:r.t,date:r.date,v:r.active,partial:false};}).sort(function(a,b){return a.t-b.t;});
   }
 
-  function render(S){
+  function render(S){ _GL=(S.GLOSS||null); buildGloss(S);
     var col=colours(S.root); S.col=col;
     var measure=S.q('.j-seg').value, scope=S.q('.j-bor').value;
     computeWindow(S);
@@ -337,7 +344,7 @@
     S.q('.j-typesub').textContent="Active based-in organisations · "+sLabel+" · % of "+commas(A.active)+" active";
     var maxSeg=Math.max.apply(null,SEGMENTS.map(function(s){return A.by_segment[s]||0;}))||1;
     S.q('.j-type').innerHTML=SEGMENTS.map(function(s){ var n=A.by_segment[s]||0;
-      return '<div class="bar-row"><div class="lab">'+segLabel(s)+'</div><div class="track"><div class="fill" style="width:'+(100*n/maxSeg)+'%;background:'+col.seg[s]+'"></div></div><div class="val">'+cp(n,A.active)+'</div></div>'; }).join("");
+      return '<div class="bar-row"><div class="lab">'+gl(segLabel(s))+'</div><div class="track"><div class="fill" style="width:'+(100*n/maxSeg)+'%;background:'+col.seg[s]+'"></div></div><div class="val">'+cp(n,A.active)+'</div></div>'; }).join("");
     // Structure panels (full width): an overall split, then two groups side by side, each
     // with its own bar and list. Sub-types take DESIGN.md shades of the group colour
     // (--sh-<group>-<n>, light/dark in CSS), assigned largest first. Rows show the count and
@@ -346,9 +353,9 @@
     function grpHTML(title,total,whole,swatchVar,shadeKey,items,note){
       items=items.filter(function(x){return x[1]>0;}).sort(function(a,b){return b[1]-a[1];});
       var bar=items.map(function(x,i){ return '<div style="flex:'+x[1]+';background:var(--sh-'+shadeKey+'-'+Math.min(i+1,shadeMax[shadeKey])+')" title="'+esc(x[0])+': '+commas(x[1])+'"></div>'; }).join('');
-      var rows=items.map(function(x,i){ return '<div class="r se-sub"><span class="k"><span class="se-sw" style="background:var(--sh-'+shadeKey+'-'+Math.min(i+1,shadeMax[shadeKey])+')"></span>'+esc(x[0])+'</span><span>'+commas(x[1])+' <em class="pc">· '+pct(x[1],total)+'</em></span></div>'; }).join('');
+      var rows=items.map(function(x,i){ return '<div class="r se-sub"><span class="k"><span class="se-sw" style="background:var(--sh-'+shadeKey+'-'+Math.min(i+1,shadeMax[shadeKey])+')"></span>'+gl(x[0])+'</span><span>'+commas(x[1])+' <em class="pc">· '+pct(x[1],total)+'</em></span></div>'; }).join('');
       if(!items.length && note) rows='<div class="r se-sub se-note"><span class="k">'+esc(note)+'</span><span></span></div>';
-      return '<div class="sgrp"><div class="r se-head"><span class="k"><span class="se-sw" style="background:'+swatchVar+'"></span>'+esc(title)+'</span><span>'+commas(total)+' <em class="pc">· '+pct(total,whole)+'</em></span></div>'
+      return '<div class="sgrp"><div class="r se-head"><span class="k"><span class="se-sw" style="background:'+swatchVar+'"></span>'+gl(title)+'</span><span>'+commas(total)+' <em class="pc">· '+pct(total,whole)+'</em></span></div>'
         +(items.length?'<div class="bar2">'+bar+'</div>':'')+'<div class="mini">'+rows+'</div></div>';
     }
     var shadeMax={cic:3,soc:5,chr:4,unc:2};
@@ -381,7 +388,7 @@
       var stack=decSegs(d).filter(function(x){return x[1]>0;}).map(function(x){ var c=x[0]?col.seg[x[0]]:col.accent; return '<span style="width:'+(100*x[1]/maxD)+'%;background:'+c+'" title="'+esc((x[0]?segLabel(x[0]):'All')+': '+commas(x[1]))+'"></span>'; }).join('');
       return '<div class="bar-row"><div class="lab">'+esc(d)+'</div><div class="track stack">'+stack+'</div><div class="val">'+cp(tot,allD)+'</div></div>'; }).join("");
     var present=DEC_ORDER.filter(function(s){ return DECADES.some(function(d){ var v=A.decades[d]; return v&&typeof v==='object'&&(v[s]||0)>0; }); });
-    S.q('.j-decleg').innerHTML=present.map(function(s){ return '<span class="legitem"><span class="dot" style="background:'+col.seg[s]+'"></span>'+esc(segLabel(s))+'</span>'; }).join('');
+    S.q('.j-decleg').innerHTML=present.map(function(s){ return '<span class="legitem"><span class="dot" style="background:'+col.seg[s]+'"></span>'+gl(segLabel(s))+'</span>'; }).join('');
     // income bands
     var repN=BANDS.reduce(function(a,b){return a+(A.income_bands[b]||0);},0);
     var chTot=(A.by_segment&&A.by_segment.Charities)||repN, noInc=Math.max(0,chTot-repN);
