@@ -385,7 +385,7 @@
     // income bands
     var repN=BANDS.reduce(function(a,b){return a+(A.income_bands[b]||0);},0);
     var chTot=(A.by_segment&&A.by_segment.Charities)||repN, noInc=Math.max(0,chTot-repN);
-    S.q('.j-incsub').textContent="% of all "+commas(chTot)+" registered charities · "+commas(noInc)+" with no income recorded · avg "+gbpFull(A.avg_income)+" · median "+gbpFull(A.median_income)+" (of those reporting)";
+    S.q('.j-incsub').textContent="% of all "+commas(chTot)+" registered charities · reporting: avg "+gbpFull(A.avg_income)+" · median "+gbpFull(A.median_income);
     var maxB=Math.max(noInc,Math.max.apply(null,BANDS.map(function(b){return A.income_bands[b]||0;})))||1;
     S.q('.j-income').innerHTML=BANDS.map(function(b){ var n=A.income_bands[b]||0;
       return '<div class="bar-row"><div class="lab">'+b+'</div><div class="track"><div class="fill" style="width:'+(100*n/maxB)+'%"></div></div><div class="val">'+cp(n,chTot)+'</div></div>'; }).join("")
