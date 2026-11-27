@@ -2,6 +2,11 @@
 
 All notable changes to this plugin, most recent first. Format: `## YYYY-MM-DD — vX.Y.Z — description`.
 
+## 2026-11-27 — v0.5.31 — Standardise the “Societies” label to “Registered Societies”
+
+- `segLabel()` now renders the Societies segment as **Registered Societies** everywhere it appears — the When the Sector Was Founded legend, the Active Sector by Type panel and the by-authority chart titles and legend — matching the Registered Charities treatment; the by-authority measure chip label is updated to match. The data keys (`by_segment.Societies` and the colour tokens) are unchanged.
+- Dashboard-only; no data, runner or aggregates change.
+
 ## 2026-11-27 — v0.5.30 — Turnover list subtitle reworded
 
 - The **Turnover of the Active Sector** subtitle now reads “% of all N registered charities · reporting: avg £… · median £…”. The percentages are of all registered charities in scope (the list carries a No income recorded row), while the average and median are labelled as being of those reporting — so neither basis is overstated. Drops the inline “with no income recorded” count, shown as its own row since v0.5.28.
