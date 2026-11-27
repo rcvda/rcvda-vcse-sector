@@ -2,6 +2,11 @@
 
 All notable changes to this plugin, most recent first. Format: `## YYYY-MM-DD — vX.Y.Z — description`.
 
+## 2026-11-27 — v0.5.32 — Title Case org-type names in the headline footnote
+
+- The Headline Figures footnote now reads “Income and workforce figures cover **Registered Charities** only. CICs, **Registered Societies** and CASCs don’t file income or staffing through their registers…” — capitalising the formal org-type names to match the Registered Charities / Registered Societies standard.
+- Dashboard-only; no data, runner or aggregates change.
+
 ## 2026-11-27 — v0.5.31 — Standardise the “Societies” label to “Registered Societies”
 
 - `segLabel()` now renders the Societies segment as **Registered Societies** everywhere it appears — the When the Sector Was Founded legend, the Active Sector by Type panel and the by-authority chart titles and legend — matching the Registered Charities treatment; the by-authority measure chip label is updated to match. The data keys (`by_segment.Societies` and the colour tokens) are unchanged.

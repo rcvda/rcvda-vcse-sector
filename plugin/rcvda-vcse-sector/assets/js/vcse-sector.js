@@ -326,7 +326,7 @@
     ];
     box.innerHTML='<div class="kpiblock">'+allTiles.map(function(it){return tile(it,'g-all');}).join('')+charTiles.map(function(it){return tile(it,'g-char');}).join('')+'</div>'
       +'<div class="kheads"><div class="ghead ghead-all"><span class="sw sw-all"></span>All VCFSE · whole registered sector</div><div class="ghead ghead-char"><span class="sw sw-char"></span>Registered charities only</div></div>'
-      +'<div class="kfoots"><p class="kfoot kfoot-all"><b>Whole sector count</b> includes unregistered organisations projected through the NAVCA model.</p><p class="kfoot kfoot-char"><b>Income and workforce figures cover registered charities only.</b> CICs, registered societies and CASCs don’t file income or staffing through their registers, so the sector’s true turnover and workforce are higher than shown. Employees and volunteers are summed from each charity’s latest annual return, where reported.</p></div>';
+      +'<div class="kfoots"><p class="kfoot kfoot-all"><b>Whole sector count</b> includes unregistered organisations projected through the NAVCA model.</p><p class="kfoot kfoot-char"><b>Income and workforce figures cover Registered Charities only.</b> CICs, Registered Societies and CASCs don’t file income or staffing through their registers, so the sector’s true turnover and workforce are higher than shown. Employees and volunteers are summed from each charity’s latest annual return, where reported.</p></div>';
   }
 
   function renderDetail(S,A,sLabel){
