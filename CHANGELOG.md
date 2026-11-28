@@ -2,6 +2,11 @@
 
 All notable changes to this plugin, most recent first. Format: `## YYYY-MM-DD — vX.Y.Z — description`.
 
+## 2026-11-28 — v0.5.34 — Trend range: Recent now 3 months
+
+- The "Sector Size Over Time" default range button now spans the last 3 months (was ~18 months) and is labelled "3 mths"; "12 mths" and "All" unchanged.
+- Dashboard-only; no data, runner or aggregates change.
+
 ## 2026-11-27 — v0.5.33 — Glossary integration: term tooltips + canonical Glossary panel
 
 - Organisation-type and sub-type labels now carry a theme-aware **glossary tooltip** (dotted term → hover/focus/tap for the definition and source), wired to the labels in Active Sector by Type, the When the Sector Was Founded legend, and the Social Enterprise and Legal Structure breakdowns.
